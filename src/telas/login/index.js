@@ -1,9 +1,9 @@
 import { View, Text }  from 'react-native'; 
 
-export default function Rotas() {
+export default function Login() {
     return (
         <View>
-            <Text>Rotas</Text>
+            <Text>Login</Text>
         </View>
     );
 }
