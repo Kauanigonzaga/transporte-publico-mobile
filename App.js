@@ -1,12 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 
-import HomeMotorista from './src/telas/homeMotorista';
+/*import HomeMotorista from './src/telas/homeMotorista';*/
+import Rotas from './src/telas/rotas';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <HomeMotorista />
+      <Rotas />
       <StatusBar style="auto" />
     </View>
   );
