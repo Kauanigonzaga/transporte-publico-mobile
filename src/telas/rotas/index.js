@@ -1,5 +1,7 @@
 import { View, Text }  from 'react-native'; 
-import styles from './css.js';
+import styles from './styles.js';
+/*import botao from './botao/index.js';*/
+
 
 export default function Rotas() {
     return (
