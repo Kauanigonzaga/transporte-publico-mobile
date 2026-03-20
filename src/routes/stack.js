@@ -13,9 +13,8 @@ const Stack = createNativeStackNavigator();
 function RootStack() {
   return (
     <Stack.Navigator>
-
-      <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="HomeMotorista" component={HomeMotorista} />
       <Stack.Screen name="Linhas" component={Linhas} />
      <Stack.Screen name="Rotas" component={Rotas} />
