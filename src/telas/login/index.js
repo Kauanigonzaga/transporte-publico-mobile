@@ -13,8 +13,8 @@ export default function Login() {
             <TextInput style={styles.input} placeholder="Senha" secureTextEntry />
             <TouchableOpacity 
                 style={styles.botao} 
-                onPress={() => navigation.navigate('HomeMotorista')}
-            >
+                onPress={() => navigation.navigate('HomeMotorista')}>
+                    
                 <Text style={styles.botaoTexto}>Acessar sistema</Text>
             </TouchableOpacity>
         </View>
