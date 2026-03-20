@@ -4,9 +4,6 @@ import { StyleSheet, Text, View } from 'react-native';
 
 /*import HomeMotorista from './src/telas/homeMotorista';*/
 import Rotas from './src/telas/rotas';
-
-import HomeMotorista from './src/telas/homeMotorista';
-
 import Login from "./src/telas/login";
 
 
@@ -15,13 +12,14 @@ export default function App() {
     <View style={styles.container}>
 
       <Rotas />
-      <HomeMotorista />
-      <Login />
+      {/* <HomeMotorista /> */}
+      {/* <Login /> */}
 
       <StatusBar style="auto" />
     </View>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {
