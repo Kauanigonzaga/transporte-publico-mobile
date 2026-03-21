@@ -7,18 +7,37 @@ const styles = StyleSheet.create(
             backgroundColor: '#E0F2FE', 
             alignItems: 'baseline', 
             padding: RFPercentage(1),
-            maxHeight: RFPercentage(8),
-
+            height:'100%',
         }, 
         titulo: {
             fontSize: RFPercentage(4), 
             fontWeight: 'bold', 
             color: '#777',
-            marginTop: '10px',
+            marginTop: RFPercentage(1),
+            width: '100%',
+            textAlign: 'center'
         },  
         
-        txt: {
+        input: {
             fontSize: RFPercentage(2.5), 
+            marginTop: RFPercentage(4)
+        },
+
+        botaoTexto: {
+            fontSize: RFPercentage(2.5),
+            paddingLeft: RFPercentage(2),
+            paddingTop: RFPercentage(0.8),
+            color: '#777',
+            fontWeight: 'bold',
+        },
+
+        botao: {
+            backgroundColor:'#00a2ff',
+            marginTop: RFPercentage(5),
+            marginLeft: RFPercentage(11.1),
+            width: '52%',
+            height: RFPercentage(5),
+            borderRadius: RFPercentage(2),
         },
     }
 );  
