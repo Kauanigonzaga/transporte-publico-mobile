@@ -1,38 +1,30 @@
-const styles = {
+import { RFValue } from 'react-native-responsive-fontsize';
+import { StyleSheet } from 'react-native';
+
+const styles = StyleSheet.create({
 
     container: {
         flex: 1,
         alingnItems: 'center',
         justifyContent: 'center',
-        color: '#1582e9',
+       /*borderRadius: RFValue(20),
+        justifyContent: 'center',*/
     },
     titulo: {
         fontSize: 30,
         fontWeight: 'bold',
         marginBottom: 20,
+        borderRadius: RFValue(20),
+        textAlign: 'center'
     },
-    botaoRoxo: {
-        backgroundColor: '#8e82c2',
-        alingnItems: 'center',
+    botao:{
+        backgroundColor: '#6f7de4',
         marginBottom: 10,
-       
+        textAlign: 'center',
+        fontSize: RFValue(20),
     },
-    botaoAzul: {
-        backgroundColor: '#3c8ae4',
-        alingnItems: 'center',
-        marginBottom: 10,
-    },
-    botaoAmarelo:{
-        backgroundColor: '#edda0e',
-        alingnItems: 'center',
-        marginBottom: 10,
-    },
-    botaoLaranja:{
-        backgroundColor: '#dc850b',
-        alingnItems: 'center',
-        marginBottom: 10,
-    },
-};
+
+});
 
 
 export default styles;
