@@ -20,7 +20,11 @@ const styles = StyleSheet.create(
         
         input: {
             fontSize: RFPercentage(2.5), 
-            marginTop: RFPercentage(4)
+            marginTop: RFPercentage(4),
+            marginLeft: RFPercentage(1),
+            backgroundColor: '#c6d4dd',
+            borderRadius: RFPercentage(1.3),
+            width: '95%'
         },
 
         botaoTexto: {
