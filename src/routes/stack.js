@@ -17,9 +17,9 @@ function RootStack() {
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="HomeMotorista" component={HomeMotorista} />
       <Stack.Screen name="Linhas" component={Linhas} />
-     <Stack.Screen name="Rotas" component={Rotas} />
-        <Stack.Screen name="Pontos" component={Pontos} />
-        <Stack.Screen name="AvaliacaoMotorista" component={AvaliacaoMotorista} />
+      <Stack.Screen name="Rotas" component={Rotas} />
+      <Stack.Screen name="Pontos" component={Pontos} />
+      <Stack.Screen name="AvaliacaoMotorista" component={AvaliacaoMotorista} />
     </Stack.Navigator>
   );
 }
