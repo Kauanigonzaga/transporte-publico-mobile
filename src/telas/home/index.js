@@ -8,21 +8,24 @@ export default function Home() {
     return (
         <View style={styles.container}>
             <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate('Linhas')}>
-
-                <Text style={styles.botao}>Linhas</Text>
+                <Text style={styles.titulo}>Linhas</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate('Rotas')}>
-                <Text style={styles.botao}>Rotas</Text>
+                <Text style={styles.titulo}>Rotas</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate('Pontos')}>
-                <Text style={styles.botao}>Pontos</Text>
+                <Text style={styles.titulo}>Pontos</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate('AvaliacaoMotorista')}>
-                <Text style={styles.botao}>Avaliação do motorista</Text>
+             <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate('Horarios')}>
+                <Text style={styles.titulo}>Horários</Text>
+            </TouchableOpacity>
+
+           {/* <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate('AvaliacaoMotorista')}>
+                <Text style={styles.titulo}>Avaliação do motorista</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate('Login')}>
-                <Text style={styles.botao}>Login</Text>
-            </TouchableOpacity>
+                <Text style={styles.titulo}>Login</Text>
+            </TouchableOpacity>*/}
         </View>
     );
 }

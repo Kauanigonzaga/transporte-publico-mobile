@@ -1,5 +1,6 @@
 import { RFValue } from 'react-native-responsive-fontsize';
 import { StyleSheet } from 'react-native';
+import { RFPercentage } from 'react-native-responsive-fontsize';
 
 const styles = StyleSheet.create({
 
@@ -7,21 +8,26 @@ const styles = StyleSheet.create({
         flex: 1,
         alingnItems: 'center',
         justifyContent: 'center',
-       borderRadius: RFValue(20),
+        borderRadius: RFPercentage(20),
         justifyContent: 'center',
+        border: RFPercentage(10),
+        borderRadius: RFPercentage(10),
     },
     titulo: {
-        fontSize: 50,
+        fontSize: RFPercentage(3),
         fontWeight: 'bold',
-        marginBottom: 100,
-        borderRadius: RFValue(20),
+        marginBottom: 10,
+        borderRadius: RFPercentage(20),
         textAlign: 'center',
+        color: '#E0F2FE',
     },
     botao:{
-        backgroundColor: '#1d2881',
-        marginBottom: 10,
-        textAlign: 'center',
-        fontSize: RFValue(30),
+        backgroundColor: '#1E40AF',
+        marginBottom: 15,
+        borderRadius: RFPercentage(30),
+        width: '55%', 
+        marginLeft: RFPercentage(11),
+
     },
 
 });
