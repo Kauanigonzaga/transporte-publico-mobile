@@ -1,25 +1,27 @@
 import { View, Text, TouchableOpacity }  from 'react-native'; 
 
 import { useNavigation } from '@react-navigation/native';
+import styles from './styles.js';
 
 export default function Home() { 
     const navigation = useNavigation();
     return (
-        <View>
-            <TouchableOpacity onPress={() => navigation.navigate('Linhas')}>
-                <Text>Linhas</Text>
+        <View style={styles.container}>
+            <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate('Linhas')}>
+
+                <Text style={styles.botao}>Linhas</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('Rotas')}>
-                <Text>Rotas</Text>
+            <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate('Rotas')}>
+                <Text style={styles.botao}>Rotas</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('Pontos')}>
-                <Text>Pontos</Text>
+            <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate('Pontos')}>
+                <Text style={styles.botao}>Pontos</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('AvaliacaoMotorista')}>
-                <Text>Avaliação do motorista</Text>
+            <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate('AvaliacaoMotorista')}>
+                <Text style={styles.botao}>Avaliação do motorista</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-                <Text>Login</Text>
+            <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate('Login')}>
+                <Text style={styles.botao}>Login</Text>
             </TouchableOpacity>
         </View>
     );
