@@ -20,12 +20,12 @@ export default function Home() {
                 <Text style={styles.titulo}>Horários</Text>
             </TouchableOpacity>
 
-           {/* <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate('AvaliacaoMotorista')}>
+           <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate('AvaliacaoMotorista')}>
                 <Text style={styles.titulo}>Avaliação do motorista</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate('Login')}>
                 <Text style={styles.titulo}>Login</Text>
-            </TouchableOpacity>*/}
+            </TouchableOpacity>
         </View>
     );
 }

@@ -4,7 +4,7 @@ import { RFPercentage } from "react-native-responsive-fontsize";
 const styles = StyleSheet.create(
     {
         container: {
-            backgroundColor: '#E0F2FE', 
+            backgroundColor: '#E9F2FA', 
             alignItems: 'baseline', 
             padding: RFPercentage(1),
             height:'100%',
