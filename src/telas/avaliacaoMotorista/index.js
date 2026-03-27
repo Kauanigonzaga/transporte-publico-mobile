@@ -15,22 +15,20 @@ export default function AvaliacaoMotorista() {
   return (
     <View style={styles.container}>
       
-      {/* Header */}
+     
       <View style={styles.header}>
         <Text style={styles.headerText}>INFORMAÇÕES</Text>
       </View>
 
-      {/* Conteúdo */}
+    
       <View style={styles.content}>
-        
-        {/* Imagem motorista */}
+   
         <Image
           source={require('../../../assets/motorista.png')}
           style={styles.image}
           resizeMode="contain"
         />
 
-        {/* Infos */}
         <View style={styles.infoBox}>
           <Text style={styles.infoText}>NOME: Joao Paulo Silva</Text>
         </View>
@@ -39,14 +37,12 @@ export default function AvaliacaoMotorista() {
           <Text style={styles.infoText}>LINHA: Azul</Text>
         </View>
 
-        {/* Avaliação */}
         <View style={styles.avaliacaoContainer}>
           <View style={styles.linha} />
           <Text style={styles.avaliacaoText}>Avalie seu desempenho</Text>
           <View style={styles.linha} />
         </View>
 
-        {/* Input */}
         <View style={styles.inputContainer}>
           <TextInput
             placeholder="Digite sua avaliação"
@@ -60,7 +56,6 @@ export default function AvaliacaoMotorista() {
           </TouchableOpacity>
         </View>
 
-        {/* Botão */}
         <TouchableOpacity 
         style={styles.botaoVer}>
 

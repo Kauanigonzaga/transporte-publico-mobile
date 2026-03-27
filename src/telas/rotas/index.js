@@ -1,32 +1,28 @@
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { View, Text, TouchableOpacity,ImageBackground } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import styles from './styles.js';
-
-
+import  Image from '../../../assets/imgMotorista.png';
 // import MapView from 'react-native-maps';
 
 export default function RotasScreen() {
     const navigation = useNavigation();
 
   return (
+
+    <ImageBackground source={ Image } style={styles.logo}> 
+    
     <SafeAreaView style={styles.screen}>
 
         {/*<Stack.Navigator>
             <Stack.Screen name="Pontos" component={pontos} />
         </Stack.Navigator>*/}
 
-      <Text style={styles.pageTitle}>Rotas e Linhas</Text>
-
       <View style={styles.panel}>
         <View style={styles.topBar}>
           <View style={styles.motoristaBox}>
             <Text style={styles.motoristaText}>MOTORISTA</Text>
-          </View>
-
-          <View style={styles.logoBox}>
-             <ImageBackground source={require('../assets/imgMotorista.png')} style={styles.logo} /> 
           </View>
 
           <View style={styles.menuBox}>
@@ -56,7 +52,8 @@ export default function RotasScreen() {
 
         <View style={styles.bottomBar} />
       </View>
-    </SafeAreaView>
+      </SafeAreaView>
+     </ImageBackground> 
   );
 }
 
