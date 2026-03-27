@@ -4,6 +4,7 @@ import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import styles from './styles.js';
 
+
 // import MapView from 'react-native-maps';
 
 export default function RotasScreen() {
@@ -25,8 +26,7 @@ export default function RotasScreen() {
           </View>
 
           <View style={styles.logoBox}>
-            {/* coloque aqui sua imagem/logo */}
-            {/* <Image source={require('../assets/logo.png')} style={styles.logo} /> */}
+             <ImageBackground source={require('../assets/imgMotorista.png')} style={styles.logo} /> 
           </View>
 
           <View style={styles.menuBox}>
@@ -61,26 +61,4 @@ export default function RotasScreen() {
 }
 
 
-
-
-
-/*import { View, Text, TouchableOpacity, StyleSheet, Image }  from 'react-native'; 
-import { useNavigation } from '@react-navigation/native';
-import styles from './styles.js';
-
-
-export default function Rotas() {
-    const navigation = useNavigation();
-    return (
-        <View style={styles.container}>
-            <Text style={styles.titulo}>Rotas</Text>
-            <TouchableOpacity>
-                <Text style={styles.botao}>LINHAS</Text>
-                <Text style={styles.botao}>PONTOS</Text>
-                <Text style={styles.botao}>HORÁRIOS</Text>
-                <Text style={styles.botao}>MOTORISTA</Text>
-            </TouchableOpacity>
-        </View>
-    );
-}*/
 
