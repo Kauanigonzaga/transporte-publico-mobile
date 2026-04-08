@@ -29,6 +29,20 @@ const styles = StyleSheet.create({
         marginLeft: RFPercentage(11),
 
     },
+    fundo: {
+        position: 'absolute',  
+    }, 
+
+    menuSuperior: {
+    flex: 1,
+    backgroundColor: '#384255',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    paddingHorizontal: ,
+    gap: 10
+    }
+
 
 });
 

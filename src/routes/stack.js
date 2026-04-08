@@ -12,6 +12,8 @@ const Stack = createNativeStackNavigator();
 
 
 function RootStack() {
+  <Stack.Screen name="Home" component={Home} options={{ headerShown: false }}
+/>
   return (
     <Stack.Navigator>
       <Stack.Screen name="Home" component={Home} />

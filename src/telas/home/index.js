@@ -1,12 +1,17 @@
-import { View, Text, TouchableOpacity }  from 'react-native'; 
+import { View, Text, TouchableOpacity, Image }  from 'react-native'; 
 
 import { useNavigation } from '@react-navigation/native';
 import styles from './styles.js';
+import image from '../../../assets/fundo.png';
+
 
 export default function Home() { 
     const navigation = useNavigation();
+    
     return (
-        <View style={styles.container}>
+        <View> 
+            <Image source={image} style={styles.fundo} />
+            
             <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate('Linhas')}>
                 <Text style={styles.titulo}>Linhas</Text>
             </TouchableOpacity>
@@ -20,9 +25,9 @@ export default function Home() {
                 <Text style={styles.titulo}>Horários</Text>
             </TouchableOpacity>
 
-           <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate('AvaliacaoMotorista')}>
+           {/* <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate('AvaliacaoMotorista')}>
                 <Text style={styles.titulo}>Avaliação do motorista</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate('Login')}>
                 <Text style={styles.titulo}>Login</Text>
             </TouchableOpacity>
