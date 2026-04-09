@@ -13,6 +13,7 @@ const styles = StyleSheet.create({
         border: RFPercentage(10),
         borderRadius: RFPercentage(10),
     },
+
     titulo: {
         fontSize: RFPercentage(3),
         fontWeight: 'bold',
@@ -21,25 +22,38 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: '#E0F2FE',
     },
+
     botao:{
         backgroundColor: '#1E40AF',
-        marginBottom: 15,
         borderRadius: RFPercentage(30),
         width: '55%', 
-        marginLeft: RFPercentage(11),
-
+        justifyContent: 'center',
+        alignItems: 'center', 
+        marginTop: RFPercentage(2),
+        borderRadius: RFPercentage(20),
+        justifyContent: 'center',
+        border: RFPercentage(10),
+        borderRadius: RFPercentage(10),
     },
+    
     fundo: {
         position: 'absolute',  
     }, 
 
-    // menuSuperior: {
-    // backgroundColor: '#384255',
-    // justifyContent: 'flex-end',
-    // alignItems: 'center',
-    // paddingHorizontal: 30, 
-    // gap: 50, 
-    // }
+    menuSuperior: {
+    backgroundColor: '#1E40AF',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    paddingHorizontal: 30, 
+    gap: 50, 
+    }, 
+
+    tituloMenuSuperior: {
+        fontSize: RFPercentage(3),
+        fontWeight: 'bold',
+        color: '#E0F2FE',
+        
+    },
 
 
 });
