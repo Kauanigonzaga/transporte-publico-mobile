@@ -4,16 +4,6 @@ import { RFPercentage } from 'react-native-responsive-fontsize';
 
 const styles = StyleSheet.create({
 
-    container: {
-        flex: 1,
-        alingnItems: 'center',
-        justifyContent: 'center',
-        borderRadius: RFPercentage(20),
-        justifyContent: 'center',
-        border: RFPercentage(10),
-        borderRadius: RFPercentage(10),
-    },
-
     titulo: {
         fontSize: RFPercentage(3),
         fontWeight: 'bold',
@@ -25,15 +15,9 @@ const styles = StyleSheet.create({
 
     botao:{
         backgroundColor: '#1E40AF',
-        borderRadius: RFPercentage(30),
-        width: '55%', 
-        justifyContent: 'center',
-        alignItems: 'center', 
-        marginTop: RFPercentage(2),
-        borderRadius: RFPercentage(20),
-        justifyContent: 'center',
-        border: RFPercentage(10),
-        borderRadius: RFPercentage(10),
+        marginBottom: 20,
+        borderRadius: RFPercentage(15),
+        width: '65%',
     },
     
     fundo: {
@@ -42,18 +26,44 @@ const styles = StyleSheet.create({
 
     menuSuperior: {
     backgroundColor: '#1E40AF',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
+    justifyContent: 'center',
+    alignItems: 'left',
     paddingHorizontal: 30, 
-    gap: 50, 
+    height: RFPercentage(6),
+
     }, 
 
     tituloMenuSuperior: {
-        fontSize: RFPercentage(3),
+        fontSize: RFPercentage(2.5),
         fontWeight: 'bold',
         color: '#E0F2FE',
         
+        
     },
+    containerSuperior: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: RFPercentage(15),
+        flex: 1,
+    },
+
+    menuInferior: {
+        backgroundColor: '#1E40AF',
+        justifyContent: 'center',
+        alignItems: 'left',
+        paddingHorizontal: 30, 
+        height: RFPercentage(6),
+        marginTop: RFPercentage(20),
+        width: '100%',
+    }, 
+    
+    tituloMenuInferior: {
+        fontSize: RFPercentage(2),
+        fontWeight: 'bold',
+        color: '#E0F2FE',
+        textAlign: 'right',
+    },
+
 
 
 });

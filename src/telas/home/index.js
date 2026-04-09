@@ -15,7 +15,7 @@ export default function Home() {
                 <View style={styles.menuSuperior}>
             <Text style={styles.tituloMenuSuperior}>BUSLY</Text>
             </View>
-            <View style={styles.centralizarBotao}>
+            <View style={styles.containerSuperior}>
             <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate('Linhas')}>
                 <Text style={styles.titulo}>Linhas</Text>
             </TouchableOpacity>
@@ -28,13 +28,16 @@ export default function Home() {
              <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate('Horarios')}>
                 <Text style={styles.titulo}>Horários</Text>
             </TouchableOpacity>
-
            {/* <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate('AvaliacaoMotorista')}>
                 <Text style={styles.titulo}>Avaliação do motorista</Text>
             </TouchableOpacity> */}
-            <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate('Login')}>
-                <Text style={styles.titulo}>Login</Text>
+
+            <View style={styles.menuInferior}>
+            <TouchableOpacity style={styles.tituloMenuInferior} onPress={() => navigation.navigate('Login')}>
+                <Text style={styles.tituloMenuInferior}>Login</Text>
             </TouchableOpacity>
+            
+            </View>
             </View>
         </View>
     );
