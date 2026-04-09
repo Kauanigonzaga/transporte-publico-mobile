@@ -12,8 +12,10 @@ export default function Home() {
         <View> 
 
             <Image source={image} style={styles.fundo} />
-
-            <Text style={styles.menuSuperior}>BUSLY</Text>
+                <View style={styles.menuSuperior}>
+            <Text style={styles.tituloMenuSuperior}>BUSLY</Text>
+            </View>
+            <View style={styles.centralizarBotao}>
             <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate('Linhas')}>
                 <Text style={styles.titulo}>Linhas</Text>
             </TouchableOpacity>
@@ -33,6 +35,7 @@ export default function Home() {
             <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate('Login')}>
                 <Text style={styles.titulo}>Login</Text>
             </TouchableOpacity>
+            </View>
         </View>
     );
 }
