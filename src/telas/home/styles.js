@@ -33,15 +33,13 @@ const styles = StyleSheet.create({
         position: 'absolute',  
     }, 
 
-    menuSuperior: {
-    flex: 1,
-    backgroundColor: '#384255',
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    paddingHorizontal: ,
-    gap: 10
-    }
+    // menuSuperior: {
+    // backgroundColor: '#384255',
+    // justifyContent: 'flex-end',
+    // alignItems: 'center',
+    // paddingHorizontal: 30, 
+    // gap: 50, 
+    // }
 
 
 });

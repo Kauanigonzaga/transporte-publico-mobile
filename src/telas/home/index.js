@@ -10,8 +10,10 @@ export default function Home() {
     
     return (
         <View> 
+
             <Image source={image} style={styles.fundo} />
-            
+
+            <Text style={styles.menuSuperior}>BUSLY</Text>
             <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate('Linhas')}>
                 <Text style={styles.titulo}>Linhas</Text>
             </TouchableOpacity>
