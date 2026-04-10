@@ -13,55 +13,60 @@ const styles = StyleSheet.create({
         color: '#E0F2FE',
     },
 
-    botao:{
+    botao: {
         backgroundColor: '#1E40AF',
         marginBottom: 20,
         borderRadius: RFPercentage(15),
         width: '65%',
     },
-    
+
     fundo: {
-        position: 'absolute',  
-    }, 
+        flex: 1,
+        justifyContent: 'center',
+    },
 
     menuSuperior: {
-    backgroundColor: '#1E40AF',
-    justifyContent: 'center',
-    alignItems: 'left',
-    paddingHorizontal: 30, 
-    height: RFPercentage(6),
+        backgroundColor: '#1E40AF',
+        justifyContent: 'center',
+        alignItems: 'left',
+        height: RFPercentage(6),
 
-    }, 
+    },
 
     tituloMenuSuperior: {
         fontSize: RFPercentage(2.5),
         fontWeight: 'bold',
         color: '#E0F2FE',
-        
-        
+        paddingLeft: RFPercentage(2),
+
     },
     containerSuperior: {
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'space-evenly',
         marginTop: RFPercentage(15),
         flex: 1,
     },
 
     menuInferior: {
+        // flex: 1,
         backgroundColor: '#1E40AF',
         justifyContent: 'center',
-        alignItems: 'left',
-        paddingHorizontal: 30, 
+        alignItems: 'left',        
         height: RFPercentage(6),
         marginTop: RFPercentage(20),
         width: '100%',
-    }, 
-    
+    },
+
+    btnInferior: {
+        // width: '50%',
+    },
+
     tituloMenuInferior: {
         fontSize: RFPercentage(2),
         fontWeight: 'bold',
         color: '#E0F2FE',
         textAlign: 'right',
+        paddingRight: RFPercentage(2),
     },
 
 
