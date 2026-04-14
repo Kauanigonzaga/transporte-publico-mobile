@@ -74,6 +74,20 @@ const styles = StyleSheet.create({
     height: 40
   },
 
+  secondaryButton: {
+    backgroundColor: '#3B82F6',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 6,
+  },
+  
+  buttonText: {
+    color: '#fff',
+    fontSize: 12,
+    fontWeight: '600',
+    
+  },
+  
   botaoEnviar: {
     padding: 8
   },

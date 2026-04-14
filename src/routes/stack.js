@@ -12,18 +12,17 @@ const Stack = createNativeStackNavigator();
 
 
 function RootStack() {
-  <Stack.Screen name="Home" component={Home} options={{ headerShown: false }}
-/>
+  
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Home" component={Home} />
-      <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="HomeMotorista" component={HomeMotorista} />
-      <Stack.Screen name="Linhas" component={Linhas} />
-      <Stack.Screen name="Rotas" component={Rotas} />
-      <Stack.Screen name="Pontos" component={Pontos} />
-      <Stack.Screen name="Horarios" component={Horarios} />
-      <Stack.Screen name="AvaliacaoMotorista" component={AvaliacaoMotorista} />
+      <Stack.Screen name="Home" component={Home} options={{ headerShown: false }}/>
+      <Stack.Screen name="Login" component={Login} options={{ headerShown: false }}/>
+      <Stack.Screen name="HomeMotorista" component={HomeMotorista} options={{ headerShown: false }} />
+      <Stack.Screen name="Linhas" component={Linhas} options={{ headerShown: false }}/>
+      <Stack.Screen name="Rotas" component={Rotas} options={{ headerShown: false }}/>
+      <Stack.Screen name="Pontos" component={Pontos} options={{ headerShown: false }}/>
+      <Stack.Screen name="Horarios" component={Horarios} options={{ headerShown: false }}/>
+      <Stack.Screen name="AvaliacaoMotorista" component={AvaliacaoMotorista} options={{ headerShown: false }}/>
     </Stack.Navigator>
   );
 }

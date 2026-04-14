@@ -1,103 +1,90 @@
+
 import { StyleSheet } from 'react-native';
+
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: '#7b4d4d',
-    padding: 8,
+    backgroundColor: '#E0F2FE',
   },
 
-  pageTitle: {
-    color: '#d9d9d9',
-    fontSize: 16,
-    marginBottom: 6,
-  },
-
-  panel: {
+  container: {
     flex: 1,
-    backgroundColor: '#3b4658',
+    borderRadius: 12,
+    backgroundColor: '#111827',
     overflow: 'hidden',
   },
 
-  topBar: {
+  /* HEADER */
+  header: {
     flexDirection: 'row',
-    alignItems: 'stretch',
-    height: 58,
-  },
-
-  motoristaBox: {
-    width: 140,
-    backgroundColor: '#ffffff',
-    justifyContent: 'center',
-    paddingHorizontal: 10,
-  },
-
-  motoristaText: {
-    fontSize: 17,
-    color: '#111',
-    fontWeight: '400',
-  },
-
-  logoBox: {
-    width: 65,
-    backgroundColor: '#d7e7ef',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
-  },
-
-  logo: {
-    width: 36,
-    height: 36,
-    resizeMode: 'contain',
-  },
-
-  menuBox: {
-    flex: 1,
-    backgroundColor: '#384255',
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
+    backgroundColor: '#1E40AF',
     paddingHorizontal: 12,
+    paddingVertical: 10,
+  },
+
+  motoristaSection: {
+    flexDirection: 'row',
+    alignItems: 'center',
     gap: 10,
   },
 
-  menuButton: {
-    backgroundColor: '#294a9b',
-    minWidth: 72,
-    height: 26,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 10,
+  avatar: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: '#E0F2FE',
   },
 
-  menuButtonText: {
+  primaryButton: {
+    backgroundColor: '#3B82F6',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 6,
+  },
+
+  secondaryButton: {
+    backgroundColor: '#111827',
+    borderWidth: 1,
+    borderColor: '#3B82F6',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 6,
+  },
+
+  buttonText: {
     color: '#fff',
-    fontSize: 11,
-    fontWeight: '500',
+    fontSize: 12,
+    fontWeight: '600',
   },
 
-  mapArea: {
+  /* MAPA */
+  mapContainer: {
     flex: 1,
-    backgroundColor: '#eef3ee',
-  },
-
-  map: {
-    flex: 1,
+    backgroundColor: '#E0F2FE',
+    padding: 8,
   },
 
   fakeMap: {
     flex: 1,
+    backgroundColor: '#dbeafe',
+    borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#edf4ed',
   },
 
-  bottomBar: {
-    height: 38,
-    backgroundColor: '#384255',
+  mapText: {
+    color: '#1E40AF',
+    fontSize: 16,
+    fontWeight: '500',
   },
-  
+
+  /* FOOTER */
+  footer: {
+    height: 40,
+    backgroundColor: '#1E40AF',
+  },
 });
-
-
 
 export default styles;

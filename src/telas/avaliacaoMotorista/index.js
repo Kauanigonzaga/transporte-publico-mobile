@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import {
   View,
   Text,
@@ -11,6 +12,7 @@ import styles from './styles';
 
 export default function AvaliacaoMotorista() {
     const [avaliacao, setAvaliacao] = useState('');
+    const navigation = useNavigation()
 
   return (
     <View style={styles.container}>
@@ -20,7 +22,11 @@ export default function AvaliacaoMotorista() {
         <Text style={styles.headerText}>INFORMAÇÕES</Text>
       </View>
 
-    
+      <TouchableOpacity 
+        style={styles.secondaryButton} onPress={() => navigation.navigate('Rotas')}>
+        <Text style={styles.buttonText}>Rotas</Text>
+      </TouchableOpacity>
+
       <View style={styles.content}>
    
         <Image

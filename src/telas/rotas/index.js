@@ -2,55 +2,50 @@ import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import styles from './styles.js';
+import styles from './styles';
 import image from '../../../assets/imgMotorista.png';
-// import MapView from 'react-native-maps';
 
 export default function RotasScreen() {
   const navigation = useNavigation();
 
   return (
     <SafeAreaView style={styles.screen}>
+      <View style={styles.container}>
 
-      {/*<Stack.Navigator>
-            <Stack.Screen name="Pontos" component={pontos} />
-        </Stack.Navigator>*/}
-
-      <View style={styles.panel}>
-        <View style={styles.topBar}>
-          <View style={styles.motoristaBox}>
-
-            <TouchableOpacity style={styles.menuButton} onPress={() => navigation.navigate('avaliacaoMotorista')}>
-            <Text style={styles.menuButtonText}>MOTORISTA</Text>
-            </TouchableOpacity>
+        {/* HEADER */}
+        <View style={styles.header}>
+          
+          <View style={styles.motoristaSection}>
+            <Image source={image} style={styles.avatar} />
             
-            <Image source={image} style={styles.logo} />
-          </View>
-
-          <View style={styles.menuBox}>
-            <TouchableOpacity style={styles.menuButton} onPress={() => navigation.navigate('Home')}>
-              <Text style={styles.menuButtonText}>HOME</Text>
+            <TouchableOpacity 
+              style={styles.primaryButton}
+              onPress={() => navigation.navigate('AvaliacaoMotorista')}>
+              <Text style={styles.buttonText}>Motorista</Text>
             </TouchableOpacity>
           </View>
+
+          <TouchableOpacity 
+            style={styles.secondaryButton}
+            onPress={() => navigation.navigate('Home')}>
+            <Text style={styles.buttonText}>Home</Text>
+          </TouchableOpacity>
+
         </View>
 
-        <View style={styles.mapArea}>
-          {/* quando estiver usando mapa */}
-          {/* <MapView style={styles.map} /> */}
-
-          {/*  só para teste visual */}
+        {/* MAPA */}
+        <View style={styles.mapContainer}>
           <View style={styles.fakeMap}>
-            <Text style={{ color: '#666' }}>MAPA</Text>
+            <Text style={styles.mapText}>Mapa</Text>
           </View>
         </View>
 
-        <View style={styles.bottomBar} />
+        {/* FOOTER */}
+        <View style={styles.footer} />
+
       </View>
     </SafeAreaView>
-    
-
   );
 }
-
 
 
