@@ -15,9 +15,10 @@ const styles = StyleSheet.create({
 
     botao: {
         backgroundColor: '#1E40AF',
-        marginBottom: 20,
-        borderRadius: RFPercentage(15),
-        width: '65%',
+        marginVertical: 10, // melhor que marginBottom
+        borderRadius: RFPercentage(50),
+        width: '70%'
+        
     },
 
     fundo: {
@@ -41,20 +42,20 @@ const styles = StyleSheet.create({
 
     },
     containerSuperior: {
-        alignItems: 'center',
-        justifyContent: 'space-evenly',
-        marginTop: RFPercentage(15),
         flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 
     menuInferior: {
         // flex: 1,
+        position: 'absolute',
+        bottom: 0,
+        width: '100%',
+        height: RFPercentage(6),
         backgroundColor: '#1E40AF',
         justifyContent: 'center',
-        alignItems: 'left',        
-        height: RFPercentage(6),
-        marginTop: RFPercentage(20),
-        width: '100%',
+        alignItems: 'flex-end', 
     },
 
     btnInferior: {
