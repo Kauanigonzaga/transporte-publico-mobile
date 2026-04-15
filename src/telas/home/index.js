@@ -15,14 +15,11 @@ export default function Home() {
                 <Text style={styles.tituloMenuSuperior}>BUSLY</Text>
             </View>
             <View style={styles.containerSuperior}>
-                <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate('Linhas')}>
-                    <Text style={styles.titulo}>Linhas</Text>
+                <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate('LinhasPontos')}>
+                    <Text style={styles.titulo}>Linhas e Pontos</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate('Rotas')}>
                     <Text style={styles.titulo}>Rotas</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate('Pontos')}>
-                    <Text style={styles.titulo}>Pontos</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate('Horarios')}>
                     <Text style={styles.titulo}>Horários</Text>
