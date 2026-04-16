@@ -5,6 +5,7 @@ import HomeMotorista from '../telas/homeMotorista';
 import LinhasPontos from '../telas/linhasPontos';
 import Rotas from '../telas/rotas';
 import Horarios from '../telas/horarios';
+import InfoMotorista from '../telas/infoMotorista';
 import AvaliacaoMotorista from '../telas/avaliacaoMotorista';
 
 const Stack = createNativeStackNavigator();
@@ -20,6 +21,7 @@ function RootStack() {
       <Stack.Screen name="LinhasPontos" component={LinhasPontos} options={{ headerShown: false }}/>
       <Stack.Screen name="Rotas" component={Rotas} options={{ headerShown: false }}/>
       <Stack.Screen name="Horarios" component={Horarios} options={{ headerShown: false }}/>
+      <Stack.Screen name="InfoMotorista" component={InfoMotorista} options={{ headerShown: false }}/>
       <Stack.Screen name="AvaliacaoMotorista" component={AvaliacaoMotorista} options={{ headerShown: false }}/>
     </Stack.Navigator>
   );

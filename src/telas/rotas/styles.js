@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
   },
 
   secondaryButton: {
-    backgroundColor: '#111827',
+    backgroundColor: '#3B82F6',
     borderWidth: 1,
     borderColor: '#3B82F6',
     paddingHorizontal: 12,

@@ -1,3 +1,5 @@
+//DUDA
+
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
@@ -31,11 +33,10 @@ export default function LinhasPontos() {
 
   return (
     <ScrollView style={styles.container}>
-      <Text style={styles.titulo}>Linhas e Pontos</Text>
 
       <TouchableOpacity style={styles.botao} 
       onPress={() => navigation.navigate('Home')}>
-        <Text style={styles.tituloBotao}>início</Text>
+        <Text style={styles.tituloBotao}> início</Text>
       </TouchableOpacity>
       
       {linhas.map((linha, index) => (
@@ -47,7 +48,7 @@ export default function LinhasPontos() {
             {linha.descricao}
           </Text>
 
-          <Text style={styles.subtitulo}>Pontos:</Text>
+          <Text style={styles.tituloPonto}>Pontos:</Text>
 
           {linha.pontos.map((ponto, i) => (
             <Text key={i} style={styles.ponto}>

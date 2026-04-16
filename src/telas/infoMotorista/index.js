@@ -1,16 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import {
-  View,
-  Text,
-  Image,
-  TextInput,
-  TouchableOpacity
+import { View, Text, Image, TextInput, TouchableOpacity
 } from 'react-native';
 
 import styles from './styles';
 
-export default function AvaliacaoMotorista() {
+export default function InfoMotorista() {
     const [avaliacao, setAvaliacao] = useState('');
     const navigation = useNavigation()
 

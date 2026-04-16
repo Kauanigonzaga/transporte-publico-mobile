@@ -1,3 +1,5 @@
+//DUDA
+
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
@@ -28,7 +30,7 @@ export default function RotasScreen() {
           <TouchableOpacity 
             style={styles.secondaryButton}
             onPress={() => navigation.navigate('Home')}>
-            <Text style={styles.buttonText}>Home</Text>
+            <Text style={styles.buttonText}>Início</Text>
           </TouchableOpacity>
 
         </View>

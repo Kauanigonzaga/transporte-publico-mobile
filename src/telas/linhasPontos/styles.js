@@ -10,25 +10,19 @@ export default StyleSheet.create({
 
   botao:{
     backgroundColor: '#1E40AF',
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    marginBottom: 20,
+    width: RFValue(60),
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    marginBottom: 15,
+    marginTop:30,
     borderRadius: 8,
   },
 
   tituloBotao:{
-    fontSize: RFValue(15),
+    fontSize: RFValue(12),
     color:'#E0F2FE',
     textAlign: 'center',
     fontWeight: 'bold'
-  },
-
-  titulo: {
-    fontSize: 24,
-    color:  '#E0F2FE',
-    fontWeight: 'bold',
-    marginBottom: 20,
-    textAlign: 'center'
   },
 
   card: {
@@ -51,7 +45,7 @@ export default StyleSheet.create({
     marginBottom: 10
   },
 
-  subtitulo: {
+  tituloPonto: {
     fontSize: 16,
     color:  '#1E40AF',
     fontWeight: 'bold',
