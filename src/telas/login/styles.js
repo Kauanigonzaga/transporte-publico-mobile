@@ -1,49 +1,74 @@
-import { StyleSheet } from 'react-native'; 
+import { StyleSheet } from 'react-native';
 import { RFPercentage } from "react-native-responsive-fontsize";
 
-const styles = StyleSheet.create(
-    {
-        container: {
-            backgroundColor: '#E9F2FA', 
-            alignItems: 'baseline', 
-            padding: RFPercentage(1),
-            height:'100%',
-        }, 
-        titulo: {
-            fontSize: RFPercentage(4), 
-            fontWeight: 'bold', 
-            color: '#777',
-            marginTop: RFPercentage(1),
-            width: '100%',
-            textAlign: 'center'
-        },  
-        
-        input: {
-            fontSize: RFPercentage(2.5), 
-            marginTop: RFPercentage(4),
-            marginLeft: RFPercentage(1),
-            backgroundColor: '#c6d4dd',
-            borderRadius: RFPercentage(1.3),
-            width: '95%'
-        },
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#3B82F6',
+  },
 
-        botaoTexto: {
-            fontSize: RFPercentage(2.5),
-            paddingLeft: RFPercentage(2),
-            paddingTop: RFPercentage(0.8),
-            color: '#777',
-            fontWeight: 'bold',
-        },
+  voltarBox: {
+    position: 'absolute',
+    top: RFPercentage(6),
+    left: RFPercentage(2),
+    backgroundColor: 'white',
+    paddingHorizontal: RFPercentage(2),
+    paddingVertical: RFPercentage(1),
+    borderRadius: RFPercentage(2),
+    shadowColor: '#000',
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5,
+  },
 
-        botao: {
-            backgroundColor:'#00a2ff',
-            marginTop: RFPercentage(5),
-            marginLeft: RFPercentage(11.1),
-            width: '52%',
-            height: RFPercentage(5),
-            borderRadius: RFPercentage(2),
-        },
-    }
-);  
+  voltarTexto: {
+    color: '#1E40AF',
+    fontSize: RFPercentage(2.2),
+    fontWeight: 'bold',
+  },
+
+  centerArea: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: RFPercentage(2),
+  },
+
+  titulo: {
+    fontSize: RFPercentage(4),
+    fontWeight: 'bold',
+    color: 'white',
+    marginBottom: RFPercentage(3),
+  },
+
+  form: {
+    width: '100%',
+    backgroundColor: 'white',
+    borderRadius: RFPercentage(2),
+    padding: RFPercentage(2),
+  },
+
+  input: {
+    fontSize: RFPercentage(2.2),
+    backgroundColor: '#eef2f7',
+    borderRadius: RFPercentage(1),
+    padding: RFPercentage(1.5),
+    marginBottom: RFPercentage(2),
+  },
+
+  botao: {
+    backgroundColor: '#1E40AF',
+    padding: RFPercentage(1.8),
+    borderRadius: RFPercentage(1.5),
+    alignItems: 'center',
+    marginTop: RFPercentage(2),
+  },
+
+  botaoTexto: {
+    fontSize: RFPercentage(2.3),
+    color: 'white',
+    fontWeight: 'bold',
+  },
+});
 
 export default styles;
