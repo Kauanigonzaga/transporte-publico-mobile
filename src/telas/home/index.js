@@ -24,9 +24,7 @@ export default function Home() {
                 <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate('Horarios')}>
                     <Text style={styles.titulo}>Horários</Text>
                 </TouchableOpacity>
-                {/* <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate('AvaliacaoMotorista')}>
-                <Text style={styles.titulo}>Avaliação do motorista</Text>
-            </TouchableOpacity> */}
+    
 
                 <View style={styles.menuInferior}>
                     <TouchableOpacity style={styles.btnInferior} onPress={() => navigation.navigate('Login')}>

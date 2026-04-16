@@ -22,7 +22,7 @@ export default function RotasScreen() {
             
             <TouchableOpacity 
               style={styles.primaryButton}
-              onPress={() => navigation.navigate('AvaliacaoMotorista')}>
+              onPress={() => navigation.navigate('AvaliacoesMotorista')}>
               <Text style={styles.buttonText}>Motorista</Text>
             </TouchableOpacity>
           </View>
