@@ -1,34 +1,28 @@
 import { StyleSheet } from 'react-native';
-import { RFPercentage } from 'react-native-responsive-fontsize';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 const styles = StyleSheet.create({
     
     fundo: {
-        flex: 1,
-        justifyContent: 'center',
+    flex: 1,
+    backgroundColor: '#3B82F6',
+    padding: 10,
     },
-  header: {
-    width: "100%",
-    backgroundColor: "#1E40AF",
-    padding: 15,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
 
-  titulo: {
-    color: "#E0F2FE",
-    fontSize: 22,
-    fontWeight: "bold",
-  },
+  header: {
+    backgroundColor: '#1E40AF',
+    width: RFValue(80),
+    marginBottom: 20,
+    marginTop:50,
+    borderRadius: 15,
+    padding: 10,
+  }, 
 
   botao: {
-    backgroundColor: "#3B82F6",
-    color: "#E0F2FE",
-    paddingVertical: 8,
-    paddingHorizontal: 20,
-    borderRadius: 10,
-    fontWeight: "bold",
+    fontSize: RFValue(12),
+    color:'#E0F2FE',
+    textAlign: 'center',
+    fontWeight: 'bold'
   },
 
   container: {
@@ -37,8 +31,8 @@ const styles = StyleSheet.create({
   },
 
   linha: {
-    backgroundColor: "#ffffff",
-    padding: 15,
+    backgroundColor: "#e1e4f1",
+    padding: 10,
     borderRadius: 15,
   },
 
@@ -50,7 +44,7 @@ const styles = StyleSheet.create({
   },
 
   card: {
-    backgroundColor: "#f9f9f9",
+    backgroundColor: "#cdd8ee",
     padding: 10,
     borderRadius: 10,
     marginBottom: 10,
@@ -65,6 +59,7 @@ const styles = StyleSheet.create({
   nome: {
     fontWeight: "bold",
     fontSize: 16,
+
   },
 
   horarios: {
@@ -80,7 +75,8 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
     paddingHorizontal: 10,
     borderRadius: 6,
-    fontSize: 12,
+    fontSize:15,
+    fontWeight: "bold",
   },
 });
 

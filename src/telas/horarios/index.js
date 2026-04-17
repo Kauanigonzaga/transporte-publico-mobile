@@ -2,7 +2,6 @@
 import { View, Text, ScrollView, TouchableOpacity, ImageBackground } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import styles from './styles.js';
-import image from '../../../assets/fundo.png';
 
 const linhas = [
   {
@@ -46,6 +45,9 @@ const linhas = [
       {
         nome: "Centro",
         horarios: ["06:30", "07:30", "08:30"]
+      }, {
+        nome: "Escola",
+        horarios: ["08:20", "09:20", "10:20"]
       }
     ]
   }
@@ -56,14 +58,12 @@ export default function Horarios() {
 
   return (
 
-    <ImageBackground source={image} style={styles.fundo} resizeMode="stretch">
     <View style={styles.fundo}>
 
       {/* HEADER */}
-      <View style={styles.header}>
-        <Text style={styles.titulo}>Horários</Text>
+      <View style={styles.header}> 
         <TouchableOpacity onPress={() => navigation.navigate("Home")}>
-          <Text style={styles.botao}>HOME</Text>
+          <Text style={styles.botao}>← Voltar</Text>
         </TouchableOpacity>
       </View>
 
@@ -97,6 +97,5 @@ export default function Horarios() {
       </ScrollView>
 
     </View>
-    </ImageBackground>
   );
 }

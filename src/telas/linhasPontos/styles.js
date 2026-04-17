@@ -8,14 +8,14 @@ export default StyleSheet.create({
     padding: 16,
   },
 
+
   botao:{
     backgroundColor: '#1E40AF',
-    width: RFValue(60),
-    paddingHorizontal: 8,
-    paddingVertical: 2,
+    width: RFValue(80),
     marginBottom: 15,
     marginTop:30,
-    borderRadius: 8,
+    borderRadius: 15,
+    padding: 10,
   },
 
   tituloBotao:{

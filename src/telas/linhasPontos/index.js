@@ -29,6 +29,7 @@ export default function LinhasPontos() {
       pontos: ['Bairro D', 'Rua das Flores', 'Mercado Municipal', 'Bairro E']
     }
   ];
+
   const navigation = useNavigation();
 
   return (
@@ -36,7 +37,7 @@ export default function LinhasPontos() {
 
       <TouchableOpacity style={styles.botao} 
       onPress={() => navigation.navigate('Home')}>
-        <Text style={styles.tituloBotao}> início</Text>
+        <Text style={styles.tituloBotao}>← Voltar</Text>
       </TouchableOpacity>
       
       {linhas.map((linha, index) => (
