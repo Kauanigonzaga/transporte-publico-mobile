@@ -1,65 +1,85 @@
+
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { View, Text, Image, TextInput, TouchableOpacity
+import {
+  View,
+  Text,
+  Image,
+  TextInput,
+  TouchableOpacity,
 } from 'react-native';
 
 import styles from './styles';
 
 export default function InfoMotorista() {
-    const [avaliacao, setAvaliacao] = useState('');
-    const navigation = useNavigation()
+  const [avaliacao, setAvaliacao] = useState('');
+  const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
-      
-     
+
+      {/* HEADER */}
       <View style={styles.header}>
-        <Text style={styles.headerText}>INFORMAÇÕES</Text>
+        <TouchableOpacity
+          style={styles.botaoVoltar}
+          onPress={() => navigation.goBack()}
+        >
+          <Text style={styles.textoVoltar}>← voltar</Text>
+        </TouchableOpacity>
+
+        <Text style={styles.titulo}>Informações do Motorista</Text>
       </View>
 
-      <TouchableOpacity 
-        style={styles.secondaryButton} onPress={() => navigation.navigate('Rotas')}>
-        <Text style={styles.buttonText}>Rotas</Text>
-      </TouchableOpacity>
+      {/* CONTEÚDO */}
+      <View style={styles.card}>
 
-      <View style={styles.content}>
-   
-        <Image
-          source={require('../../../assets/motorista.png')}
-          style={styles.image}
-          resizeMode="contain"
-        />
-
-        <View style={styles.infoBox}>
-          <Text style={styles.infoText}>NOME: Joao Paulo Silva</Text>
-        </View>
-
-        <View style={styles.infoBox}>
-          <Text style={styles.infoText}>LINHA: Azul</Text>
-        </View>
-
-        <View style={styles.avaliacaoContainer}>
-          <View style={styles.linha} />
-          <Text style={styles.avaliacaoText}>Avalie seu desempenho</Text>
-          <View style={styles.linha} />
-        </View>
-
-        <View style={styles.inputContainer}>
-          <TextInput
-            placeholder="Digite sua avaliação"
-            style={styles.input}
-            value={avaliacao}
-            onChangeText={setAvaliacao}
+        {/* FOTO + INFO */}
+        <View style={styles.topo}>
+          <Image
+            source={require('../../../assets/imgMotorista.png')}
+            style={styles.image}
           />
 
-          <TouchableOpacity style={styles.botaoEnviar}>
-            <Text style={styles.textoBotao}>➤</Text>
-          </TouchableOpacity>
+          <View style={styles.info}>
+            <View style={styles.infoBox}>
+              <Text style={styles.label}>Nome</Text>
+              <Text style={styles.valor}>João Paulo</Text>
+            </View>
+
+            <View style={styles.infoBox}>
+              <Text style={styles.label}>Linha</Text>
+              <Text style={styles.valor}>Azul</Text>
+            </View>
+
+            <Text style={styles.estrelas}> ⭐ 4.8 de 5
+            </Text>
+          </View>
         </View>
 
-        <TouchableOpacity 
-        style={styles.botaoVer}>
+        {/* TEXTO */}
+        <Text style={styles.avaliacaoText}>
+          Avalie o desempenho do motorista
+        </Text>
 
+        {/* INPUT */}
+        <TextInput
+          placeholder="Digite sua avaliação..."
+          style={styles.input}
+          value={avaliacao}
+          onChangeText={setAvaliacao}
+          multiline
+        />
+
+        {/* BOTÃO ENVIAR */}
+        <TouchableOpacity style={styles.botaoEnviar}>
+          <Text style={styles.textoBotao}>Enviar Avaliação</Text>
+        </TouchableOpacity>
+
+        {/* VER AVALIAÇÕES */}
+        <TouchableOpacity
+          style={styles.botaoVer}
+          onPress={() => navigation.navigate('AvaliacoesMotorista')}
+        >
           <Text style={styles.textoVer}>Ver avaliações</Text>
         </TouchableOpacity>
 
