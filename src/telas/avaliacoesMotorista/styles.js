@@ -1,3 +1,4 @@
+import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -80,4 +81,22 @@ const styles = StyleSheet.create({
     marginTop: 15,
     color: '#111827',
   },
+  avaliacaoBox: {
+  width: '100%',
+  backgroundColor: '#E0F2FE',
+  padding: 10,
+  borderRadius: 10,
+  marginBottom: 10,
+},
+
+texto: {
+  color: '#111827',
+},
+
+data: {
+  fontSize: 12,
+  color: '#555',
+  marginTop: 5,
+},
 });
+export default styles;

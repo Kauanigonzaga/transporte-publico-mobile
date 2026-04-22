@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import {
@@ -13,7 +12,19 @@ import styles from './styles';
 
 export default function InfoMotorista() {
   const [avaliacao, setAvaliacao] = useState('');
+  const [avaliacoes, setAvaliacoes] = useState([]);
+  const [nota, setNota] = useState(0);
+
   const navigation = useNavigation();
+
+  // ⭐ média automática
+  const media =
+    avaliacoes.length > 0
+      ? (
+          avaliacoes.reduce((acc, item) => acc + item.nota, 0) /
+          avaliacoes.length
+        ).toFixed(1)
+      : 0;
 
   return (
     <View style={styles.container}>
@@ -51,7 +62,9 @@ export default function InfoMotorista() {
               <Text style={styles.valor}>Azul</Text>
             </View>
 
-            <Text style={styles.estrelas}> ⭐ 4.8 de 5
+            {/* ⭐ MÉDIA */}
+            <Text style={styles.estrelas}>
+              ⭐ {media} de 5
             </Text>
           </View>
         </View>
@@ -60,6 +73,23 @@ export default function InfoMotorista() {
         <Text style={styles.avaliacaoText}>
           Avalie o desempenho do motorista
         </Text>
+
+        {/* ⭐ ESTRELAS */}
+        <View style={{ flexDirection: 'row', alignSelf: 'center', marginBottom: 10 }}>
+          {[1,2,3,4,5].map((star) => (
+            <TouchableOpacity key={star} onPress={() => setNota(star)}>
+              <Text
+                style={{
+                  fontSize: 30,
+                  color: star <= nota ? '#3B82F6' : '#ccc',
+                  marginHorizontal: 5,
+                }}
+              >
+                ★
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
 
         {/* INPUT */}
         <TextInput
@@ -71,14 +101,42 @@ export default function InfoMotorista() {
         />
 
         {/* BOTÃO ENVIAR */}
-        <TouchableOpacity style={styles.botaoEnviar}>
+        <TouchableOpacity
+          style={styles.botaoEnviar}
+          onPress={() => {
+            if (nota === 0) {
+              alert('Selecione uma nota!');
+              return;
+            }
+
+            const nova = {
+              nota,
+              comentario: avaliacao,
+              data: new Date().toLocaleString(),
+            };
+
+            const listaAtualizada = [...avaliacoes, nova];
+
+            setAvaliacoes(listaAtualizada);
+            setNota(0);
+            setAvaliacao('');
+
+            navigation.navigate('AvaliacoesMotorista', {
+              avaliacoes: listaAtualizada,
+            });
+          }}
+        >
           <Text style={styles.textoBotao}>Enviar Avaliação</Text>
         </TouchableOpacity>
 
         {/* VER AVALIAÇÕES */}
         <TouchableOpacity
           style={styles.botaoVer}
-          onPress={() => navigation.navigate('AvaliacoesMotorista')}
+          onPress={() =>
+            navigation.navigate('AvaliacoesMotorista', {
+              avaliacoes,
+            })
+          }
         >
           <Text style={styles.textoVer}>Ver avaliações</Text>
         </TouchableOpacity>
