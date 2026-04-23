@@ -61,24 +61,10 @@ const styles = StyleSheet.create({
 
   /* MAPA */
   mapContainer: {
-    flex: 1,
-    backgroundColor: '#E0F2FE',
-    padding: 8,
-  },
-
-  fakeMap: {
-    flex: 1,
-    backgroundColor: '#dbeafe',
-    borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  mapText: {
-    color: '#1E40AF',
-    fontSize: 16,
-    fontWeight: '500',
-  },
+  flex: 1,
+  borderRadius: 20,
+  overflow: 'hidden',
+},
 
   /* FOOTER */
   footer: {
