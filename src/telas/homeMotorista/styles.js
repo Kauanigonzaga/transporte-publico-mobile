@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { RFPercentage } from "react-native-responsive-fontsize";
 
 const styles = StyleSheet.create({
 
@@ -251,6 +252,20 @@ const styles = StyleSheet.create({
         padding: 14,
         borderRadius: 12,
         alignItems: "center",
+    },
+
+    voltarBox: {
+        position: 'absolute',
+        top: RFPercentage(6),
+        left: RFPercentage(2),
+        backgroundColor: 'white',
+        paddingHorizontal: RFPercentage(2),
+        paddingVertical: RFPercentage(1),
+        borderRadius: RFPercentage(2),
+        shadowColor: '#000',
+        shadowOpacity: 0.2,
+        shadowRadius: 4,
+        elevation: 5,
     },
 });
 

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigation } from '@react-navigation/native';
 import {
   View,
   Text,
@@ -12,10 +13,19 @@ import {
 import styles from "./styles";
 
 export default function HomeMotorista() {
-  const [online, setOnline] = useState(false);
+  const navigation = useNavigation();
+  const [avaliacoes, setAvaliacoes] = useState([]);
 
   return (
     <SafeAreaView style={styles.container}>
+
+      {/* Botão de voltar com caixa */}
+      <TouchableOpacity 
+          style={styles.voltarBox}
+          onPress={() => navigation.navigate('Home')}>
+          
+          <Text style={styles.voltarTexto}>Home</Text>
+      </TouchableOpacity>
       
       <View style={styles.header}>
 
@@ -43,11 +53,12 @@ export default function HomeMotorista() {
         </View>
       </View>
 
-        <View style={styles.avaliacoesContainer}>
-          <TouchableOpacity style={styles.botaoAvaliacoes}>
-              <Text style={styles.textoBotao}>Ver Avaliações</Text>
-          </TouchableOpacity>
-        </View>
+      <View style={styles.avaliacoesContainer}>
+        <TouchableOpacity style={styles.botaoAvaliacoes} onPress={() => navigation.navigate('AvaliacoesMotorista', {avaliacoes,})}>
+            <Text style={styles.textoBotao}>Ver Avaliações</Text>
+        </TouchableOpacity>
+      </View>
+
     </SafeAreaView>
   );
 }

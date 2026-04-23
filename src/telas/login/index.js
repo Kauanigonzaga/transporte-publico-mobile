@@ -13,7 +13,7 @@ export default function Login() {
                 style={styles.voltarBox}
                 onPress={() => navigation.navigate('Home')}>
                 
-                <Text style={styles.voltarTexto}>← Voltar</Text>
+                <Text style={styles.voltarTexto}>Voltar</Text>
             </TouchableOpacity>
 
             {/* Conteúdo central */}
