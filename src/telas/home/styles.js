@@ -1,78 +1,174 @@
-import { RFValue } from 'react-native-responsive-fontsize';
 import { StyleSheet } from 'react-native';
-import { RFPercentage } from 'react-native-responsive-fontsize';
 
 const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+  },
 
-    titulo: {
-        fontSize: RFPercentage(3),
-        fontWeight: 'bold',
-        marginBottom: 10,
-        borderRadius: RFPercentage(20),
-        textAlign: 'center',
-        color: '#E0F2FE',
-    },
+  overlay: {
+    flex: 1,
+    backgroundColor: 'rgba(2, 20, 46, 0.70)',
+  },
 
-    botao: {
-        backgroundColor: '#1E40AF',
-        marginVertical: 10, // melhor que marginBottom
-        borderRadius: RFPercentage(50),
-        width: '70%'
-        
-    },
+  screen: {
+    flex: 1,
+    paddingHorizontal: 22,
+    paddingTop: 14,
+    paddingBottom: 22,
+  },
 
-    fundo: {
-        flex: 1,
-        justifyContent: 'center',
-    },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
 
-    menuSuperior: {
-        backgroundColor: '#1E40AF',
-        justifyContent: 'center',
-        alignItems: 'left',
-        height: RFPercentage(6),
+  brand: {
+    color: '#8FD8FF',
+    fontSize: 22,
+    fontWeight: '900',
+    letterSpacing: 0,
+  },
 
-    },
+  subtitle: {
+    color: '#D8E8FA',
+    fontSize: 13,
+    fontWeight: '700',
+    marginTop: 4,
+  },
 
-    tituloMenuSuperior: {
-        fontSize: RFPercentage(2.5),
-        fontWeight: 'bold',
-        color: '#E0F2FE',
-        paddingLeft: RFPercentage(2),
+  loginButton: {
+    minHeight: 42,
+    paddingHorizontal: 18,
+    borderRadius: 8,
+    backgroundColor: '#FFFFFF',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 
-    },
-    containerSuperior: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
+  loginButtonText: {
+    color: '#073D8F',
+    fontSize: 14,
+    fontWeight: '900',
+  },
 
-    menuInferior: {
-        // flex: 1,
-        position: 'absolute',
-        bottom: 0,
-        width: '100%',
-        height: RFPercentage(6),
-        backgroundColor: '#1E40AF',
-        justifyContent: 'center',
-        alignItems: 'flex-end', 
-    },
+  hero: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingBottom: 18,
+  },
 
-    btnInferior: {
-        // width: '50%',
-    },
+  heroTitle: {
+    color: '#FFFFFF',
+    fontSize: 40,
+    lineHeight: 46,
+    fontWeight: '900',
+    maxWidth: 330,
+  },
 
-    tituloMenuInferior: {
-        fontSize: RFPercentage(2),
-        fontWeight: 'bold',
-        color: '#E0F2FE',
-        textAlign: 'right',
-        paddingRight: RFPercentage(2),
-    },
+  heroText: {
+    color: '#E8F2FF',
+    fontSize: 16,
+    lineHeight: 24,
+    fontWeight: '600',
+    marginTop: 14,
+    maxWidth: 330,
+  },
 
+  panel: {
+    backgroundColor: '#F8FBFF',
+    borderRadius: 24,
+    padding: 16,
+    shadowColor: '#001E49',
+    shadowOffset: { width: 0, height: 14 },
+    shadowOpacity: 0.20,
+    shadowRadius: 24,
+    elevation: 8,
+  },
 
+  panelTitle: {
+    color: '#082D63',
+    fontSize: 22,
+    fontWeight: '900',
+    marginBottom: 12,
+  },
 
+  menuCard: {
+    minHeight: 86,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 18,
+    padding: 14,
+    marginBottom: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#E3EAF3',
+  },
+
+  menuCardFeatured: {
+    backgroundColor: '#1D4ED8',
+    borderColor: '#1D4ED8',
+  },
+
+  menuBadge: {
+    width: 48,
+    height: 48,
+    borderRadius: 14,
+    backgroundColor: '#E8F2FF',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 14,
+  },
+
+  menuBadgeFeatured: {
+    backgroundColor: '#FFFFFF',
+  },
+
+  menuBadgeText: {
+    color: '#073D8F',
+    fontSize: 14,
+    fontWeight: '900',
+  },
+
+  menuBadgeTextFeatured: {
+    color: '#1D4ED8',
+  },
+
+  menuTextGroup: {
+    flex: 1,
+  },
+
+  menuTitle: {
+    color: '#082D63',
+    fontSize: 18,
+    fontWeight: '900',
+  },
+
+  menuTitleFeatured: {
+    color: '#FFFFFF',
+  },
+
+  menuDescription: {
+    color: '#65758A',
+    fontSize: 13,
+    lineHeight: 18,
+    marginTop: 4,
+  },
+
+  menuDescriptionFeatured: {
+    color: '#DCEBFF',
+  },
+
+  menuArrow: {
+    color: '#082D63',
+    fontSize: 28,
+    fontWeight: '300',
+    marginLeft: 10,
+  },
+
+  menuArrowFeatured: {
+    color: '#FFFFFF',
+  },
 });
-
 
 export default styles;

@@ -2,6 +2,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from '../telas/login';
 import Home from '../telas/home';
 import HomeMotorista from '../telas/homeMotorista';
+import HomeAdmin from '../telas/homeAdmin';
 import LinhasPontos from '../telas/linhasPontos';
 import Rotas from '../telas/rotas';
 import Horarios from '../telas/horarios';
@@ -18,6 +19,7 @@ function RootStack() {
       <Stack.Screen name="Home" component={Home} options={{ headerShown: false }}/>
       <Stack.Screen name="Login" component={Login} options={{ headerShown: false }}/>
       <Stack.Screen name="HomeMotorista" component={HomeMotorista} options={{ headerShown: false }} />
+      <Stack.Screen name="HomeAdmin" component={HomeAdmin} options={{ headerShown: false }} />
       <Stack.Screen name="LinhasPontos" component={LinhasPontos} options={{ headerShown: false }}/>
       <Stack.Screen name="Rotas" component={Rotas} options={{ headerShown: false }}/>
       <Stack.Screen name="Horarios" component={Horarios} options={{ headerShown: false }}/>

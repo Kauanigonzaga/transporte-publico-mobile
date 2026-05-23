@@ -1,0 +1,7 @@
+
+> transporte-publico-mobile@1.0.0 start
+> expo start --localhost --port 8081
+
+Starting project at D:\temp\Maria\transporte-publico-mobile
+› Port 8081 is being used by another process
+› Skipping dev server

@@ -1,139 +1,284 @@
-
-
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-  container: {
+  screen: {
     flex: 1,
-    backgroundColor: '#1E40AF',
+    backgroundColor: '#F4F7FB',
   },
 
-  /* HEADER */
   header: {
-    paddingTop: 50,
+    backgroundColor: '#12355B',
     paddingHorizontal: 20,
+    paddingTop: 12,
+    paddingBottom: 20,
     flexDirection: 'row',
     alignItems: 'center',
   },
 
-  botaoVoltar: {
-    backgroundColor: '#3B82F6',
-    padding: 7,
+  backButton: {
+    width: 42,
+    height: 42,
     borderRadius: 8,
-    marginRight: 8,
+    backgroundColor: '#FFFFFF',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 14,
   },
 
-  textoVoltar: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
+  backButtonText: {
+    color: '#12355B',
+    fontSize: 22,
+    fontWeight: '900',
   },
 
-  titulo: {
-    color: '#fff',
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-
-  /* CARD */
-  card: {
+  headerTextGroup: {
     flex: 1,
-    backgroundColor: '#fff',
-    marginTop: 20,
-    borderTopLeftRadius: 25,
-    borderTopRightRadius: 25,
-    padding: 20,
   },
 
-  /* TOPO */
-  topo: {
+  brand: {
+    color: '#8FD8FF',
+    fontSize: 13,
+    fontWeight: '800',
+    letterSpacing: 0,
+  },
+
+  title: {
+    color: '#FFFFFF',
+    fontSize: 25,
+    fontWeight: '900',
+    marginTop: 2,
+  },
+
+  content: {
+    flex: 1,
+  },
+
+  contentContainer: {
+    padding: 18,
+    paddingBottom: 28,
+  },
+
+  profileCard: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 8,
+    padding: 16,
+    borderWidth: 1,
+    borderColor: '#E3EAF3',
+    shadowColor: '#0F172A',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.08,
+    shadowRadius: 14,
+    elevation: 3,
+  },
+
+  profileTop: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 20,
   },
 
-  image: {
-    width: 90,
-    height: 90,
-    borderRadius: 50,
-    borderWidth: 2,
-    borderColor: '#3B82F6',
+  avatar: {
+    width: 86,
+    height: 86,
+    borderRadius: 43,
+    backgroundColor: '#E8F2FF',
+    borderWidth: 3,
+    borderColor: '#D7E8FA',
+    marginRight: 14,
   },
 
-  info: {
-    marginLeft: 15,
+  profileInfo: {
     flex: 1,
+  },
+
+  statusPill: {
+    alignSelf: 'flex-start',
+    backgroundColor: '#DDF8E8',
+    borderRadius: 8,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    marginBottom: 8,
+  },
+
+  statusText: {
+    color: '#197A42',
+    fontSize: 12,
+    fontWeight: '900',
+  },
+
+  driverName: {
+    color: '#16263A',
+    fontSize: 24,
+    fontWeight: '900',
+  },
+
+  driverRoute: {
+    color: '#617489',
+    fontSize: 14,
+    fontWeight: '700',
+    marginTop: 3,
+  },
+
+  ratingSummary: {
+    marginTop: 16,
+    paddingTop: 16,
+    borderTopWidth: 1,
+    borderTopColor: '#E8EEF6',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+
+  summaryLabel: {
+    color: '#617489',
+    fontSize: 13,
+    fontWeight: '700',
+  },
+
+  summaryScore: {
+    color: '#12355B',
+    fontSize: 38,
+    fontWeight: '900',
+    marginTop: 2,
+  },
+
+  summaryRight: {
+    alignItems: 'flex-end',
+  },
+
+  summaryCount: {
+    color: '#65758A',
+    fontSize: 13,
+    fontWeight: '700',
+    marginTop: 6,
+  },
+
+  starsRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+
+  starButton: {
+    minWidth: 25,
+    alignItems: 'center',
+  },
+
+  star: {
+    color: '#C9D3DF',
+    fontSize: 20,
+    fontWeight: '900',
+  },
+
+  starLarge: {
+    fontSize: 34,
+  },
+
+  starActive: {
+    color: '#F4B000',
+  },
+
+  starInactive: {
+    color: '#C9D3DF',
+  },
+
+  infoGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 10,
+    marginTop: 16,
   },
 
   infoBox: {
-    backgroundColor: '#E0F2FE',
-    padding: 10,
-    borderRadius: 10,
+    width: '48%',
+    minHeight: 76,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#E3EAF3',
+    padding: 14,
+    justifyContent: 'center',
+  },
+
+  infoLabel: {
+    color: '#617489',
+    fontSize: 12,
+    fontWeight: '700',
+    marginBottom: 5,
+  },
+
+  infoValue: {
+    color: '#16263A',
+    fontSize: 15,
+    fontWeight: '900',
+  },
+
+  reviewCard: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#E3EAF3',
+    padding: 16,
+    marginTop: 16,
+  },
+
+  sectionTitle: {
+    color: '#16263A',
+    fontSize: 20,
+    fontWeight: '900',
+  },
+
+  sectionDescription: {
+    color: '#65758A',
+    fontSize: 14,
+    lineHeight: 20,
+    marginTop: 5,
+  },
+
+  largeStarsWrapper: {
+    alignItems: 'center',
+    marginTop: 14,
+    marginBottom: 12,
+  },
+
+  input: {
+    minHeight: 108,
+    backgroundColor: '#F4F7FB',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#E1E8F0',
+    padding: 12,
+    color: '#16263A',
+    fontSize: 14,
+    textAlignVertical: 'top',
+    marginBottom: 12,
+  },
+
+  primaryButton: {
+    minHeight: 48,
+    backgroundColor: '#12355B',
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
     marginBottom: 10,
   },
 
-  label: {
-    fontSize: 12,
-    color: '#555',
-  },
-
-  valor: {
+  primaryButtonText: {
+    color: '#FFFFFF',
     fontSize: 15,
-    fontWeight: 'bold',
-    color: '#111827',
+    fontWeight: '900',
   },
 
-  estrelas:{
-    color: '#3B82F6',
-    backgroundColor: '#E0F2FE',
-    width: 110,
-    height: 40,
-    padding: 10,
-    borderRadius: 10
-  },
-
-  /* TEXTO */
-    avaliacaoText: {
-    textAlign: 'center',
-    marginBottom: 15,
-    color: '#333',
-  },
-
-  /* INPUT */
-  input: {
-    height: 100,
-    backgroundColor: '#F3F4F6',
-    borderRadius: 12,
-    padding: 10,
-    textAlignVertical: 'top',
-    marginBottom: 15,
-  },
-
-  /* BOTÕES */
-  botaoEnviar: {
-  backgroundColor: '#1E40AF',
-  padding: 14,
-  borderRadius: 12,
-  alignItems: 'center',
-  marginBottom: 10,
-  elevation: 3, // sombra Android
-},
-
-  textoBotao: {
-    color: '#fff',
-    fontWeight: 'bold',
-  },
-
-  botaoVer: {
-    backgroundColor: '#E0F2FE',
-    padding: 14,
-    borderRadius: 12,
+  secondaryButton: {
+    minHeight: 48,
+    backgroundColor: '#E8F2FF',
+    borderRadius: 8,
     alignItems: 'center',
+    justifyContent: 'center',
   },
 
-  textoVer: {
-    color: '#1E40AF',
-    fontWeight: 'bold',
+  secondaryButtonText: {
+    color: '#12355B',
+    fontSize: 15,
+    fontWeight: '900',
   },
 });
 

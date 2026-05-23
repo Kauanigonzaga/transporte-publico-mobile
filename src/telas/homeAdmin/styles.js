@@ -7,17 +7,18 @@ const styles = StyleSheet.create({
   },
 
   header: {
+    minHeight: 178,
     backgroundColor: '#073D8F',
-    paddingHorizontal: 20,
-    paddingTop: 14,
-    paddingBottom: 22,
+    paddingHorizontal: 22,
+    paddingTop: 16,
+    paddingBottom: 34,
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start',
   },
 
-  backButton: {
-    width: 42,
-    height: 42,
+  homeButton: {
+    minHeight: 42,
+    paddingHorizontal: 16,
     borderRadius: 8,
     backgroundColor: '#FFFFFF',
     alignItems: 'center',
@@ -25,9 +26,9 @@ const styles = StyleSheet.create({
     marginRight: 14,
   },
 
-  backButtonText: {
+  homeButtonText: {
     color: '#073D8F',
-    fontSize: 22,
+    fontSize: 14,
     fontWeight: '900',
   },
 
@@ -37,57 +38,38 @@ const styles = StyleSheet.create({
 
   brand: {
     color: '#8FD8FF',
-    fontSize: 13,
+    fontSize: 16,
     fontWeight: '900',
     letterSpacing: 0,
+    marginBottom: 8,
   },
 
   headerTitle: {
     color: '#FFFFFF',
-    fontSize: 28,
+    fontSize: 31,
+    lineHeight: 36,
     fontWeight: '900',
-    marginTop: 2,
   },
 
   content: {
     flex: 1,
+    marginTop: -46,
   },
 
   contentContainer: {
-    padding: 18,
-    paddingBottom: 30,
+    paddingHorizontal: 18,
+    paddingBottom: 28,
   },
 
   summaryCard: {
     backgroundColor: '#FFFFFF',
     borderRadius: 22,
     padding: 18,
-    flexDirection: 'row',
-    alignItems: 'center',
     shadowColor: '#0A2A55',
     shadowOffset: { width: 0, height: 12 },
-    shadowOpacity: 0.10,
-    shadowRadius: 22,
+    shadowOpacity: 0.12,
+    shadowRadius: 24,
     elevation: 5,
-  },
-
-  summaryIcon: {
-    width: 66,
-    height: 66,
-    borderRadius: 18,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 14,
-  },
-
-  summaryIconText: {
-    color: '#FFFFFF',
-    fontSize: 26,
-    fontWeight: '900',
-  },
-
-  summaryInfo: {
-    flex: 1,
   },
 
   summaryLabel: {
@@ -99,15 +81,17 @@ const styles = StyleSheet.create({
   summaryTitle: {
     color: '#082D63',
     fontSize: 23,
+    lineHeight: 29,
     fontWeight: '900',
-    marginTop: 2,
+    marginTop: 4,
   },
 
-  summaryRoute: {
-    color: '#65758A',
+  summaryText: {
+    color: '#53677D',
     fontSize: 14,
-    fontWeight: '700',
-    marginTop: 4,
+    lineHeight: 21,
+    fontWeight: '600',
+    marginTop: 8,
   },
 
   sectionTitle: {
@@ -128,9 +112,12 @@ const styles = StyleSheet.create({
     width: '48%',
     minHeight: 58,
     borderRadius: 16,
-    paddingHorizontal: 16,
+    backgroundColor: '#FFFFFF',
+    paddingHorizontal: 14,
     flexDirection: 'row',
     alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#E3EAF3',
   },
 
   lineDot: {
@@ -150,89 +137,56 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
   },
 
-  descriptionCard: {
+  formCard: {
     backgroundColor: '#FFFFFF',
-    borderRadius: 18,
-    padding: 16,
+    borderRadius: 22,
+    padding: 18,
     marginTop: 16,
     borderWidth: 1,
     borderColor: '#E3EAF3',
   },
 
-  descriptionTitle: {
+  formTitle: {
     color: '#082D63',
-    fontSize: 18,
+    fontSize: 22,
     fontWeight: '900',
-    marginBottom: 8,
+    marginBottom: 16,
   },
 
-  descriptionText: {
-    color: '#53677D',
-    fontSize: 14,
-    lineHeight: 21,
-    fontWeight: '600',
+  inputGroup: {
+    marginBottom: 14,
   },
 
-  pointsCard: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 18,
-    padding: 16,
-    borderWidth: 1,
-    borderColor: '#E3EAF3',
-  },
-
-  pointRow: {
-    flexDirection: 'row',
-  },
-
-  pointTrack: {
-    width: 40,
-    alignItems: 'center',
-  },
-
-  pointMarker: {
-    width: 34,
-    height: 34,
-    borderRadius: 17,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  pointMarkerText: {
-    color: '#FFFFFF',
-    fontSize: 13,
-    fontWeight: '900',
-  },
-
-  pointLine: {
-    flex: 1,
-    width: 3,
-    minHeight: 34,
-    backgroundColor: '#DDE7F2',
-    marginVertical: 4,
-  },
-
-  pointInfo: {
-    flex: 1,
-    paddingLeft: 12,
-    paddingBottom: 18,
-  },
-
-  pointInfoLast: {
-    paddingBottom: 0,
-  },
-
-  pointName: {
-    color: '#16263A',
-    fontSize: 17,
-    fontWeight: '900',
-  },
-
-  pointHint: {
+  label: {
     color: '#65758A',
-    fontSize: 12,
+    fontSize: 13,
+    fontWeight: '800',
+    marginBottom: 7,
+  },
+
+  input: {
+    minHeight: 52,
+    backgroundColor: '#F4F7FB',
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#E1E8F0',
+    paddingHorizontal: 14,
+    color: '#16263A',
+    fontSize: 15,
     fontWeight: '700',
-    marginTop: 4,
+  },
+
+  textArea: {
+    minHeight: 92,
+    backgroundColor: '#F4F7FB',
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#E1E8F0',
+    padding: 14,
+    color: '#16263A',
+    fontSize: 15,
+    fontWeight: '700',
+    textAlignVertical: 'top',
   },
 
   primaryButton: {
@@ -241,12 +195,12 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 16,
+    marginTop: 4,
   },
 
   primaryButtonText: {
     color: '#FFFFFF',
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: '900',
   },
 });

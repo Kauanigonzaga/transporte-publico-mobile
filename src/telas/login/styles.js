@@ -1,73 +1,159 @@
 import { StyleSheet } from 'react-native';
-import { RFPercentage } from "react-native-responsive-fontsize";
 
 const styles = StyleSheet.create({
-  container: {
+  screen: {
     flex: 1,
-    backgroundColor: '#3B82F6',
+    backgroundColor: '#073D8F',
+    paddingHorizontal: 22,
   },
 
-  voltarBox: {
-    position: 'absolute',
-    top: RFPercentage(6),
-    left: RFPercentage(2),
-    backgroundColor: 'white',
-    paddingHorizontal: RFPercentage(2),
-    paddingVertical: RFPercentage(1),
-    borderRadius: RFPercentage(2),
-    shadowColor: '#000',
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-
-  voltarTexto: {
-    color: '#1E40AF',
-    fontSize: RFPercentage(2.2),
-    fontWeight: 'bold',
-  },
-
-  centerArea: {
-    flex: 1,
-    justifyContent: 'center',
+  header: {
+    paddingTop: 14,
+    flexDirection: 'row',
     alignItems: 'center',
-    padding: RFPercentage(2),
+    justifyContent: 'space-between',
   },
 
-  titulo: {
-    fontSize: RFPercentage(4),
-    fontWeight: 'bold',
-    color: 'white',
-    marginBottom: RFPercentage(3),
+  backButton: {
+    width: 42,
+    height: 42,
+    borderRadius: 8,
+    backgroundColor: '#FFFFFF',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
-  form: {
-    width: '100%',
-    backgroundColor: 'white',
-    borderRadius: RFPercentage(2),
-    padding: RFPercentage(2),
+  backButtonText: {
+    color: '#073D8F',
+    fontSize: 22,
+    fontWeight: '900',
+  },
+
+  brand: {
+    color: '#8FD8FF',
+    fontSize: 20,
+    fontWeight: '900',
+    letterSpacing: 0,
+  },
+
+  hero: {
+    paddingTop: 54,
+    paddingBottom: 28,
+  },
+
+  title: {
+    color: '#FFFFFF',
+    fontSize: 38,
+    lineHeight: 44,
+    fontWeight: '900',
+  },
+
+  subtitle: {
+    color: '#DCEBFF',
+    fontSize: 15,
+    lineHeight: 22,
+    fontWeight: '600',
+    marginTop: 12,
+  },
+
+  formCard: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 24,
+    padding: 18,
+    shadowColor: '#001E49',
+    shadowOffset: { width: 0, height: 14 },
+    shadowOpacity: 0.22,
+    shadowRadius: 24,
+    elevation: 8,
+  },
+
+  formTitle: {
+    color: '#082D63',
+    fontSize: 22,
+    fontWeight: '900',
+    marginBottom: 12,
+  },
+
+  roleSelector: {
+    flexDirection: 'row',
+    gap: 10,
+    marginBottom: 18,
+  },
+
+  roleButton: {
+    flex: 1,
+    minHeight: 48,
+    borderRadius: 12,
+    backgroundColor: '#E8F2FF',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  roleButtonActive: {
+    backgroundColor: '#073D8F',
+  },
+
+  roleButtonText: {
+    color: '#073D8F',
+    fontSize: 14,
+    fontWeight: '900',
+  },
+
+  roleButtonTextActive: {
+    color: '#FFFFFF',
+  },
+
+  inputGroup: {
+    marginBottom: 14,
+  },
+
+  label: {
+    color: '#65758A',
+    fontSize: 13,
+    fontWeight: '800',
+    marginBottom: 7,
   },
 
   input: {
-    fontSize: RFPercentage(2.2),
-    backgroundColor: '#eef2f7',
-    borderRadius: RFPercentage(1),
-    padding: RFPercentage(1.5),
-    marginBottom: RFPercentage(2),
+    minHeight: 52,
+    backgroundColor: '#F4F7FB',
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#E1E8F0',
+    paddingHorizontal: 14,
+    color: '#16263A',
+    fontSize: 15,
+    fontWeight: '700',
   },
 
-  botao: {
-    backgroundColor: '#1E40AF',
-    padding: RFPercentage(1.8),
-    borderRadius: RFPercentage(1.5),
+  primaryButton: {
+    minHeight: 52,
+    backgroundColor: '#073D8F',
+    borderRadius: 14,
     alignItems: 'center',
-    marginTop: RFPercentage(2),
+    justifyContent: 'center',
+    marginTop: 8,
   },
 
-  botaoTexto: {
-    fontSize: RFPercentage(2.3),
-    color: 'white',
-    fontWeight: 'bold',
+  primaryButtonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: '900',
+  },
+
+  secondaryButton: {
+    minHeight: 50,
+    backgroundColor: '#E8F2FF',
+    borderRadius: 14,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 10,
+  },
+
+  secondaryButtonText: {
+    color: '#073D8F',
+    fontSize: 15,
+    fontWeight: '900',
   },
 });
 

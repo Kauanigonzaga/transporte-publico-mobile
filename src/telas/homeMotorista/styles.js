@@ -1,272 +1,272 @@
-import { StyleSheet } from "react-native";
-import { RFPercentage } from "react-native-responsive-fontsize";
+import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    backgroundColor: '#F4F7FB',
+  },
 
-    container: {
-        flex: 1,
-        backgroundColor:'#E0F2FE',
-        padding: 16,
-    },
+  header: {
+    minHeight: 190,
+    backgroundColor: '#073D8F',
+    paddingHorizontal: 22,
+    paddingTop: 16,
+    paddingBottom: 34,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+  },
 
-    header: {
-        alignItems: "center",
-        margin: 20,
-        marginTop: 170,
-    },
+  homeButton: {
+    minHeight: 42,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+    backgroundColor: '#FFFFFF',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 14,
+  },
 
-    avatar: {
-        width: 100,
-        height: 100,
-        borderRadius: 50,
-        marginBottom: 10,
-    },
+  homeButtonText: {
+    color: '#073D8F',
+    fontSize: 14,
+    fontWeight: '900',
+  },
 
-    nome: {
-        color: "#0f172a",
-        fontSize: 22,
-        fontWeight: "bold",
-    },
+  headerTextGroup: {
+    flex: 1,
+  },
 
-    linhaText: {
-        marginTop: 6,
-        paddingVertical: 4,
-        paddingHorizontal: 12,
-        borderRadius: 20,
-        backgroundColor: "#2563eb",
-        color: "#fff",
-        fontWeight: "bold",
-        fontSize: 14,
-        overflow: "hidden",
-    },
+  brand: {
+    color: '#8FD8FF',
+    fontSize: 16,
+    fontWeight: '900',
+    letterSpacing: 0,
+    marginBottom: 8,
+  },
 
-    linhasContainer: {
-        flexDirection: "row",
-        gap: 8,
-    },
+  headerTitle: {
+    color: '#FFFFFF',
+    fontSize: 30,
+    lineHeight: 36,
+    fontWeight: '900',
+  },
 
-    linhaButton: {
-        paddingVertical: 6,
-        paddingHorizontal: 10,
-        borderRadius: 8,
-    },
+  content: {
+    flex: 1,
+    marginTop: -52,
+  },
 
-    linhaSelecionada: {
-        borderWidth: 2,
-        borderColor: "#000",
-    },
+  contentContainer: {
+    paddingHorizontal: 18,
+    paddingBottom: 28,
+  },
 
-    linhaButtonText: {
-        color: "#000",
-        fontWeight: "bold",
-    },
+  profileCard: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 22,
+    padding: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
+    shadowColor: '#0A2A55',
+    shadowOffset: { width: 0, height: 12 },
+    shadowOpacity: 0.12,
+    shadowRadius: 24,
+    elevation: 5,
+  },
 
-    statusContainer: {
-        marginBottom: 30,
-        alignSelf: "center",
-        backgroundColor: "#fff",
-        padding: 16,
-        borderRadius: 16,
-        elevation: 3,
-        width: "100%",
-    },
+  avatar: {
+    width: 86,
+    height: 86,
+    borderRadius: 43,
+    backgroundColor: '#E8F2FF',
+    marginRight: 16,
+  },
 
-    statusText: {
-        color: "#0f172a",
-        fontSize: 16,
-        marginBottom: 10,
-        textAlign: "center",
-        fontWeight: "bold",
-    },
+  profileInfo: {
+    flex: 1,
+  },
 
-    button: {
-        padding: 14,
-        borderRadius: 12,
-        alignItems: "center",
-    },
+  statusPill: {
+    alignSelf: 'flex-start',
+    borderRadius: 8,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    marginBottom: 8,
+  },
 
-    online: {
-        backgroundColor: "#16a34a",
-    },
+  statusOnline: {
+    backgroundColor: '#DDF8E8',
+  },
 
-    offline: {
-        backgroundColor: "#dc2626",
-    },
+  statusOffline: {
+    backgroundColor: '#FFE4E6',
+  },
 
-    buttonText: {
-        color: "#fff",
-        fontWeight: "bold",
-    },
+  statusText: {
+    fontSize: 12,
+    fontWeight: '900',
+  },
 
-    card: {
-        backgroundColor: "#1e293b",
-        padding: 16,
-        borderRadius: 12,
-        marginBottom: 20,
-    },
+  statusTextOnline: {
+    color: '#197A42',
+  },
 
-    cardTitle: {
-        color: "#fff",
-        fontSize: 18,
-        fontWeight: "bold",
-        marginBottom: 8,
-    },
+  statusTextOffline: {
+    color: '#BE123C',
+  },
 
-    cardText: {
-        color: "#cbd5f5",
-    },
+  driverName: {
+    color: '#082D63',
+    fontSize: 24,
+    fontWeight: '900',
+  },
 
-    actions: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        marginBottom: 20,
-    },
+  driverRoute: {
+    color: '#65758A',
+    fontSize: 15,
+    fontWeight: '800',
+    marginTop: 4,
+  },
 
-    actionButton: {
-        backgroundColor: "#2563eb",
-        padding: 12,
-        borderRadius: 10,
-        width: "48%",
-        alignItems: "center",
-    },
+  statusCard: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 18,
+    padding: 16,
+    marginTop: 16,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#E3EAF3',
+  },
 
-    actionText: {
-        color: "#fff",
-        fontWeight: "bold",
-    },
+  cardLabel: {
+    color: '#65758A',
+    fontSize: 12,
+    fontWeight: '800',
+  },
 
-    listContainer: {
-        flex: 1,
-    },
+  cardTitle: {
+    color: '#082D63',
+    fontSize: 17,
+    fontWeight: '900',
+    marginTop: 4,
+    maxWidth: 190,
+  },
 
-    listItem: {
-        backgroundColor: "#1e293b",
-        padding: 12,
-        borderRadius: 10,
-        marginBottom: 10,
-        flexDirection: "row",
-        justifyContent: "space-between",
-    },
+  statusButton: {
+    minHeight: 42,
+    minWidth: 86,
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 
-    listText: {
-        color: "#fff",
-    },
+  pauseButton: {
+    backgroundColor: '#F97316',
+  },
 
-    aval: {
-        width: "100%",
-        marginTop: 10,
-        backgroundColor: "#fff",
-        padding: 16,
-        borderRadius: 16,
+  startButton: {
+    backgroundColor: '#16A34A',
+  },
 
-        elevation: 3,
-        shadowColor: "#000",
-        shadowOpacity: 0.05,
-        shadowRadius: 4,
-    },
+  statusButtonText: {
+    color: '#FFFFFF',
+    fontSize: 14,
+    fontWeight: '900',
+  },
 
-    desemp: {
-        fontWeight: "bold",
-        fontSize: 16,
-        marginBottom: 10,
-        color: "#1e293b",
-    },
+  statsGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 10,
+    marginTop: 16,
+  },
 
-    input: {
-        width: "100%",
-        height: 100,
-        borderWidth: 1,
-        borderColor: "#e2e8f0",
-        borderRadius: 12,
-        padding: 12,
-        backgroundColor: "#f8fafc",
-        textAlignVertical: "top",
-    },
+  statBox: {
+    width: '48%',
+    minHeight: 94,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 18,
+    padding: 14,
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: '#E3EAF3',
+  },
 
-    botaoEnviar: {
-        marginTop: 12,
-        backgroundColor: "#2563eb",
-        padding: 14,
-        borderRadius: 12,
-        alignItems: "center",
-    },
+  statLabel: {
+    color: '#65758A',
+    fontSize: 12,
+    fontWeight: '800',
+    marginBottom: 7,
+  },
 
-    textoBotao: {
-        color: "#fff",
-        fontWeight: "bold",
-    },
+  statValue: {
+    color: '#073D8F',
+    fontSize: 30,
+    fontWeight: '900',
+  },
 
-    linha: {
-        width: "40%",
-        marginTop: 20,
-        backgroundColor: "#E0F2FE",
-        padding: 16,
-        borderRadius: 16,
-        elevation: 5,
-        marginBottom: 50,
-        alignSelf: "center",
-    },
+  statValueSmall: {
+    color: '#082D63',
+    fontSize: 17,
+    lineHeight: 21,
+    fontWeight: '900',
+  },
 
-    infoCard: {
-        width: "100%",
-        backgroundColor: "#fff",
-        padding: 16,
-        borderRadius: 16,
-        marginTop: 20,
+  infoCard: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 18,
+    padding: 16,
+    marginTop: 16,
+    borderWidth: 1,
+    borderColor: '#E3EAF3',
+  },
 
-        elevation: 3,
-        shadowColor: "#000",
-        shadowOpacity: 0.05,
-        shadowRadius: 4,
-    },
+  sectionTitle: {
+    color: '#082D63',
+    fontSize: 20,
+    fontWeight: '900',
+    marginBottom: 8,
+  },
 
-    infoTitle: {
-        fontSize: 16,
-        fontWeight: "bold",
-        marginBottom: 12,
-        color: "#0f172a",
-    },
+  infoRow: {
+    paddingVertical: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: '#E8EEF6',
+  },
 
-    infoItem: {
-        marginBottom: 10,
-    },
+  infoRowLast: {
+    paddingTop: 12,
+  },
 
-    infoLabel: {
-        fontSize: 12,
-        color: "#64748b",
-    },
+  infoLabel: {
+    color: '#65758A',
+    fontSize: 12,
+    fontWeight: '800',
+    marginBottom: 4,
+  },
 
-    infoValue: {
-        fontSize: 16,
-        fontWeight: "bold",
-        color: "#0f172a",
-    },
+  infoValue: {
+    color: '#16263A',
+    fontSize: 16,
+    fontWeight: '900',
+  },
 
-    avaliacoesContainer: {
-        marginTop: 20,
-        width: "100%",
-    },
+  primaryButton: {
+    minHeight: 52,
+    backgroundColor: '#073D8F',
+    borderRadius: 14,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 16,
+  },
 
-    botaoAvaliacoes: {
-        backgroundColor: "#0f172a",
-        padding: 14,
-        borderRadius: 12,
-        alignItems: "center",
-    },
-
-    voltarBox: {
-        position: 'absolute',
-        top: RFPercentage(6),
-        left: RFPercentage(2),
-        backgroundColor: 'white',
-        paddingHorizontal: RFPercentage(2),
-        paddingVertical: RFPercentage(1),
-        borderRadius: RFPercentage(2),
-        shadowColor: '#000',
-        shadowOpacity: 0.2,
-        shadowRadius: 4,
-        elevation: 5,
-    },
+  primaryButtonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: '900',
+  },
 });
 
 export default styles;
