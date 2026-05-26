@@ -1,15 +1,22 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Alert, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 import styles from './styles';
 
 export default function Login() {
   const navigation = useNavigation();
+  const route = useRoute();
   const [user, setUser] = useState('');
   const [password, setPassword] = useState('');
   const [loginType, setLoginType] = useState('motorista');
+
+  useEffect(() => {
+    if (route.params?.loginType === 'admin' || route.params?.loginType === 'motorista') {
+      setLoginType(route.params.loginType);
+    }
+  }, [route.params?.loginType]);
 
   function handleLogin() {
     if (!user.trim() || !password.trim()) {
