@@ -100,6 +100,29 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
 
+  feedbackContainer: {
+    flex: 1,
+    padding: 24,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  feedbackText: {
+    color: '#65758A',
+    fontSize: 14,
+    fontWeight: '700',
+    marginTop: 12,
+  },
+
+  errorText: {
+    color: '#BE123C',
+    fontSize: 15,
+    lineHeight: 21,
+    fontWeight: '700',
+    textAlign: 'center',
+    marginBottom: 18,
+  },
+
   reviewCard: {
     backgroundColor: '#FFFFFF',
     borderRadius: 8,

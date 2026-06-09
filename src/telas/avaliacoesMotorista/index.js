@@ -1,9 +1,20 @@
-import { useMemo } from 'react';
-import { View, Text, TouchableOpacity, FlatList } from 'react-native';
+import { useCallback, useMemo, useState } from 'react';
+import {
+  ActivityIndicator,
+  FlatList,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import {
+  useFocusEffect,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 
 import styles from './styles';
+import { get } from '../../services/api';
 
 function Stars({ rating }) {
   return (
@@ -26,34 +37,77 @@ function Stars({ rating }) {
 export default function AvaliacoesMotorista() {
   const navigation = useNavigation();
   const route = useRoute();
-  const avaliacoes = route.params?.avaliacoes || [];
+  const driver = route.params?.driver || null;
+  const driverId =
+    route.params?.id_motorista || driver?.id_motorista || null;
+  const driverName = driver?.nome_motorista || driver?.nome || 'Motorista';
 
-  const media = useMemo(() => {
-    if (avaliacoes.length === 0) {
+  const [reviews, setReviews] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  const loadReviews = useCallback(async () => {
+    if (!driverId) {
+      setError('Motorista não informado.');
+      setLoading(false);
+      return;
+    }
+
+    try {
+      setLoading(true);
+      setError('');
+
+      const response = await get(`/avaliacao/${driverId}`);
+      setReviews(response.dados || []);
+    } catch (loadError) {
+      setError(loadError.message);
+    } finally {
+      setLoading(false);
+    }
+  }, [driverId]);
+
+  useFocusEffect(
+    useCallback(() => {
+      loadReviews();
+    }, [loadReviews]),
+  );
+
+  const average = useMemo(() => {
+    if (reviews.length === 0) {
       return '0.0';
     }
 
-    const total = avaliacoes.reduce((sum, item) => sum + Number(item.nota || 0), 0);
-    return (total / avaliacoes.length).toFixed(1);
-  }, [avaliacoes]);
+    const total = reviews.reduce(
+      (sum, item) => sum + Number(item.nota_avaliacao || 0),
+      0,
+    );
+    return (total / reviews.length).toFixed(1);
+  }, [reviews]);
 
-  const renderAvaliacao = ({ item, index }) => (
+  const renderReview = ({ item, index }) => (
     <View style={styles.reviewCard}>
       <View style={styles.reviewHeader}>
         <View>
           <Text style={styles.reviewAuthor}>Passageiro {index + 1}</Text>
-          <Text style={styles.reviewDate}>{item.data || 'Data nao informada'}</Text>
+          <Text style={styles.reviewDate}>
+            {item.data_avaliacao
+              ? new Date(item.data_avaliacao).toLocaleString('pt-BR')
+              : 'Data não informada'}
+          </Text>
         </View>
 
         <View style={styles.ratingPill}>
-          <Text style={styles.ratingPillText}>{item.nota || 0}/5</Text>
+          <Text style={styles.ratingPillText}>
+            {item.nota_avaliacao || 0}/5
+          </Text>
         </View>
       </View>
 
-      <Stars rating={Number(item.nota || 0)} />
+      <Stars rating={Number(item.nota_avaliacao || 0)} />
 
       <Text style={styles.reviewText}>
-        {item.comentario?.trim() || 'Avaliacao enviada sem comentario.'}
+        {item.comentario_avaliacao?.trim() ||
+          'Avaliação enviada sem comentário.'}
       </Text>
     </View>
   );
@@ -71,51 +125,72 @@ export default function AvaliacoesMotorista() {
 
         <View style={styles.headerTextGroup}>
           <Text style={styles.brand}>BUSLY</Text>
-          <Text style={styles.title}>Avaliacoes</Text>
+          <Text style={styles.title}>Avaliações</Text>
         </View>
       </View>
 
       <View style={styles.summaryCard}>
         <View>
-          <Text style={styles.summaryLabel}>Nota media do motorista</Text>
-          <Text style={styles.summaryScore}>{media}</Text>
+          <Text style={styles.summaryLabel}>Nota média de {driverName}</Text>
+          <Text style={styles.summaryScore}>{average}</Text>
         </View>
 
         <View style={styles.summaryRight}>
-          <Stars rating={Math.round(Number(media))} />
+          <Stars rating={Math.round(Number(average))} />
           <Text style={styles.summaryCount}>
-            {avaliacoes.length} {avaliacoes.length === 1 ? 'avaliacao' : 'avaliacoes'}
+            {reviews.length}{' '}
+            {reviews.length === 1 ? 'avaliação' : 'avaliações'}
           </Text>
         </View>
       </View>
 
-      <FlatList
-        data={avaliacoes}
-        keyExtractor={(_, index) => String(index)}
-        renderItem={renderAvaliacao}
-        contentContainerStyle={[
-          styles.listContent,
-          avaliacoes.length === 0 && styles.emptyListContent,
-        ]}
-        showsVerticalScrollIndicator={false}
-        ListEmptyComponent={
-          <View style={styles.emptyCard}>
-            <Text style={styles.emptyTitle}>Ainda nao ha avaliacoes</Text>
-            <Text style={styles.emptyText}>
-              Quando os passageiros avaliarem o motorista, os comentarios e notas
-              vao aparecer aqui.
-            </Text>
+      {loading ? (
+        <View style={styles.feedbackContainer}>
+          <ActivityIndicator color="#12355B" size="large" />
+          <Text style={styles.feedbackText}>Carregando avaliações...</Text>
+        </View>
+      ) : error ? (
+        <View style={styles.feedbackContainer}>
+          <Text style={styles.errorText}>{error}</Text>
+          <TouchableOpacity style={styles.emptyButton} onPress={loadReviews}>
+            <Text style={styles.emptyButtonText}>Tentar novamente</Text>
+          </TouchableOpacity>
+        </View>
+      ) : (
+        <FlatList
+          data={reviews}
+          keyExtractor={(item) => String(item.id_avaliacao)}
+          renderItem={renderReview}
+          contentContainerStyle={[
+            styles.listContent,
+            reviews.length === 0 && styles.emptyListContent,
+          ]}
+          showsVerticalScrollIndicator={false}
+          ListEmptyComponent={
+            <View style={styles.emptyCard}>
+              <Text style={styles.emptyTitle}>Ainda não há avaliações</Text>
+              <Text style={styles.emptyText}>
+                Quando os passageiros avaliarem este motorista, os comentários
+                e notas aparecerão aqui.
+              </Text>
 
-            <TouchableOpacity
-              style={styles.emptyButton}
-              activeOpacity={0.85}
-              onPress={() => navigation.goBack()}
-            >
-              <Text style={styles.emptyButtonText}>Avaliar motorista</Text>
-            </TouchableOpacity>
-          </View>
-        }
-      />
+              <TouchableOpacity
+                style={styles.emptyButton}
+                activeOpacity={0.85}
+                onPress={() =>
+                  navigation.navigate('InfoMotorista', {
+                    id_motorista: Number(driverId),
+                    driver,
+                    routeName: route.params?.routeName,
+                  })
+                }
+              >
+                <Text style={styles.emptyButtonText}>Avaliar motorista</Text>
+              </TouchableOpacity>
+            </View>
+          }
+        />
+      )}
     </SafeAreaView>
   );
 }

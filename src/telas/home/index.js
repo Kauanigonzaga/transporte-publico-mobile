@@ -1,98 +1,41 @@
-import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import {
+  ImageBackground,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 
 import styles from './styles';
 
-const MENU_ITEMS = [
-  {
-    id: 'rotas',
-    title: 'Rotas',
-    description: 'Linhas azul, roxa, amarela e laranja.',
-    route: 'Rotas',
-    featured: true,
-    icon: 'route',
-  },
-  {
-    id: 'horarios',
-    title: 'Horarios',
-    description: 'Previsoes e planejamento de viagem.',
-    route: 'Horarios',
-    icon: 'clock',
-  },
-];
-
-const ACCESS_ITEMS = [
-  {
-    id: 'admin',
-    title: 'Administrador',
-    description: 'Login ADM',
-    type: 'admin',
-    icon: 'shield',
-  },
-  {
-    id: 'motorista',
-    title: 'Motorista',
-    description: 'Login Motorista',
-    type: 'motorista',
-    icon: 'wheel',
-  },
-];
-
-function HomeIcon({ name, featured }) {
-  const toneStyle = featured ? styles.iconLight : styles.iconBlue;
-
-  if (name === 'route') {
-    return (
-      <View style={styles.routeIcon}>
-        <View style={[styles.routeDot, toneStyle]} />
-        <View style={[styles.routeLine, toneStyle]} />
-        <View style={[styles.routeDot, styles.routeDotEnd, toneStyle]} />
-      </View>
-    );
-  }
-
-  if (name === 'clock') {
-    return (
-      <View style={[styles.clockIcon, featured ? styles.clockIconLight : styles.clockIconBlue]}>
-        <View style={[styles.clockHour, toneStyle]} />
-        <View style={[styles.clockMinute, toneStyle]} />
-      </View>
-    );
-  }
-
-  if (name === 'bus') {
-    return (
-      <View style={styles.busIcon}>
-        <View style={styles.busWindowRow}>
-          <View style={styles.busWindow} />
-          <View style={styles.busWindow} />
-          <View style={styles.busWindow} />
-        </View>
-        <View style={styles.busFrontLine} />
-        <View style={styles.busWheelRow}>
-          <View style={styles.busWheel} />
-          <View style={styles.busWheel} />
-        </View>
-      </View>
-    );
-  }
-
-  if (name === 'shield') {
-    return (
-      <View style={styles.shieldIcon}>
-        <View style={styles.shieldTop} />
-        <View style={styles.shieldBottom} />
-      </View>
-    );
-  }
-
+function BusIcon({ dark = false }) {
   return (
-    <View style={styles.wheelIcon}>
-      <View style={styles.wheelCenter} />
-      <View style={styles.wheelSpokeLeft} />
-      <View style={styles.wheelSpokeRight} />
+    <View style={[styles.busIcon, dark && styles.busIconDark]}>
+      <View style={styles.busWindows}>
+        <View style={[styles.busWindow, dark && styles.busWindowDark]} />
+        <View style={[styles.busWindow, dark && styles.busWindowDark]} />
+      </View>
+      <View style={[styles.busLine, dark && styles.busLineDark]} />
+      <View style={styles.busWheels}>
+        <View style={[styles.busWheel, dark && styles.busWheelDark]} />
+        <View style={[styles.busWheel, dark && styles.busWheelDark]} />
+      </View>
     </View>
+  );
+}
+
+function AccessButton({ title, onPress }) {
+  return (
+    <TouchableOpacity
+      style={styles.accessButton}
+      activeOpacity={0.86}
+      onPress={onPress}
+    >
+      <Text style={styles.accessButtonText}>{title}</Text>
+      <Text style={styles.accessButtonArrow}>{'>'}</Text>
+    </TouchableOpacity>
   );
 }
 
@@ -100,122 +43,87 @@ export default function Home() {
   const navigation = useNavigation();
 
   return (
-    <View style={styles.screen}>
-      <ScrollView
-        style={styles.scroll}
-        contentContainerStyle={styles.scrollContent}
-        showsVerticalScrollIndicator={false}
-      >
-        <View style={styles.phone}>
-          <SafeAreaView edges={['top']} style={styles.hero}>
-            <View style={styles.circleLarge} />
-            <View style={styles.circleMedium} />
-            <View style={styles.circleSmall} />
+    <ImageBackground
+      source={require('../../../assets/fundo.png')}
+      resizeMode="cover"
+      style={styles.background}
+    >
+      <View style={styles.mapOverlay} />
 
-            <View style={styles.header}>
-              <View style={styles.logoMark}>
-                <View style={styles.logoIcon}>
-                  <HomeIcon name="bus" />
-                </View>
-                <Text style={styles.brand}>BUSLY</Text>
-              </View>
+      <SafeAreaView style={styles.safeArea} edges={['top', 'bottom']}>
+        <View style={styles.header}>
+          <View style={styles.brandGroup}>
+            <View style={styles.logoIcon}>
+              <BusIcon />
             </View>
-
-            <View style={styles.heroCopy}>
-              <Text style={styles.eyebrow}>Transporte publico</Text>
-              <Text style={styles.heroTitle}>
-                Para onde{'\n'}voce quer <Text style={styles.heroTitleAccent}>ir?</Text>
-              </Text>
-              <Text style={styles.heroText}>Consulte rotas e horarios em tempo real.</Text>
-            </View>
-          </SafeAreaView>
-
-          <View style={styles.body}>
-            <View style={styles.mainCards}>
-              {MENU_ITEMS.map((item) => (
-                <TouchableOpacity
-                  key={item.id}
-                  style={[styles.menuCard, item.featured && styles.menuCardFeatured]}
-                  activeOpacity={0.88}
-                  onPress={() => navigation.navigate(item.route)}
-                >
-                  {item.featured && <View style={styles.dotAccent} />}
-
-                  <View
-                    style={[
-                      styles.menuBadge,
-                      item.featured && styles.menuBadgeFeatured,
-                    ]}
-                  >
-                    <HomeIcon name={item.icon} featured={item.featured} />
-                  </View>
-
-                  <View style={styles.menuTextGroup}>
-                    <Text
-                      style={[
-                        styles.menuTitle,
-                        item.featured && styles.menuTitleFeatured,
-                      ]}
-                    >
-                      {item.title}
-                    </Text>
-                    <Text
-                      style={[
-                        styles.menuDescription,
-                        item.featured && styles.menuDescriptionFeatured,
-                      ]}
-                    >
-                      {item.description}
-                    </Text>
-                  </View>
-
-                  <Text
-                    style={[
-                      styles.menuArrow,
-                      item.featured && styles.menuArrowFeatured,
-                    ]}
-                  >
-                    {'>'}
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-
-            <View style={styles.divider}>
-              <View style={styles.dividerLine} />
-              <Text style={styles.dividerText}>Acesso restrito</Text>
-              <View style={styles.dividerLine} />
-            </View>
-
-            <View style={styles.accessList}>
-              {ACCESS_ITEMS.map((item) => (
-                <TouchableOpacity
-                  key={item.id}
-                  style={styles.accessCard}
-                  activeOpacity={0.88}
-                  onPress={() => navigation.navigate('Login', { loginType: item.type })}
-                >
-                  <View
-                    style={[
-                      styles.accessBadge,
-                      item.type === 'admin' ? styles.accessBadgeAdmin : styles.accessBadgeDriver,
-                    ]}
-                  >
-                    <HomeIcon name={item.icon} />
-                  </View>
-
-                  <View style={styles.accessTextGroup}>
-                    <Text style={styles.accessTitle}>{item.title}</Text>
-                    <Text style={styles.accessDescription}>{item.description}</Text>
-                  </View>
-
-                  <Text style={styles.accessArrow}>{'>'}</Text>
-                </TouchableOpacity>
-              ))}
-            </View>
+            <Text style={styles.brand}>Busly</Text>
           </View>
         </View>
-      </ScrollView>
-    </View>
+
+        <ScrollView
+          style={styles.scroll}
+          contentContainerStyle={styles.content}
+          showsVerticalScrollIndicator={false}
+        >
+          <View style={styles.hero}>
+            <Text style={styles.eyebrow}>Mobilidade urbana inteligente</Text>
+            <Text style={styles.title}>
+              Seu caminho,{'\n'}
+              <Text style={styles.titleAccent}>nossa missão.</Text>
+            </Text>
+            <Text style={styles.subtitle}>
+              Planeje suas rotas e acompanhe os horários de forma simples,
+              rápida e intuitiva.
+            </Text>
+          </View>
+
+          <View style={styles.routeCard}>
+            <View style={styles.routeIconContainer}>
+              <BusIcon dark />
+            </View>
+
+            <Text style={styles.routeTitle}>Rotas de Ônibus</Text>
+            <Text style={styles.routeDescription}>
+              Encontre a melhor linha para chegar ao seu destino.
+            </Text>
+
+            <TouchableOpacity
+              style={styles.primaryButton}
+              activeOpacity={0.88}
+              onPress={() => navigation.navigate('Rotas')}
+            >
+              <Text style={styles.primaryButtonText}>Ver Rotas</Text>
+              <Text style={styles.primaryButtonArrow}>{'>'}</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.scheduleButton}
+              activeOpacity={0.82}
+              onPress={() => navigation.navigate('Horarios')}
+            >
+              <Text style={styles.scheduleButtonText}>Consultar horários</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.restrictedAccess}>
+            <Text style={styles.accessLabel}>Acesso restrito</Text>
+            <View style={styles.accessRow}>
+              <AccessButton
+                title="Motorista"
+                onPress={() =>
+                  navigation.navigate('Login', { loginType: 'motorista' })
+                }
+              />
+              <AccessButton
+                title="Administrador"
+                onPress={() =>
+                  navigation.navigate('Login', { loginType: 'admin' })
+                }
+              />
+            </View>
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+    </ImageBackground>
   );
 }

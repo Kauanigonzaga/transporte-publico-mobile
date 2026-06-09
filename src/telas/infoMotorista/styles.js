@@ -58,6 +58,29 @@ const styles = StyleSheet.create({
     paddingBottom: 28,
   },
 
+  loadingContainer: {
+    flex: 1,
+    padding: 24,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  loadingText: {
+    color: '#617489',
+    fontSize: 14,
+    fontWeight: '700',
+    marginTop: 12,
+  },
+
+  errorText: {
+    color: '#BE123C',
+    fontSize: 15,
+    lineHeight: 21,
+    fontWeight: '700',
+    textAlign: 'center',
+    marginBottom: 18,
+  },
+
   profileCard: {
     backgroundColor: '#FFFFFF',
     borderRadius: 8,

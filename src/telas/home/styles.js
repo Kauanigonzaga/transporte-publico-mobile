@@ -1,460 +1,285 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-  screen: {
+  background: {
     flex: 1,
-    backgroundColor: '#EEF3FF',
+    backgroundColor: '#10243D',
+  },
+
+  mapOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(11, 25, 43, 0.76)',
+  },
+
+  safeArea: {
+    flex: 1,
+  },
+
+  header: {
+    minHeight: 68,
+    paddingHorizontal: 22,
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'rgba(5, 55, 128, 0.97)',
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(255, 255, 255, 0.1)',
+  },
+
+  brandGroup: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+
+  logoIcon: {
+    width: 38,
+    height: 38,
+    borderRadius: 11,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#1688E8',
+    marginRight: 10,
+  },
+
+  brand: {
+    color: '#FFFFFF',
+    fontSize: 23,
+    fontWeight: '900',
+    letterSpacing: -0.5,
   },
 
   scroll: {
     flex: 1,
   },
 
-  scrollContent: {
+  content: {
     flexGrow: 1,
-  },
-
-  phone: {
-    flex: 1,
-    backgroundColor: '#EEF3FF',
+    paddingHorizontal: 22,
+    paddingTop: 42,
+    paddingBottom: 26,
+    justifyContent: 'center',
   },
 
   hero: {
-    backgroundColor: '#1A3A8F',
-    paddingHorizontal: 26,
-    paddingTop: 28,
-    paddingBottom: 42,
-    overflow: 'hidden',
-  },
-
-  circleLarge: {
-    position: 'absolute',
-    top: -55,
-    right: -55,
-    width: 210,
-    height: 210,
-    borderRadius: 105,
-    backgroundColor: '#2451B8',
-    opacity: 0.4,
-  },
-
-  circleMedium: {
-    position: 'absolute',
-    top: 40,
-    right: 15,
-    width: 90,
-    height: 90,
-    borderRadius: 45,
-    backgroundColor: '#3B6FE0',
-    opacity: 0.25,
-  },
-
-  circleSmall: {
-    position: 'absolute',
-    bottom: -35,
-    left: -45,
-    width: 140,
-    height: 140,
-    borderRadius: 70,
-    backgroundColor: '#2451B8',
-    opacity: 0.25,
-  },
-
-  header: {
-    marginBottom: 40,
-    zIndex: 2,
-  },
-
-  logoMark: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-
-  logoIcon: {
-    width: 32,
-    height: 32,
-    borderRadius: 10,
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 8,
-  },
-
-  brand: {
-    color: '#FFFFFF',
-    fontSize: 18,
-    fontWeight: '900',
-    letterSpacing: 2,
-  },
-
-  heroCopy: {
-    zIndex: 2,
+    marginBottom: 28,
   },
 
   eyebrow: {
-    color: '#93B8F5',
-    fontSize: 10,
+    color: '#72C6FF',
+    fontSize: 11,
     fontWeight: '800',
-    letterSpacing: 2,
+    letterSpacing: 1.4,
     textTransform: 'uppercase',
-    marginBottom: 8,
+    marginBottom: 12,
   },
 
-  heroTitle: {
+  title: {
+    maxWidth: 330,
     color: '#FFFFFF',
-    fontSize: 29,
-    lineHeight: 34,
+    fontSize: 39,
+    lineHeight: 44,
     fontWeight: '900',
-    marginBottom: 8,
+    letterSpacing: -1.4,
   },
 
-  heroTitleAccent: {
-    color: '#93C5FD',
+  titleAccent: {
+    color: '#31A7F5',
   },
 
-  heroText: {
-    color: 'rgba(255, 255, 255, 0.62)',
-    fontSize: 12,
-    lineHeight: 19,
+  subtitle: {
+    maxWidth: 350,
+    color: 'rgba(255, 255, 255, 0.78)',
+    fontSize: 15,
+    lineHeight: 23,
     fontWeight: '500',
+    marginTop: 15,
   },
 
-  body: {
-    flex: 1,
-    paddingHorizontal: 20,
-    paddingTop: 28,
-    paddingBottom: 28,
-    justifyContent: 'space-between',
-  },
-
-  mainCards: {
-    marginBottom: 24,
-  },
-
-  menuCard: {
-    minHeight: 78,
-    backgroundColor: '#FFFFFF',
-    borderRadius: 22,
-    paddingHorizontal: 20,
-    paddingVertical: 14,
-    marginBottom: 10,
-    flexDirection: 'row',
+  routeCard: {
+    width: '100%',
+    maxWidth: 430,
+    alignSelf: 'center',
     alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#D0DCEF',
-    overflow: 'hidden',
+    backgroundColor: 'rgba(255, 255, 255, 0.97)',
+    borderRadius: 24,
+    paddingHorizontal: 20,
+    paddingTop: 24,
+    paddingBottom: 18,
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 14 },
+    shadowOpacity: 0.25,
+    shadowRadius: 22,
+    elevation: 10,
   },
 
-  menuCardFeatured: {
-    backgroundColor: '#1A3A8F',
-    borderColor: '#1A3A8F',
-  },
-
-  dotAccent: {
-    position: 'absolute',
-    right: -20,
-    top: -20,
-    width: 75,
-    height: 75,
-    borderRadius: 38,
-    backgroundColor: 'rgba(255, 255, 255, 0.07)',
-  },
-
-  menuBadge: {
-    width: 44,
-    height: 44,
-    borderRadius: 14,
-    backgroundColor: '#EEF3FF',
+  routeIconContainer: {
+    width: 56,
+    height: 56,
+    borderRadius: 17,
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 14,
-  },
-
-  menuBadgeFeatured: {
-    backgroundColor: 'rgba(255, 255, 255, 0.18)',
-  },
-
-  menuTextGroup: {
-    flex: 1,
-  },
-
-  menuTitle: {
-    color: '#1A2A50',
-    fontSize: 15,
-    fontWeight: '900',
-    marginBottom: 2,
-  },
-
-  menuTitleFeatured: {
-    color: '#FFFFFF',
-  },
-
-  menuDescription: {
-    color: '#8A9BBF',
-    fontSize: 11,
-    lineHeight: 16,
-    fontWeight: '500',
-  },
-
-  menuDescriptionFeatured: {
-    color: 'rgba(255, 255, 255, 0.62)',
-  },
-
-  menuArrow: {
-    color: '#C0CEEA',
-    fontSize: 22,
-    fontWeight: '500',
-    marginLeft: 10,
-  },
-
-  menuArrowFeatured: {
-    color: 'rgba(255, 255, 255, 0.45)',
-  },
-
-  divider: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    backgroundColor: '#E4F2FF',
     marginBottom: 14,
   },
 
-  dividerLine: {
-    flex: 1,
-    height: 1,
-    backgroundColor: '#D4DEEF',
+  routeTitle: {
+    color: '#092D5D',
+    fontSize: 22,
+    fontWeight: '900',
+    letterSpacing: -0.4,
   },
 
-  dividerText: {
-    color: '#9AAAC8',
-    fontSize: 10,
-    fontWeight: '800',
-    letterSpacing: 1,
-    textTransform: 'uppercase',
-    marginHorizontal: 10,
+  routeDescription: {
+    maxWidth: 280,
+    color: '#68798D',
+    fontSize: 13,
+    lineHeight: 19,
+    fontWeight: '500',
+    textAlign: 'center',
+    marginTop: 6,
+    marginBottom: 18,
   },
 
-  accessList: {
-    gap: 10,
-    paddingBottom: 6,
-  },
-
-  accessCard: {
-    minHeight: 74,
-    backgroundColor: '#FFFFFF',
-    borderWidth: 1,
-    borderColor: '#D0DCEF',
-    borderRadius: 12,
-    paddingHorizontal: 14,
-    paddingVertical: 12,
+  primaryButton: {
+    width: '100%',
+    minHeight: 56,
+    borderRadius: 15,
+    paddingHorizontal: 19,
     flexDirection: 'row',
     alignItems: 'center',
-  },
-
-  accessBadge: {
-    width: 40,
-    height: 40,
-    borderRadius: 8,
-    alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 12,
+    backgroundColor: '#0768C9',
+    shadowColor: '#0768C9',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.25,
+    shadowRadius: 12,
+    elevation: 5,
   },
 
-  accessBadgeAdmin: {
-    backgroundColor: '#DBEAFE',
-  },
-
-  accessBadgeDriver: {
-    backgroundColor: '#DCFCE7',
-  },
-
-  accessTextGroup: {
-    flex: 1,
-  },
-
-  accessTitle: {
-    color: '#1A2A50',
-    fontSize: 14,
+  primaryButtonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
     fontWeight: '900',
-    marginBottom: 2,
   },
 
-  accessDescription: {
-    color: '#9AAAC8',
-    fontSize: 11,
+  primaryButtonArrow: {
+    position: 'absolute',
+    right: 19,
+    color: '#FFFFFF',
+    fontSize: 21,
     fontWeight: '700',
   },
 
-  accessArrow: {
-    color: '#C0CEEA',
-    fontSize: 20,
-    fontWeight: '600',
-    marginLeft: 10,
+  scheduleButton: {
+    minHeight: 38,
+    paddingHorizontal: 14,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 7,
   },
 
-  iconBlue: {
-    backgroundColor: '#1A3A8F',
-    borderColor: '#1A3A8F',
+  scheduleButtonText: {
+    color: '#0768C9',
+    fontSize: 13,
+    fontWeight: '800',
   },
 
-  iconLight: {
-    backgroundColor: '#FFFFFF',
-    borderColor: '#FFFFFF',
-  },
-
-  routeIcon: {
-    width: 22,
-    height: 22,
-    justifyContent: 'space-between',
-  },
-
-  routeDot: {
-    width: 7,
-    height: 7,
-    borderRadius: 4,
-    alignSelf: 'flex-start',
-  },
-
-  routeDotEnd: {
-    alignSelf: 'flex-end',
-  },
-
-  routeLine: {
-    width: 20,
-    height: 3,
-    borderRadius: 2,
+  restrictedAccess: {
+    width: '100%',
+    maxWidth: 430,
     alignSelf: 'center',
-    transform: [{ rotate: '-28deg' }],
+    marginTop: 24,
   },
 
-  clockIcon: {
-    width: 23,
-    height: 23,
-    borderRadius: 12,
-    borderWidth: 3,
-    backgroundColor: 'transparent',
+  accessLabel: {
+    color: 'rgba(255, 255, 255, 0.68)',
+    fontSize: 10,
+    fontWeight: '800',
+    letterSpacing: 1.3,
+    textTransform: 'uppercase',
+    textAlign: 'center',
+    marginBottom: 11,
+  },
+
+  accessRow: {
+    flexDirection: 'row',
+    gap: 10,
+  },
+
+  accessButton: {
+    flex: 1,
+    minHeight: 50,
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.28)',
+    paddingHorizontal: 13,
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: 'rgba(8, 32, 58, 0.68)',
   },
 
-  clockIconBlue: {
-    borderColor: '#1A3A8F',
+  accessButtonText: {
+    color: '#FFFFFF',
+    fontSize: 13,
+    fontWeight: '800',
   },
 
-  clockIconLight: {
-    borderColor: '#FFFFFF',
-  },
-
-  clockHour: {
+  accessButtonArrow: {
     position: 'absolute',
-    width: 3,
-    height: 8,
-    borderRadius: 2,
-    top: 4,
-  },
-
-  clockMinute: {
-    position: 'absolute',
-    width: 7,
-    height: 3,
-    borderRadius: 2,
-    right: 5,
-    top: 10,
-  },
-
-  shieldIcon: {
-    width: 22,
-    height: 24,
-    alignItems: 'center',
-  },
-
-  shieldTop: {
-    width: 20,
-    height: 14,
-    borderTopLeftRadius: 8,
-    borderTopRightRadius: 8,
-    borderBottomLeftRadius: 4,
-    borderBottomRightRadius: 4,
-    backgroundColor: '#1D4ED8',
-  },
-
-  shieldBottom: {
-    width: 14,
-    height: 14,
-    marginTop: -7,
-    backgroundColor: '#1D4ED8',
-    transform: [{ rotate: '45deg' }],
-  },
-
-  wheelIcon: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
-    borderWidth: 3,
-    borderColor: '#16A34A',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  wheelCenter: {
-    width: 6,
-    height: 6,
-    borderRadius: 3,
-    backgroundColor: '#16A34A',
-  },
-
-  wheelSpokeLeft: {
-    position: 'absolute',
-    width: 9,
-    height: 3,
-    borderRadius: 2,
-    backgroundColor: '#16A34A',
-    left: 3,
-    bottom: 5,
-    transform: [{ rotate: '35deg' }],
-  },
-
-  wheelSpokeRight: {
-    position: 'absolute',
-    width: 9,
-    height: 3,
-    borderRadius: 2,
-    backgroundColor: '#16A34A',
-    right: 3,
-    bottom: 5,
-    transform: [{ rotate: '-35deg' }],
+    right: 11,
+    color: '#72C6FF',
+    fontSize: 17,
+    fontWeight: '800',
   },
 
   busIcon: {
     width: 22,
-    height: 20,
-    borderWidth: 3,
+    height: 23,
+    borderWidth: 2.5,
     borderColor: '#FFFFFF',
-    borderRadius: 4,
-    paddingHorizontal: 2,
-    paddingTop: 3,
+    borderRadius: 5,
+    paddingHorizontal: 3,
+    paddingTop: 4,
   },
 
-  busWindowRow: {
+  busIconDark: {
+    width: 27,
+    height: 29,
+    borderColor: '#0768C9',
+    borderRadius: 6,
+  },
+
+  busWindows: {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
 
   busWindow: {
-    width: 3,
-    height: 4,
+    width: 5,
+    height: 5,
     borderRadius: 1,
     backgroundColor: '#FFFFFF',
   },
 
-  busFrontLine: {
-    width: 4,
-    height: 3,
-    borderRadius: 1,
-    backgroundColor: '#FFFFFF',
-    alignSelf: 'flex-end',
-    marginTop: 2,
+  busWindowDark: {
+    width: 6,
+    height: 7,
+    backgroundColor: '#0768C9',
   },
 
-  busWheelRow: {
+  busLine: {
+    width: '100%',
+    height: 2,
+    borderRadius: 1,
+    backgroundColor: '#FFFFFF',
+    marginTop: 3,
+  },
+
+  busLineDark: {
+    backgroundColor: '#0768C9',
+  },
+
+  busWheels: {
     position: 'absolute',
     left: 2,
     right: 2,
@@ -468,6 +293,13 @@ const styles = StyleSheet.create({
     height: 6,
     borderRadius: 3,
     backgroundColor: '#FFFFFF',
+  },
+
+  busWheelDark: {
+    width: 7,
+    height: 7,
+    borderRadius: 4,
+    backgroundColor: '#0768C9',
   },
 });
 

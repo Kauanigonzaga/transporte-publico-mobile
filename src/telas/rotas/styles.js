@@ -5,287 +5,382 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F8FBFF',
   },
-
   header: {
-    minHeight: 250,
+    minHeight: 185,
     backgroundColor: '#073D8F',
-    paddingHorizontal: 28,
-    paddingTop: 30,
-    paddingBottom: 46,
+    paddingHorizontal: 24,
+    paddingTop: 24,
+    paddingBottom: 42,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-
   headerCopy: {
     flex: 1,
     paddingRight: 18,
   },
-
   brand: {
     color: '#8FD8FF',
-    fontSize: 17,
+    fontSize: 16,
     fontWeight: '900',
-    letterSpacing: 0,
-    marginBottom: 20,
+    marginBottom: 12,
   },
-
   headerTitle: {
     color: '#FFFFFF',
-    fontSize: 36,
-    lineHeight: 42,
+    fontSize: 32,
+    lineHeight: 38,
     fontWeight: '900',
   },
-
   homeButton: {
-    width: 50,
-    height: 26,
-    borderRadius: 8,
+    minWidth: 58,
+    height: 34,
+    borderRadius: 9,
+    paddingHorizontal: 10,
     backgroundColor: '#FFFFFF',
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: '#001E49',
-    shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.16,
-    shadowRadius: 18,
   },
-
   homeButtonText: {
     color: '#082D63',
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: '900',
   },
-
   content: {
     flex: 1,
+    marginTop: -28,
+    borderTopLeftRadius: 28,
+    borderTopRightRadius: 28,
     backgroundColor: '#F8FBFF',
-    marginTop: -34,
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
   },
-
   contentContainer: {
-    paddingHorizontal: 22,
-    paddingTop: 26,
-    paddingBottom: 112,
-  },
-
-  driverCard: {
-    minHeight: 150,
-    backgroundColor: '#FFFFFF',
-    borderRadius: 22,
     paddingHorizontal: 18,
-    paddingVertical: 20,
-    flexDirection: 'row',
-    alignItems: 'center',
-    shadowColor: '#0A2A55',
-    shadowOffset: { width: 0, height: 12 },
-    shadowOpacity: 0.12,
-    shadowRadius: 24,
-    elevation: 5,
+    paddingTop: 24,
+    paddingBottom: 34,
   },
-
-  avatar: {
-    width: 96,
-    height: 96,
-    borderRadius: 18,
-    backgroundColor: '#E8F2FF',
-    marginRight: 16,
-  },
-
-  driverInfo: {
-    flex: 1,
-  },
-
-  driverEyebrow: {
-    color: '#687A95',
-    fontSize: 16,
-    fontWeight: '900',
-    marginBottom: 8,
-  },
-
-  driverTitle: {
-    color: '#082D63',
-    fontSize: 21,
-    lineHeight: 27,
-    fontWeight: '900',
-  },
-
-  driverDescription: {
-    color: '#687A95',
-    fontSize: 16,
-    lineHeight: 23,
-    marginTop: 10,
-  },
-
-  cardArrow: {
-    color: '#082D63',
-    fontSize: 34,
-    fontWeight: '300',
-    marginLeft: 12,
-  },
-
   sectionTitle: {
     color: '#082D63',
-    fontSize: 24,
+    fontSize: 21,
     fontWeight: '900',
-    marginTop: 34,
-    marginBottom: 18,
+    marginBottom: 14,
   },
-
   routesList: {
-    gap: 16,
+    gap: 10,
+    paddingRight: 18,
   },
-
   routeButton: {
-    minHeight: 82,
-    borderRadius: 18,
-    paddingHorizontal: 24,
+    minWidth: 130,
+    minHeight: 54,
+    borderRadius: 15,
+    paddingHorizontal: 17,
     flexDirection: 'row',
     alignItems: 'center',
   },
-
   routeDot: {
-    width: 22,
-    height: 22,
-    borderRadius: 11,
-    marginRight: 24,
+    width: 13,
+    height: 13,
+    borderRadius: 7,
+    marginRight: 10,
   },
-
   routeButtonText: {
-    flex: 1,
     color: '#082D63',
-    fontSize: 24,
+    fontSize: 15,
     fontWeight: '900',
   },
-
   routeButtonTextActive: {
     color: '#FFFFFF',
   },
-
-  routeArrow: {
-    color: '#082D63',
-    fontSize: 32,
-    fontWeight: '300',
+  errorCard: {
+    marginTop: 16,
+    padding: 15,
+    borderRadius: 14,
+    backgroundColor: '#FFF1F2',
+    borderWidth: 1,
+    borderColor: '#FECDD3',
   },
-
-  routeArrowActive: {
-    color: '#FFFFFF',
+  errorTitle: {
+    color: '#9F1239',
+    fontSize: 15,
+    fontWeight: '900',
   },
-
+  errorText: {
+    color: '#BE123C',
+    fontSize: 13,
+    lineHeight: 18,
+    marginTop: 4,
+  },
+  errorAction: {
+    color: '#9F1239',
+    fontSize: 12,
+    fontWeight: '800',
+    marginTop: 7,
+  },
   mapCard: {
-    marginTop: 20,
+    marginTop: 24,
   },
-
   mapTitle: {
     color: '#082D63',
-    fontSize: 22,
+    fontSize: 19,
     fontWeight: '900',
-    marginBottom: 16,
+    marginBottom: 12,
   },
-
   mapContainer: {
-    height: 210,
-    borderRadius: 18,
+    height: 250,
+    borderRadius: 19,
     overflow: 'hidden',
     backgroundColor: '#DCE7F3',
   },
-
   map: {
     flex: 1,
   },
-
+  mapEmpty: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 24,
+  },
+  mapEmptyText: {
+    color: '#687A95',
+    fontSize: 14,
+    fontWeight: '700',
+    textAlign: 'center',
+  },
   mapButton: {
     position: 'absolute',
-    left: 18,
-    bottom: 18,
-    minHeight: 54,
-    paddingHorizontal: 20,
-    borderRadius: 27,
+    left: 14,
+    bottom: 14,
+    minHeight: 46,
+    paddingHorizontal: 17,
+    borderRadius: 23,
     backgroundColor: '#FFFFFF',
     flexDirection: 'row',
     alignItems: 'center',
-    shadowColor: '#0A2A55',
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.12,
-    shadowRadius: 14,
     elevation: 4,
   },
-
   mapPin: {
-    width: 18,
-    height: 18,
-    borderRadius: 9,
+    width: 14,
+    height: 14,
+    borderRadius: 7,
     backgroundColor: '#073D8F',
-    marginRight: 12,
+    marginRight: 9,
   },
-
   mapButtonText: {
     color: '#082D63',
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '900',
   },
-
-  bottomNav: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    bottom: 0,
-    height: 92,
+  dataPanel: {
+    marginTop: 20,
+    borderRadius: 20,
+    overflow: 'hidden',
+    backgroundColor: '#073D8F',
+    shadowColor: '#001E49',
+    shadowOffset: { width: 0, height: 12 },
+    shadowOpacity: 0.18,
+    shadowRadius: 20,
+    elevation: 7,
+  },
+  panelTabs: {
+    minHeight: 64,
+    padding: 8,
+    flexDirection: 'row',
+    gap: 6,
+    backgroundColor: '#052F70',
+  },
+  panelTab: {
+    flex: 1,
+    minHeight: 47,
+    borderRadius: 11,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  panelTabActive: {
     backgroundColor: '#FFFFFF',
-    borderTopLeftRadius: 28,
-    borderTopRightRadius: 28,
+  },
+  panelTabText: {
+    color: '#A9CDF6',
+    fontSize: 10,
+    fontWeight: '900',
+  },
+  panelTabTextActive: {
+    color: '#073D8F',
+  },
+  panelHeader: {
+    paddingHorizontal: 18,
+    paddingTop: 18,
+  },
+  panelTitle: {
+    color: '#FFFFFF',
+    fontSize: 20,
+    fontWeight: '900',
+  },
+  panelRouteName: {
+    color: '#8FD8FF',
+    fontSize: 13,
+    fontWeight: '800',
+    marginTop: 3,
+  },
+  panelContent: {
+    padding: 18,
+    paddingTop: 14,
+  },
+  feedback: {
+    minHeight: 120,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  feedbackText: {
+    color: '#C9E3FF',
+    fontSize: 13,
+    fontWeight: '700',
+    marginTop: 10,
+  },
+  emptyText: {
+    color: '#D8E9FC',
+    fontSize: 14,
+    lineHeight: 20,
+    textAlign: 'center',
+    paddingVertical: 25,
+  },
+  dataRow: {
+    minHeight: 64,
+    borderRadius: 13,
+    padding: 11,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-around',
-    paddingBottom: 12,
-    shadowColor: '#0A2A55',
-    shadowOffset: { width: 0, height: -8 },
-    shadowOpacity: 0.08,
-    shadowRadius: 20,
-    elevation: 8,
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    marginBottom: 9,
   },
-
-  navItem: {
-    minWidth: 92,
+  dataIndex: {
+    width: 34,
+    height: 34,
+    borderRadius: 17,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#FFFFFF',
+    marginRight: 11,
   },
-
-  navIcon: {
-    width: 30,
-    height: 30,
+  dataIndexText: {
+    color: '#073D8F',
+    fontSize: 13,
+    fontWeight: '900',
+  },
+  dataCopy: {
+    flex: 1,
+  },
+  dataTitle: {
+    color: '#FFFFFF',
+    fontSize: 14,
+    fontWeight: '900',
+  },
+  dataDescription: {
+    color: '#A9CDF6',
+    fontSize: 11,
+    fontWeight: '600',
+    marginTop: 2,
+  },
+  scheduleCard: {
+    borderRadius: 13,
+    padding: 13,
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    marginBottom: 9,
+  },
+  schedulePoint: {
+    color: '#FFFFFF',
+    fontSize: 14,
+    fontWeight: '900',
+    marginBottom: 9,
+  },
+  scheduleTimes: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 7,
+  },
+  timePill: {
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    borderRadius: 8,
+    backgroundColor: '#FFFFFF',
+  },
+  timeText: {
+    color: '#073D8F',
+    fontSize: 12,
+    fontWeight: '900',
+  },
+  driverCard: {
     borderRadius: 15,
+    padding: 13,
+    backgroundColor: 'rgba(255, 255, 255, 0.11)',
+    marginBottom: 11,
+  },
+  avatar: {
+    width: 62,
+    height: 62,
+    borderRadius: 16,
+    backgroundColor: '#DCEBFC',
+    marginBottom: 11,
+  },
+  driverInfo: {
+    marginBottom: 12,
+  },
+  driverName: {
+    color: '#FFFFFF',
+    fontSize: 18,
+    fontWeight: '900',
+  },
+  driverCode: {
+    color: '#A9CDF6',
+    fontSize: 12,
+    fontWeight: '700',
+    marginTop: 3,
+  },
+  statusPill: {
+    alignSelf: 'flex-start',
+    borderRadius: 8,
+    paddingHorizontal: 9,
+    paddingVertical: 4,
+    backgroundColor: '#DDF8E8',
+    marginTop: 8,
+  },
+  statusText: {
+    color: '#197A42',
+    fontSize: 11,
+    fontWeight: '900',
+  },
+  driverRating: {
+    color: '#D8E9FC',
+    fontSize: 12,
+    fontWeight: '700',
+    marginTop: 8,
+  },
+  driverActions: {
+    flexDirection: 'row',
+    gap: 8,
+  },
+  driverPrimaryButton: {
+    flex: 1,
+    minHeight: 43,
+    borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 4,
+    backgroundColor: '#FFFFFF',
   },
-
-  navIconActive: {
-    backgroundColor: '#E8F2FF',
-  },
-
-  navIconText: {
-    color: '#758196',
-    fontSize: 18,
+  driverPrimaryText: {
+    color: '#073D8F',
+    fontSize: 13,
     fontWeight: '900',
   },
-
-  navIconTextActive: {
-    color: '#1D4ED8',
-    fontSize: 18,
-    fontWeight: '900',
+  driverSecondaryButton: {
+    flex: 1.25,
+    minHeight: 43,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#8FD8FF',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-
-  navText: {
-    color: '#758196',
-    fontSize: 14,
-    fontWeight: '800',
-  },
-
-  navTextActive: {
-    color: '#1D4ED8',
-    fontSize: 14,
+  driverSecondaryText: {
+    color: '#FFFFFF',
+    fontSize: 12,
     fontWeight: '900',
   },
 });
