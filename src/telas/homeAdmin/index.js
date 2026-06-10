@@ -1,190 +1,248 @@
-import { useState } from 'react';
-import { Alert, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { useRef } from 'react';
+import {
+  Alert,
+  Animated,
+  Image,
+  ImageBackground,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  useWindowDimensions,
+  View,
+} from 'react-native';
+import { BlurView } from 'expo-blur';
+import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 
 import styles from './styles';
 
-// Troque estes dados pelos endpoints de rotas, pontos e horarios quando a API estiver pronta.
-const INITIAL_ADMIN_DATA = [
+const MODULES = [
   {
-    id: 'azul',
-    name: 'Linha Azul',
-    color: '#1D4ED8',
-    route: 'Centro > Bairro A',
-    points: 'Terminal Central, Av. Brasil, Escola Estadual, Bairro A',
-    times: '06:40, 07:20, 08:00, 08:40',
+    id: 'points',
+    title: 'Pontos de Ônibus',
+    description: 'Cadastre e ajuste os locais de parada das linhas.',
+    image: require('../../../assets/admin-pontos.png'),
+    actions: [
+      {
+        label: 'Editar pontos',
+        icon: 'P',
+        screen: 'LinhasPontos',
+      },
+    ],
   },
   {
-    id: 'roxa',
-    name: 'Linha Roxa',
-    color: '#7C3AED',
-    route: 'Rodoviaria > Bairro B',
-    points: 'Rodoviaria, Mercado Central, Praca Central, Bairro B',
-    times: '08:00, 09:00, 10:00, 11:00',
+    id: 'schedules',
+    title: 'Horários',
+    description: 'Gerencie os horários de passagem por ponto.',
+    image: require('../../../assets/admin-horarios.png'),
+    actions: [
+      {
+        label: 'Editar horários',
+        icon: 'H',
+        screen: 'Horarios',
+      },
+    ],
   },
   {
-    id: 'amarela',
-    name: 'Linha Amarela',
-    color: '#EAB308',
-    route: 'Bairro D > Centro',
-    points: 'Bairro D, Rua das Flores, Mercado Municipal, Centro',
-    times: '06:30, 07:30, 08:30, 09:30',
+    id: 'routes',
+    title: 'Rotas',
+    description: 'Organize linhas, trajetos e pontos no mapa.',
+    image: require('../../../assets/admin-rotas.png'),
+    actions: [
+      {
+        label: 'Editar rotas',
+        icon: 'R',
+        screen: 'Rotas',
+      },
+    ],
   },
   {
-    id: 'laranja',
-    name: 'Linha Laranja',
-    color: '#F97316',
-    route: 'Bairro C > Centro',
-    points: 'Bairro C, Rua das Flores, Mercado Municipal, Centro',
-    times: '07:00, 08:00, 09:00, 10:00',
+    id: 'drivers',
+    title: 'Motoristas',
+    description: 'Cadastre motoristas e mantenha os dados atualizados.',
+    icon: '+',
+    actions: [
+      {
+        label: 'Cadastrar',
+        icon: '+',
+        unavailable: 'O cadastro de motoristas ainda não possui tela no app.',
+      },
+      {
+        label: 'Ver motoristas',
+        icon: '≡',
+        unavailable: 'A gestão de motoristas ainda não possui tela no app.',
+      },
+    ],
   },
 ];
 
-export default function HomeAdmin() {
-  const navigation = useNavigation();
-  const [lines, setLines] = useState(INITIAL_ADMIN_DATA);
-  const [selectedLineId, setSelectedLineId] = useState(INITIAL_ADMIN_DATA[0].id);
+function AdminCard({ item, columns, onAction }) {
+  const scale = useRef(new Animated.Value(1)).current;
 
-  const selectedLine = lines.find((line) => line.id === selectedLineId) || lines[0];
-
-  function updateSelectedLine(field, value) {
-    setLines((currentLines) =>
-      currentLines.map((line) =>
-        line.id === selectedLine.id ? { ...line, [field]: value } : line,
-      ),
-    );
-  }
-
-  function handleSave() {
-    // Depois, troque este trecho por PUT/PATCH para a API.
-    Alert.alert('Alteracoes salvas', 'Os dados foram atualizados localmente.');
+  function animate(toValue) {
+    Animated.spring(scale, {
+      toValue,
+      friction: 7,
+      tension: 120,
+      useNativeDriver: true,
+    }).start();
   }
 
   return (
-    <SafeAreaView style={styles.screen}>
-      <View style={styles.header}>
-        <TouchableOpacity
-          style={styles.homeButton}
-          activeOpacity={0.85}
-          onPress={() => navigation.navigate('Home')}
-        >
-          <Text style={styles.homeButtonText}>Home</Text>
-        </TouchableOpacity>
-
-        <View style={styles.headerTextGroup}>
-          <Text style={styles.brand}>BUSLY</Text>
-          <Text style={styles.headerTitle}>Painel admin</Text>
-        </View>
-      </View>
-
-      <ScrollView
-        style={styles.content}
-        contentContainerStyle={styles.contentContainer}
-        showsVerticalScrollIndicator={false}
+    <Animated.View
+      style={[
+        styles.cardShell,
+        columns === 2 ? styles.cardHalf : styles.cardFull,
+        { transform: [{ scale }] },
+      ]}
+    >
+      <TouchableOpacity
+        activeOpacity={1}
+        onPressIn={() => animate(0.98)}
+        onPressOut={() => animate(1)}
+        style={styles.cardTouchArea}
       >
-        <View style={styles.summaryCard}>
-          <Text style={styles.summaryLabel}>Gerenciamento</Text>
-          <Text style={styles.summaryTitle}>Editar rotas, pontos e horarios</Text>
-          <Text style={styles.summaryText}>
-            Selecione uma linha, ajuste as informacoes e salve. Depois esses campos
-            vao alimentar o back-end.
-          </Text>
-        </View>
+        <BlurView
+          intensity={34}
+          tint="dark"
+          experimentalBlurMethod="dimezisBlurView"
+          style={styles.card}
+        >
+          <View style={styles.cardContent}>
+            {item.image ? (
+              <Image
+                source={item.image}
+                resizeMode="contain"
+                style={styles.cardImage}
+              />
+            ) : (
+              <View style={styles.cardIconArea}>
+                <View style={styles.driverIcon}>
+                  <View style={styles.driverHead} />
+                  <View style={styles.driverBody} />
+                  <Text style={styles.driverPlus}>{item.icon}</Text>
+                </View>
+              </View>
+            )}
 
-        <Text style={styles.sectionTitle}>Linhas</Text>
+            <View style={styles.cardCopy}>
+              <Text style={styles.cardTitle}>{item.title}</Text>
+              <Text style={styles.cardDescription}>{item.description}</Text>
+            </View>
 
-        <View style={styles.lineGrid}>
-          {lines.map((line) => {
-            const isSelected = line.id === selectedLine.id;
-
-            return (
-              <TouchableOpacity
-                key={line.id}
-                style={[
-                  styles.lineButton,
-                  isSelected && { backgroundColor: line.color },
-                ]}
-                activeOpacity={0.86}
-                onPress={() => setSelectedLineId(line.id)}
-              >
-                <View
-                  style={[
-                    styles.lineDot,
-                    { backgroundColor: isSelected ? '#FFFFFF' : line.color },
-                  ]}
-                />
-                <Text
-                  style={[
-                    styles.lineButtonText,
-                    isSelected && styles.lineButtonTextActive,
-                  ]}
+            <View style={styles.cardActions}>
+              {item.actions.map((action) => (
+                <TouchableOpacity
+                  key={action.label}
+                  activeOpacity={0.82}
+                  onPress={() => onAction(action)}
+                  style={styles.actionButton}
                 >
-                  {line.name.replace('Linha ', '')}
-                </Text>
-              </TouchableOpacity>
-            );
-          })}
-        </View>
-
-        <View style={styles.formCard}>
-          <Text style={styles.formTitle}>{selectedLine.name}</Text>
-
-          <View style={styles.inputGroup}>
-            <Text style={styles.label}>Nome da linha</Text>
-            <TextInput
-              style={styles.input}
-              value={selectedLine.name}
-              onChangeText={(value) => updateSelectedLine('name', value)}
-              placeholder="Ex: Linha Azul"
-              placeholderTextColor="#8A98A8"
-            />
+                  <LinearGradient
+                    colors={['#2563EB', '#1D4ED8']}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 1 }}
+                    style={styles.actionGradient}
+                  >
+                    <View style={styles.actionIcon}>
+                      <Text style={styles.actionIconText}>{action.icon}</Text>
+                    </View>
+                    <Text style={styles.actionText}>{action.label}</Text>
+                  </LinearGradient>
+                </TouchableOpacity>
+              ))}
+            </View>
           </View>
+        </BlurView>
+      </TouchableOpacity>
+    </Animated.View>
+  );
+}
 
-          <View style={styles.inputGroup}>
-            <Text style={styles.label}>Rota</Text>
-            <TextInput
-              style={styles.input}
-              value={selectedLine.route}
-              onChangeText={(value) => updateSelectedLine('route', value)}
-              placeholder="Ex: Centro > Bairro A"
-              placeholderTextColor="#8A98A8"
-            />
-          </View>
+export default function HomeAdmin() {
+  const navigation = useNavigation();
+  const { width } = useWindowDimensions();
+  const columns = width >= 600 ? 2 : 1;
 
-          <View style={styles.inputGroup}>
-            <Text style={styles.label}>Pontos</Text>
-            <TextInput
-              style={styles.textArea}
-              value={selectedLine.points}
-              onChangeText={(value) => updateSelectedLine('points', value)}
-              placeholder="Separe os pontos por virgula"
-              placeholderTextColor="#8A98A8"
-              multiline
-            />
-          </View>
+  function logout() {
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Home' }],
+    });
+  }
 
-          <View style={styles.inputGroup}>
-            <Text style={styles.label}>Horarios</Text>
-            <TextInput
-              style={styles.textArea}
-              value={selectedLine.times}
-              onChangeText={(value) => updateSelectedLine('times', value)}
-              placeholder="Separe os horarios por virgula"
-              placeholderTextColor="#8A98A8"
-              multiline
-            />
+  function handleAction(action) {
+    if (action.screen) {
+      navigation.navigate(action.screen, { adminMode: true });
+      return;
+    }
+
+    Alert.alert('Módulo em preparação', action.unavailable);
+  }
+
+  return (
+    <ImageBackground
+      source={require('../../../assets/admin-fundo.png')}
+      resizeMode="cover"
+      style={styles.background}
+    >
+      <View style={styles.backgroundOverlay} />
+
+      <SafeAreaView style={styles.safeArea}>
+        <LinearGradient
+          colors={['#1E40AF', '#3B82F6']}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          style={styles.header}
+        >
+          <View style={styles.headerTitleRow}>
+            <View style={styles.busIcon}>
+              <View style={styles.busWindow} />
+              <View style={styles.busWindow} />
+              <View style={styles.busWheelLeft} />
+              <View style={styles.busWheelRight} />
+            </View>
+            <Text style={styles.headerTitle}>Painel Administrativo</Text>
           </View>
 
           <TouchableOpacity
-            style={styles.primaryButton}
-            activeOpacity={0.86}
-            onPress={handleSave}
+            activeOpacity={0.82}
+            onPress={logout}
+            style={styles.logoutButton}
           >
-            <Text style={styles.primaryButtonText}>Salvar alteracoes</Text>
+            <Text style={styles.logoutIcon}>›</Text>
+            <Text style={styles.logoutText}>Sair</Text>
           </TouchableOpacity>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+        </LinearGradient>
+
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.scrollContent}
+        >
+          <View style={styles.intro}>
+            <Text style={styles.eyebrow}>TRANSPORTE PÚBLICO</Text>
+            <Text style={styles.pageTitle}>
+              Escolha uma área para gerenciar
+            </Text>
+            <Text style={styles.pageDescription}>
+              Atualize pontos, horários, rotas e motoristas pelo painel central
+              do sistema.
+            </Text>
+          </View>
+
+          <View style={styles.grid}>
+            {MODULES.map((item) => (
+              <AdminCard
+                key={item.id}
+                item={item}
+                columns={columns}
+                onAction={handleAction}
+              />
+            ))}
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+    </ImageBackground>
   );
 }

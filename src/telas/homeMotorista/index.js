@@ -1,182 +1,619 @@
-import React, { useMemo, useState } from 'react';
-import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  ActivityIndicator,
+  Animated,
+  Image,
+  LayoutAnimation,
+  Platform,
+  RefreshControl,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  UIManager,
+  View,
+} from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useNavigation } from '@react-navigation/native';
+import { WebView } from 'react-native-webview';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 import styles from './styles';
 import motoristaImage from '../../../assets/imgMotorista.png';
+import { get, getAssetUrl } from '../../services/api';
 
-// Troque este objeto pelo retorno da API quando o back estiver pronto.
-const DRIVER_MOCK = {
-  id: 'motorista-001',
-  name: 'Joao Paulo',
-  routeName: 'Linha Azul',
-  vehicle: 'Onibus 204',
-  plate: 'BUS-2047',
-  cnh: '00000000000',
-  cpf: '123.456.789-00',
-  nextStop: 'Terminal Central',
-  shift: 'Manha',
-  photo: motoristaImage,
+const ROUTE_MAPS = {
+  ROXA:
+    'https://www.google.com/maps/d/embed?mid=1EifQjeD8Cx_JHRKUjpf0wx2JezX3bxw&ehbc=2E312F',
+  AZUL:
+    'https://www.google.com/maps/d/embed?mid=1PZnUg7Xd-2Y_LuZgKu0I8XBxSUJqOGg&ehbc=2E312F',
+  LARANJA:
+    'https://www.google.com/maps/d/embed?mid=1bUGpvBgmP-nTU3OPTjyh48C8-2XWEt4&ehbc=2E312F',
+  AMARELA:
+    'https://www.google.com/maps/d/embed?mid=1oHTQrYTHxzncd8IdKuHOWY9z0damzVE&ehbc=2E312F',
 };
 
-const REVIEW_MOCK = [
-  {
-    motoristaId: 'motorista-001',
-    nota: 5,
-    comentario: 'Motorista atencioso e viagem tranquila.',
-    data: '22/05/2026 19:40',
-  },
-  {
-    motoristaId: 'motorista-001',
-    nota: 4,
-    comentario: 'Chegou no horario e dirigiu bem.',
-    data: '22/05/2026 18:10',
-  },
-];
+if (
+  Platform.OS === 'android' &&
+  UIManager.setLayoutAnimationEnabledExperimental
+) {
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+}
+
+function getInitials(name) {
+  return String(name || '?')
+    .trim()
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase())
+    .join('');
+}
+
+function getRouteCode(name) {
+  const words = String(name || '')
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean);
+
+  if (words.length > 1) {
+    return words
+      .slice(0, 2)
+      .map((word) => word[0])
+      .join('')
+      .toUpperCase();
+  }
+
+  return words[0]?.slice(0, 2).toUpperCase() || '--';
+}
+
+function normalizeRouteName(route) {
+  return route?.nome_rota || route?.nome_linhas || route?.nome_linha || '';
+}
+
+function routeMap(route) {
+  if (route?.mapa) {
+    return route.mapa;
+  }
+
+  return ROUTE_MAPS[normalizeRouteName(route).trim().toUpperCase()] || '';
+}
+
+function nextSchedule(schedules = []) {
+  const times = schedules
+    .map((schedule) => schedule.hora || schedule.passagem_horarios)
+    .filter(Boolean)
+    .map((time) => String(time).slice(0, 5))
+    .sort();
+
+  if (!times.length) {
+    return 'Não informado';
+  }
+
+  const now = new Date();
+  const current = `${String(now.getHours()).padStart(2, '0')}:${String(
+    now.getMinutes(),
+  ).padStart(2, '0')}`;
+
+  return times.find((time) => time >= current) || times[0];
+}
+
+function formatDate(value) {
+  if (!value) {
+    return 'Data não informada';
+  }
+
+  const date = new Date(value);
+  return Number.isNaN(date.getTime())
+    ? String(value)
+    : date.toLocaleDateString('pt-BR');
+}
+
+function Stars({ rating, size = 19 }) {
+  const roundedRating = Math.round(Number(rating || 0));
+
+  return (
+    <View style={styles.starsRow}>
+      {[1, 2, 3, 4, 5].map((star) => (
+        <Text
+          key={star}
+          style={[
+            styles.star,
+            { fontSize: size },
+            star <= roundedRating ? styles.starActive : styles.starInactive,
+          ]}
+        >
+          ★
+        </Text>
+      ))}
+    </View>
+  );
+}
 
 export default function HomeMotorista() {
   const navigation = useNavigation();
-  const [isOnline, setIsOnline] = useState(true);
-  const [reviews] = useState(REVIEW_MOCK);
+  const route = useRoute();
+  const driverId =
+    route.params?.id_motorista ||
+    route.params?.id ||
+    route.params?.driver?.id_motorista ||
+    null;
 
-  const averageRating = useMemo(() => {
-    if (reviews.length === 0) {
+  const [driver, setDriver] = useState(route.params?.driver || null);
+  const [routes, setRoutes] = useState([]);
+  const [reviews, setReviews] = useState([]);
+  const [apiAverage, setApiAverage] = useState(0);
+  const [activeTab, setActiveTab] = useState('routes');
+  const [expandedRouteId, setExpandedRouteId] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+  const [error, setError] = useState('');
+  const entrance = useRef(new Animated.Value(0)).current;
+
+  const loadData = useCallback(
+    async (isRefresh = false) => {
+      if (!driverId) {
+        setError('ID do motorista não informado.');
+        setLoading(false);
+        return;
+      }
+
+      try {
+        isRefresh ? setRefreshing(true) : setLoading(true);
+        setError('');
+
+        const [driverResponse, routesResponse, reviewsResponse, averageResponse] =
+          await Promise.all([
+            get(`/motoristas/${driverId}`),
+            get(`/motoristas/${driverId}/rotas`),
+            get(`/avaliacao/${driverId}`),
+            get(`/mediaAvaliacao/${driverId}`).catch(() => ({ media: 0 })),
+          ]);
+
+        const routeItems = routesResponse.dados?.rotas || [];
+        const detailedRoutes = await Promise.all(
+          routeItems.map(async (item) => {
+            try {
+              const response = await get(`/rotas/${item.id_rota}/detalhes`);
+              return { ...item, ...(response.dados || {}) };
+            } catch {
+              return item;
+            }
+          }),
+        );
+
+        setDriver(driverResponse.dados || routesResponse.dados || null);
+        setRoutes(detailedRoutes);
+        setReviews(reviewsResponse.dados || []);
+        setApiAverage(
+          averageResponse.media ?? averageResponse.dados?.media ?? 0,
+        );
+      } catch (loadError) {
+        setError(loadError.message);
+      } finally {
+        setLoading(false);
+        setRefreshing(false);
+      }
+    },
+    [driverId],
+  );
+
+  useEffect(() => {
+    loadData();
+  }, [loadData]);
+
+  useEffect(() => {
+    if (!loading && !error) {
+      Animated.timing(entrance, {
+        toValue: 1,
+        duration: 420,
+        useNativeDriver: true,
+      }).start();
+    }
+  }, [entrance, error, loading]);
+
+  const average = useMemo(() => {
+    if (Number(apiAverage) > 0) {
+      return Number(apiAverage).toFixed(1);
+    }
+
+    if (!reviews.length) {
       return '0.0';
     }
 
-    const total = reviews.reduce((sum, item) => sum + Number(item.nota || 0), 0);
+    const total = reviews.reduce(
+      (sum, review) => sum + Number(review.nota_avaliacao || 0),
+      0,
+    );
     return (total / reviews.length).toFixed(1);
-  }, [reviews]);
+  }, [apiAverage, reviews]);
+
+  const driverName =
+    driver?.nome_motorista || driver?.nome || 'Motorista';
+  const photoUrl = getAssetUrl(driver?.foto_motorista || driver?.foto);
+
+  function changeTab(tab) {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    setActiveTab(tab);
+  }
+
+  function toggleRoute(routeId) {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    setExpandedRouteId((current) =>
+      Number(current) === Number(routeId) ? null : routeId,
+    );
+  }
+
+  function logout() {
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Home' }],
+    });
+  }
+
+  if (loading) {
+    return (
+      <LinearGradient
+        colors={['#06142E', '#0B2F7A', '#1264E8']}
+        style={styles.centeredScreen}
+      >
+        <ActivityIndicator color="#FFFFFF" size="large" />
+        <Text style={styles.loadingText}>Carregando seu painel...</Text>
+      </LinearGradient>
+    );
+  }
+
+  if (error && !driver) {
+    return (
+      <LinearGradient
+        colors={['#06142E', '#0B2F7A', '#1264E8']}
+        style={styles.centeredScreen}
+      >
+        <Text style={styles.errorTitle}>Não foi possível carregar</Text>
+        <Text style={styles.errorText}>{error}</Text>
+        <TouchableOpacity style={styles.retryButton} onPress={() => loadData()}>
+          <Text style={styles.retryButtonText}>Tentar novamente</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.backLink} onPress={logout}>
+          <Text style={styles.backLinkText}>Voltar ao início</Text>
+        </TouchableOpacity>
+      </LinearGradient>
+    );
+  }
 
   return (
-    <SafeAreaView style={styles.screen}>
-      <View style={styles.header}>
-        <TouchableOpacity
-          style={styles.homeButton}
-          activeOpacity={0.85}
-          onPress={() => navigation.navigate('Home')}
+    <LinearGradient
+      colors={['#06142E', '#0B2F7A', '#1264E8']}
+      locations={[0, 0.55, 1]}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 1 }}
+      style={styles.screen}
+    >
+      <SafeAreaView style={styles.safeArea}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={() => loadData(true)}
+              tintColor="#FFFFFF"
+              colors={['#2F7CFF']}
+            />
+          }
+          contentContainerStyle={styles.content}
         >
-          <Text style={styles.homeButtonText}>Home</Text>
-        </TouchableOpacity>
+          <Animated.View
+            style={[
+              styles.animatedContent,
+              {
+                opacity: entrance,
+                transform: [
+                  {
+                    translateY: entrance.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: [16, 0],
+                    }),
+                  },
+                ],
+              },
+            ]}
+          >
+            <View style={styles.headerCard}>
+              <View style={styles.profileRow}>
+                {photoUrl ? (
+                  <Image source={{ uri: photoUrl }} style={styles.avatar} />
+                ) : driverName !== 'Motorista' ? (
+                  <LinearGradient
+                    colors={['#2F7CFF', '#0057D9']}
+                    style={styles.avatarFallback}
+                  >
+                    <Text style={styles.avatarInitials}>
+                      {getInitials(driverName)}
+                    </Text>
+                  </LinearGradient>
+                ) : (
+                  <Image source={motoristaImage} style={styles.avatar} />
+                )}
 
-        <View style={styles.headerTextGroup}>
-          <Text style={styles.brand}>BUSLY</Text>
-          <Text style={styles.headerTitle}>Painel do motorista</Text>
-        </View>
-      </View>
+                <View style={styles.profileCopy}>
+                  <Text style={styles.welcome}>BEM-VINDO DE VOLTA</Text>
+                  <Text style={styles.driverName}>{driverName}</Text>
+                  <View style={styles.idTag}>
+                    <Text style={styles.idTagText}>ID #{driverId}</Text>
+                  </View>
+                </View>
+              </View>
 
-      <ScrollView
-        style={styles.content}
-        contentContainerStyle={styles.contentContainer}
-        showsVerticalScrollIndicator={false}
-      >
-        <View style={styles.profileCard}>
-          <Image source={DRIVER_MOCK.photo} style={styles.avatar} />
+              <View style={styles.statsRow}>
+                <View style={styles.statItem}>
+                  <Text style={styles.statValue}>{routes.length}</Text>
+                  <Text style={styles.statLabel}>ROTAS</Text>
+                </View>
+                <View style={styles.statDivider} />
+                <View style={styles.statItem}>
+                  <Text style={styles.statValue}>{average}</Text>
+                  <Text style={styles.statLabel}>MÉDIA</Text>
+                </View>
+                <View style={styles.statDivider} />
+                <View style={styles.statItem}>
+                  <Text style={styles.statValue}>{reviews.length}</Text>
+                  <Text style={styles.statLabel}>AVALIAÇÕES</Text>
+                </View>
+              </View>
 
-          <View style={styles.profileInfo}>
-            <View
-              style={[
-                styles.statusPill,
-                isOnline ? styles.statusOnline : styles.statusOffline,
-              ]}
-            >
-              <Text
-                style={[
-                  styles.statusText,
-                  isOnline ? styles.statusTextOnline : styles.statusTextOffline,
-                ]}
+              <TouchableOpacity
+                activeOpacity={0.85}
+                onPress={logout}
+                style={styles.logoutButton}
               >
-                {isOnline ? 'Em rota' : 'Fora de rota'}
-              </Text>
+                <LinearGradient
+                  colors={['#2F7CFF', '#0057D9']}
+                  style={styles.logoutGradient}
+                >
+                  <Text style={styles.logoutText}>Sair</Text>
+                </LinearGradient>
+              </TouchableOpacity>
             </View>
 
-            <Text style={styles.driverName}>{DRIVER_MOCK.name}</Text>
-            <Text style={styles.driverRoute}>{DRIVER_MOCK.routeName}</Text>
-          </View>
-        </View>
+            <View style={styles.tabs}>
+              <TouchableOpacity
+                activeOpacity={0.85}
+                style={[
+                  styles.tab,
+                  activeTab === 'routes' && styles.tabActive,
+                ]}
+                onPress={() => changeTab('routes')}
+              >
+                <Text
+                  style={[
+                    styles.tabText,
+                    activeTab === 'routes' && styles.tabTextActive,
+                  ]}
+                >
+                  Minhas Rotas
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                activeOpacity={0.85}
+                style={[
+                  styles.tab,
+                  activeTab === 'reviews' && styles.tabActive,
+                ]}
+                onPress={() => changeTab('reviews')}
+              >
+                <Text
+                  style={[
+                    styles.tabText,
+                    activeTab === 'reviews' && styles.tabTextActive,
+                  ]}
+                >
+                  Avaliações
+                </Text>
+              </TouchableOpacity>
+            </View>
 
-        <View style={styles.statusCard}>
-          <View>
-            <Text style={styles.cardLabel}>Status da operacao</Text>
-            <Text style={styles.cardTitle}>
-              {isOnline ? 'Disponivel para passageiros' : 'Pausado'}
-            </Text>
-          </View>
+            <View style={styles.panel}>
+              {error ? (
+                <TouchableOpacity
+                  style={styles.inlineError}
+                  onPress={() => loadData()}
+                >
+                  <Text style={styles.inlineErrorText}>
+                    {error} Toque para tentar novamente.
+                  </Text>
+                </TouchableOpacity>
+              ) : null}
 
-          <TouchableOpacity
-            style={[
-              styles.statusButton,
-              isOnline ? styles.pauseButton : styles.startButton,
-            ]}
-            activeOpacity={0.85}
-            onPress={() => setIsOnline((current) => !current)}
-          >
-            <Text style={styles.statusButtonText}>
-              {isOnline ? 'Pausar' : 'Iniciar'}
-            </Text>
-          </TouchableOpacity>
-        </View>
+              {activeTab === 'routes' ? (
+                routes.length ? (
+                  routes.map((item) => {
+                    const isExpanded =
+                      Number(expandedRouteId) === Number(item.id_rota);
+                    const points = item.pontos || [];
+                    const schedules = item.horarios || [];
+                    const origin =
+                      item.origem || points[0]?.nome_ponto || 'Não informado';
+                    const destination =
+                      item.destino ||
+                      points[points.length - 1]?.nome_ponto ||
+                      'Não informado';
+                    const mapUrl = routeMap(item);
 
-        <View style={styles.statsGrid}>
-          <View style={styles.statBox}>
-            <Text style={styles.statLabel}>Nota media</Text>
-            <Text style={styles.statValue}>{averageRating}</Text>
-          </View>
+                    return (
+                      <View key={item.id_rota} style={styles.routeCard}>
+                        <TouchableOpacity
+                          activeOpacity={0.88}
+                          onPress={() => toggleRoute(item.id_rota)}
+                          style={styles.routePressable}
+                        >
+                          <LinearGradient
+                            colors={['#2F7CFF', '#0057D9']}
+                            style={styles.routeCode}
+                          >
+                            <Text style={styles.routeCodeText}>
+                              {getRouteCode(normalizeRouteName(item))}
+                            </Text>
+                          </LinearGradient>
 
-          <View style={styles.statBox}>
-            <Text style={styles.statLabel}>Avaliacoes</Text>
-            <Text style={styles.statValue}>{reviews.length}</Text>
-          </View>
+                          <View style={styles.routeInfo}>
+                            <View style={styles.routeTitleRow}>
+                              <Text style={styles.routeName}>
+                                Rota {normalizeRouteName(item) || item.id_rota}
+                              </Text>
+                              <Text style={styles.expandIcon}>
+                                {isExpanded ? '−' : '+'}
+                              </Text>
+                            </View>
 
-          <View style={styles.statBox}>
-            <Text style={styles.statLabel}>Proximo ponto</Text>
-            <Text style={styles.statValueSmall}>{DRIVER_MOCK.nextStop}</Text>
-          </View>
+                            <View style={styles.journeyRow}>
+                              <Text style={styles.journeyText}>{origin}</Text>
+                              <Text style={styles.journeyArrow}>→</Text>
+                              <Text style={styles.journeyText}>
+                                {destination}
+                              </Text>
+                            </View>
 
-          <View style={styles.statBox}>
-            <Text style={styles.statLabel}>Turno</Text>
-            <Text style={styles.statValueSmall}>{DRIVER_MOCK.shift}</Text>
-          </View>
-        </View>
+                            <View style={styles.routeMetaRow}>
+                              <View style={styles.metaPill}>
+                                <Text style={styles.metaText}>
+                                  {item.quantidade_pontos || points.length} pontos
+                                </Text>
+                              </View>
+                              <View style={styles.metaPill}>
+                                <Text style={styles.metaText}>
+                                  Próximo: {nextSchedule(schedules)}
+                                </Text>
+                              </View>
+                            </View>
 
-        <View style={styles.infoCard}>
-          <Text style={styles.sectionTitle}>Dados do motorista</Text>
+                            <View style={styles.activeBadge}>
+                              <Text style={styles.activeBadgeText}>
+                                {String(item.status || 'Ativa').toUpperCase()}
+                              </Text>
+                            </View>
+                          </View>
+                        </TouchableOpacity>
 
-          <View style={styles.infoRow}>
-            <Text style={styles.infoLabel}>CPF</Text>
-            <Text style={styles.infoValue}>{DRIVER_MOCK.cpf}</Text>
-          </View>
+                        {isExpanded ? (
+                          <View style={styles.routeDetails}>
+                            <Text style={styles.detailTitle}>Horários da rota</Text>
+                            <View style={styles.timesWrap}>
+                              {schedules.length ? (
+                                [...new Set(
+                                  schedules.map((schedule) =>
+                                    String(
+                                      schedule.hora ||
+                                        schedule.passagem_horarios,
+                                    ).slice(0, 5),
+                                  ),
+                                )].map((time) => (
+                                  <View key={time} style={styles.timePill}>
+                                    <Text style={styles.timeText}>{time}</Text>
+                                  </View>
+                                ))
+                              ) : (
+                                <Text style={styles.emptyDetail}>
+                                  Nenhum horário cadastrado.
+                                </Text>
+                              )}
+                            </View>
 
-          <View style={styles.infoRow}>
-            <Text style={styles.infoLabel}>CNH</Text>
-            <Text style={styles.infoValue}>{DRIVER_MOCK.cnh}</Text>
-          </View>
+                            <Text style={styles.detailTitle}>Pontos da rota</Text>
+                            {points.length ? (
+                              points.map((point, index) => (
+                                <View
+                                  key={point.id_ponto || index}
+                                  style={styles.pointRow}
+                                >
+                                  <View style={styles.pointIndex}>
+                                    <Text style={styles.pointIndexText}>
+                                      {index + 1}
+                                    </Text>
+                                  </View>
+                                  <Text style={styles.pointName}>
+                                    {point.nome_ponto || point.nome_pontos}
+                                  </Text>
+                                </View>
+                              ))
+                            ) : (
+                              <Text style={styles.emptyDetail}>
+                                Nenhum ponto cadastrado.
+                              </Text>
+                            )}
 
-          <View style={styles.infoRow}>
-            <Text style={styles.infoLabel}>Veiculo</Text>
-            <Text style={styles.infoValue}>{DRIVER_MOCK.vehicle}</Text>
-          </View>
+                            <Text style={styles.detailTitle}>Mapa da rota</Text>
+                            {mapUrl ? (
+                              <View style={styles.mapContainer}>
+                                <WebView
+                                  source={{ uri: mapUrl }}
+                                  style={styles.map}
+                                  startInLoadingState
+                                />
+                              </View>
+                            ) : (
+                              <Text style={styles.emptyDetail}>
+                                Mapa não disponível para esta rota.
+                              </Text>
+                            )}
+                          </View>
+                        ) : null}
+                      </View>
+                    );
+                  })
+                ) : (
+                  <View style={styles.emptyState}>
+                    <Text style={styles.emptyStateTitle}>Nenhuma rota</Text>
+                    <Text style={styles.emptyStateText}>
+                      Não há rotas vinculadas a este motorista no momento.
+                    </Text>
+                  </View>
+                )
+              ) : (
+                <>
+                  <View style={styles.reviewSummary}>
+                    <Text style={styles.averageValue}>{average}</Text>
+                    <Stars rating={average} size={25} />
+                    <Text style={styles.averageCaption}>
+                      Baseado em {reviews.length}{' '}
+                      {reviews.length === 1 ? 'avaliação' : 'avaliações'}
+                    </Text>
+                  </View>
 
-          <View style={styles.infoRowLast}>
-            <Text style={styles.infoLabel}>Placa</Text>
-            <Text style={styles.infoValue}>{DRIVER_MOCK.plate}</Text>
-          </View>
-        </View>
-
-        <TouchableOpacity
-          style={styles.primaryButton}
-          activeOpacity={0.86}
-          onPress={() =>
-            navigation.navigate('AvaliacoesMotorista', {
-              avaliacoes: reviews,
-              driver: DRIVER_MOCK,
-            })
-          }
-        >
-          <Text style={styles.primaryButtonText}>Ver avaliacoes</Text>
-        </TouchableOpacity>
-      </ScrollView>
-    </SafeAreaView>
+                  {reviews.length ? (
+                    reviews.map((review) => (
+                      <View
+                        key={review.id_avaliacao}
+                        style={styles.reviewCard}
+                      >
+                        <View style={styles.reviewHeader}>
+                          <Stars rating={review.nota_avaliacao} />
+                          <Text style={styles.reviewScore}>
+                            {Number(review.nota_avaliacao || 0).toFixed(1)}
+                          </Text>
+                        </View>
+                        <Text style={styles.reviewComment}>
+                          {review.comentario_avaliacao?.trim() ||
+                            'Avaliação enviada sem comentário.'}
+                        </Text>
+                        <Text style={styles.reviewDate}>
+                          {formatDate(review.data_avaliacao)}
+                        </Text>
+                      </View>
+                    ))
+                  ) : (
+                    <View style={styles.emptyState}>
+                      <Text style={styles.emptyStateTitle}>
+                        Nenhuma avaliação
+                      </Text>
+                      <Text style={styles.emptyStateText}>
+                        As avaliações recebidas aparecerão aqui.
+                      </Text>
+                    </View>
+                  )}
+                </>
+              )}
+            </View>
+          </Animated.View>
+        </ScrollView>
+      </SafeAreaView>
+    </LinearGradient>
   );
 }

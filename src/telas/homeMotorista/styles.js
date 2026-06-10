@@ -3,269 +3,473 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: '#F4F7FB',
   },
-
-  header: {
-    minHeight: 190,
-    backgroundColor: '#073D8F',
-    paddingHorizontal: 22,
-    paddingTop: 16,
-    paddingBottom: 34,
-    flexDirection: 'row',
-    alignItems: 'flex-start',
+  safeArea: {
+    flex: 1,
   },
-
-  homeButton: {
-    minHeight: 42,
-    paddingHorizontal: 16,
-    borderRadius: 8,
-    backgroundColor: '#FFFFFF',
+  content: {
+    padding: 14,
+    paddingBottom: 30,
+  },
+  animatedContent: {
+    flex: 1,
+  },
+  centeredScreen: {
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 14,
+    padding: 28,
   },
-
-  homeButtonText: {
-    color: '#073D8F',
-    fontSize: 14,
-    fontWeight: '900',
+  loadingText: {
+    color: '#DBEAFE',
+    fontSize: 15,
+    fontWeight: '700',
+    marginTop: 14,
   },
-
-  headerTextGroup: {
-    flex: 1,
-  },
-
-  brand: {
-    color: '#8FD8FF',
-    fontSize: 16,
-    fontWeight: '900',
-    letterSpacing: 0,
-    marginBottom: 8,
-  },
-
-  headerTitle: {
+  errorTitle: {
     color: '#FFFFFF',
-    fontSize: 30,
-    lineHeight: 36,
-    fontWeight: '900',
-  },
-
-  content: {
-    flex: 1,
-    marginTop: -52,
-  },
-
-  contentContainer: {
-    paddingHorizontal: 18,
-    paddingBottom: 28,
-  },
-
-  profileCard: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 22,
-    padding: 16,
-    flexDirection: 'row',
-    alignItems: 'center',
-    shadowColor: '#0A2A55',
-    shadowOffset: { width: 0, height: 12 },
-    shadowOpacity: 0.12,
-    shadowRadius: 24,
-    elevation: 5,
-  },
-
-  avatar: {
-    width: 86,
-    height: 86,
-    borderRadius: 43,
-    backgroundColor: '#E8F2FF',
-    marginRight: 16,
-  },
-
-  profileInfo: {
-    flex: 1,
-  },
-
-  statusPill: {
-    alignSelf: 'flex-start',
-    borderRadius: 8,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    marginBottom: 8,
-  },
-
-  statusOnline: {
-    backgroundColor: '#DDF8E8',
-  },
-
-  statusOffline: {
-    backgroundColor: '#FFE4E6',
-  },
-
-  statusText: {
-    fontSize: 12,
-    fontWeight: '900',
-  },
-
-  statusTextOnline: {
-    color: '#197A42',
-  },
-
-  statusTextOffline: {
-    color: '#BE123C',
-  },
-
-  driverName: {
-    color: '#082D63',
     fontSize: 24,
     fontWeight: '900',
+    textAlign: 'center',
   },
-
-  driverRoute: {
-    color: '#65758A',
+  errorText: {
+    color: '#BFDBFE',
     fontSize: 15,
-    fontWeight: '800',
-    marginTop: 4,
+    lineHeight: 22,
+    marginTop: 8,
+    textAlign: 'center',
   },
-
-  statusCard: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 18,
-    padding: 16,
+  retryButton: {
+    backgroundColor: '#2F7CFF',
+    borderRadius: 12,
+    marginTop: 22,
+    paddingHorizontal: 24,
+    paddingVertical: 13,
+  },
+  retryButtonText: {
+    color: '#FFFFFF',
+    fontSize: 15,
+    fontWeight: '900',
+  },
+  backLink: {
     marginTop: 16,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#E3EAF3',
+    padding: 8,
   },
-
-  cardLabel: {
-    color: '#65758A',
+  backLinkText: {
+    color: '#BFDBFE',
+    fontWeight: '800',
+  },
+  headerCard: {
+    backgroundColor: 'rgba(18, 63, 150, 0.72)',
+    borderColor: 'rgba(120, 170, 255, 0.28)',
+    borderRadius: 22,
+    borderWidth: 1,
+    padding: 18,
+    shadowColor: '#001450',
+    shadowOffset: { width: 0, height: 16 },
+    shadowOpacity: 0.3,
+    shadowRadius: 24,
+    elevation: 8,
+  },
+  profileRow: {
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  avatar: {
+    backgroundColor: '#DCEBFF',
+    borderColor: 'rgba(147, 197, 253, 0.5)',
+    borderRadius: 39,
+    borderWidth: 3,
+    height: 78,
+    width: 78,
+  },
+  avatarFallback: {
+    alignItems: 'center',
+    borderColor: 'rgba(147, 197, 253, 0.5)',
+    borderRadius: 39,
+    borderWidth: 3,
+    height: 78,
+    justifyContent: 'center',
+    width: 78,
+  },
+  avatarInitials: {
+    color: '#FFFFFF',
+    fontSize: 25,
+    fontWeight: '900',
+  },
+  profileCopy: {
+    flex: 1,
+    marginLeft: 15,
+  },
+  welcome: {
+    color: '#BFDBFE',
+    fontSize: 10,
+    fontWeight: '800',
+    letterSpacing: 1.1,
+  },
+  driverName: {
+    color: '#FFFFFF',
+    fontSize: 24,
+    fontWeight: '900',
+    lineHeight: 29,
+    marginTop: 3,
+  },
+  idTag: {
+    alignSelf: 'flex-start',
+    backgroundColor: 'rgba(191, 219, 254, 0.13)',
+    borderRadius: 20,
+    marginTop: 7,
+    paddingHorizontal: 11,
+    paddingVertical: 5,
+  },
+  idTagText: {
+    color: '#DBEAFE',
     fontSize: 12,
     fontWeight: '800',
   },
-
-  cardTitle: {
-    color: '#082D63',
-    fontSize: 17,
-    fontWeight: '900',
-    marginTop: 4,
-    maxWidth: 190,
-  },
-
-  statusButton: {
-    minHeight: 42,
-    minWidth: 86,
-    borderRadius: 8,
+  statsRow: {
     alignItems: 'center',
+    backgroundColor: 'rgba(8, 28, 74, 0.42)',
+    borderRadius: 17,
+    flexDirection: 'row',
+    marginTop: 18,
+    paddingVertical: 14,
+  },
+  statItem: {
+    alignItems: 'center',
+    flex: 1,
+  },
+  statValue: {
+    color: '#FFFFFF',
+    fontSize: 25,
+    fontWeight: '900',
+  },
+  statLabel: {
+    color: '#BFDBFE',
+    fontSize: 9,
+    fontWeight: '800',
+    letterSpacing: 0.5,
+    marginTop: 3,
+  },
+  statDivider: {
+    backgroundColor: 'rgba(147, 197, 253, 0.2)',
+    height: 38,
+    width: 1,
+  },
+  logoutButton: {
+    borderRadius: 12,
+    marginTop: 14,
+    overflow: 'hidden',
+  },
+  logoutGradient: {
+    alignItems: 'center',
+    minHeight: 46,
     justifyContent: 'center',
   },
-
-  pauseButton: {
-    backgroundColor: '#F97316',
-  },
-
-  startButton: {
-    backgroundColor: '#16A34A',
-  },
-
-  statusButtonText: {
+  logoutText: {
     color: '#FFFFFF',
+    fontSize: 15,
+    fontWeight: '900',
+  },
+  tabs: {
+    flexDirection: 'row',
+    gap: 8,
+    marginTop: 18,
+  },
+  tab: {
+    alignItems: 'center',
+    backgroundColor: 'rgba(18, 63, 150, 0.5)',
+    borderTopLeftRadius: 14,
+    borderTopRightRadius: 14,
+    flex: 1,
+    paddingHorizontal: 12,
+    paddingVertical: 14,
+  },
+  tabActive: {
+    backgroundColor: '#216DE5',
+  },
+  tabText: {
+    color: '#BFDBFE',
     fontSize: 14,
     fontWeight: '900',
   },
-
-  statsGrid: {
+  tabTextActive: {
+    color: '#FFFFFF',
+  },
+  panel: {
+    backgroundColor: 'rgba(8, 28, 74, 0.8)',
+    borderColor: 'rgba(120, 170, 255, 0.22)',
+    borderBottomLeftRadius: 22,
+    borderBottomRightRadius: 22,
+    borderTopRightRadius: 22,
+    borderWidth: 1,
+    minHeight: 360,
+    padding: 14,
+    shadowColor: '#001450',
+    shadowOffset: { width: 0, height: 16 },
+    shadowOpacity: 0.26,
+    shadowRadius: 24,
+    elevation: 7,
+  },
+  inlineError: {
+    backgroundColor: 'rgba(239, 68, 68, 0.18)',
+    borderColor: 'rgba(252, 165, 165, 0.38)',
+    borderRadius: 12,
+    borderWidth: 1,
+    marginBottom: 12,
+    padding: 12,
+  },
+  inlineErrorText: {
+    color: '#FEE2E2',
+    fontSize: 13,
+    fontWeight: '700',
+    lineHeight: 19,
+  },
+  routeCard: {
+    backgroundColor: 'rgba(56, 98, 177, 0.3)',
+    borderColor: 'rgba(120, 170, 255, 0.18)',
+    borderRadius: 18,
+    borderWidth: 1,
+    marginBottom: 13,
+    overflow: 'hidden',
+  },
+  routePressable: {
+    flexDirection: 'row',
+    padding: 14,
+  },
+  routeCode: {
+    alignItems: 'center',
+    borderRadius: 15,
+    height: 58,
+    justifyContent: 'center',
+    width: 58,
+  },
+  routeCodeText: {
+    color: '#FFFFFF',
+    fontSize: 18,
+    fontWeight: '900',
+  },
+  routeInfo: {
+    flex: 1,
+    marginLeft: 13,
+  },
+  routeTitleRow: {
+    alignItems: 'flex-start',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  routeName: {
+    color: '#FFFFFF',
+    flex: 1,
+    fontSize: 18,
+    fontWeight: '900',
+    lineHeight: 22,
+  },
+  expandIcon: {
+    color: '#BFDBFE',
+    fontSize: 23,
+    fontWeight: '400',
+    lineHeight: 23,
+    marginLeft: 8,
+  },
+  journeyRow: {
+    alignItems: 'center',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 10,
-    marginTop: 16,
+    marginTop: 7,
   },
-
-  statBox: {
-    width: '48%',
-    minHeight: 94,
-    backgroundColor: '#FFFFFF',
-    borderRadius: 18,
-    padding: 14,
-    justifyContent: 'center',
-    borderWidth: 1,
-    borderColor: '#E3EAF3',
-  },
-
-  statLabel: {
-    color: '#65758A',
+  journeyText: {
+    color: '#DBEAFE',
     fontSize: 12,
-    fontWeight: '800',
-    marginBottom: 7,
+    fontWeight: '700',
+    maxWidth: '43%',
   },
-
-  statValue: {
-    color: '#073D8F',
-    fontSize: 30,
-    fontWeight: '900',
-  },
-
-  statValueSmall: {
-    color: '#082D63',
-    fontSize: 17,
-    lineHeight: 21,
-    fontWeight: '900',
-  },
-
-  infoCard: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 18,
-    padding: 16,
-    marginTop: 16,
-    borderWidth: 1,
-    borderColor: '#E3EAF3',
-  },
-
-  sectionTitle: {
-    color: '#082D63',
-    fontSize: 20,
-    fontWeight: '900',
-    marginBottom: 8,
-  },
-
-  infoRow: {
-    paddingVertical: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: '#E8EEF6',
-  },
-
-  infoRowLast: {
-    paddingTop: 12,
-  },
-
-  infoLabel: {
-    color: '#65758A',
-    fontSize: 12,
-    fontWeight: '800',
-    marginBottom: 4,
-  },
-
-  infoValue: {
-    color: '#16263A',
+  journeyArrow: {
+    color: '#93C5FD',
     fontSize: 16,
+    marginHorizontal: 7,
+  },
+  routeMetaRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 6,
+    marginTop: 10,
+  },
+  metaPill: {
+    backgroundColor: 'rgba(191, 219, 254, 0.12)',
+    borderRadius: 20,
+    paddingHorizontal: 9,
+    paddingVertical: 5,
+  },
+  metaText: {
+    color: '#DBEAFE',
+    fontSize: 11,
+    fontWeight: '700',
+  },
+  activeBadge: {
+    alignSelf: 'flex-start',
+    backgroundColor: '#22C55E',
+    borderRadius: 20,
+    marginTop: 8,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+  },
+  activeBadgeText: {
+    color: '#FFFFFF',
+    fontSize: 10,
     fontWeight: '900',
   },
-
-  primaryButton: {
-    minHeight: 52,
-    backgroundColor: '#073D8F',
+  routeDetails: {
+    borderTopColor: 'rgba(147, 197, 253, 0.17)',
+    borderTopWidth: 1,
+    padding: 14,
+  },
+  detailTitle: {
+    color: '#FFFFFF',
+    fontSize: 15,
+    fontWeight: '900',
+    marginBottom: 10,
+    marginTop: 6,
+  },
+  timesWrap: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 7,
+    marginBottom: 10,
+  },
+  timePill: {
+    backgroundColor: 'rgba(47, 124, 255, 0.3)',
+    borderColor: 'rgba(147, 197, 253, 0.22)',
+    borderRadius: 9,
+    borderWidth: 1,
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+  },
+  timeText: {
+    color: '#FFFFFF',
+    fontSize: 12,
+    fontWeight: '900',
+  },
+  pointRow: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginBottom: 9,
+  },
+  pointIndex: {
+    alignItems: 'center',
+    backgroundColor: '#216DE5',
+    borderRadius: 13,
+    height: 26,
+    justifyContent: 'center',
+    width: 26,
+  },
+  pointIndexText: {
+    color: '#FFFFFF',
+    fontSize: 11,
+    fontWeight: '900',
+  },
+  pointName: {
+    color: '#DBEAFE',
+    flex: 1,
+    fontSize: 13,
+    fontWeight: '700',
+    marginLeft: 10,
+  },
+  emptyDetail: {
+    color: '#93B5E6',
+    fontSize: 13,
+    lineHeight: 19,
+    marginBottom: 10,
+  },
+  mapContainer: {
+    backgroundColor: '#DCEBFF',
     borderRadius: 14,
+    height: 230,
+    overflow: 'hidden',
+  },
+  map: {
+    flex: 1,
+  },
+  reviewSummary: {
+    alignItems: 'center',
+    borderBottomColor: 'rgba(147, 197, 253, 0.16)',
+    borderBottomWidth: 1,
+    marginBottom: 16,
+    paddingBottom: 22,
+    paddingTop: 8,
+  },
+  averageValue: {
+    color: '#FFFFFF',
+    fontSize: 54,
+    fontWeight: '900',
+  },
+  averageCaption: {
+    color: '#BFDBFE',
+    fontSize: 13,
+    fontWeight: '700',
+    marginTop: 7,
+  },
+  starsRow: {
+    flexDirection: 'row',
+  },
+  star: {
+    lineHeight: 26,
+    marginRight: 2,
+  },
+  starActive: {
+    color: '#FACC15',
+  },
+  starInactive: {
+    color: 'rgba(191, 219, 254, 0.28)',
+  },
+  reviewCard: {
+    backgroundColor: 'rgba(56, 98, 177, 0.3)',
+    borderColor: 'rgba(120, 170, 255, 0.18)',
+    borderRadius: 17,
+    borderWidth: 1,
+    marginBottom: 12,
+    padding: 16,
+  },
+  reviewHeader: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  reviewScore: {
+    color: '#FFFFFF',
+    fontSize: 15,
+    fontWeight: '900',
+  },
+  reviewComment: {
+    color: '#DBEAFE',
+    fontSize: 14,
+    fontStyle: 'italic',
+    lineHeight: 21,
+    marginTop: 11,
+  },
+  reviewDate: {
+    color: '#93C5FD',
+    fontSize: 12,
+    fontWeight: '700',
+    marginTop: 12,
+  },
+  emptyState: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 16,
+    minHeight: 280,
+    padding: 24,
   },
-
-  primaryButtonText: {
+  emptyStateTitle: {
     color: '#FFFFFF',
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: '900',
+  },
+  emptyStateText: {
+    color: '#BFDBFE',
+    fontSize: 14,
+    lineHeight: 21,
+    marginTop: 7,
+    textAlign: 'center',
   },
 });
 

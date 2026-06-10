@@ -1,207 +1,259 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-  screen: {
+  background: {
     flex: 1,
-    backgroundColor: '#F4F7FB',
+    backgroundColor: '#081020',
   },
-
+  backgroundOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(8, 15, 32, 0.68)',
+  },
+  safeArea: {
+    flex: 1,
+  },
   header: {
-    minHeight: 178,
-    backgroundColor: '#073D8F',
-    paddingHorizontal: 22,
-    paddingTop: 16,
-    paddingBottom: 34,
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-  },
-
-  homeButton: {
-    minHeight: 42,
-    paddingHorizontal: 16,
-    borderRadius: 8,
-    backgroundColor: '#FFFFFF',
     alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 14,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    minHeight: 82,
+    paddingHorizontal: 18,
+    paddingVertical: 14,
+    shadowColor: '#0F172A',
+    shadowOffset: { width: 0, height: 12 },
+    shadowOpacity: 0.3,
+    shadowRadius: 22,
+    elevation: 10,
   },
-
-  homeButtonText: {
-    color: '#073D8F',
-    fontSize: 14,
-    fontWeight: '900',
-  },
-
-  headerTextGroup: {
+  headerTitleRow: {
+    alignItems: 'center',
     flex: 1,
+    flexDirection: 'row',
   },
-
-  brand: {
-    color: '#8FD8FF',
-    fontSize: 16,
-    fontWeight: '900',
-    letterSpacing: 0,
-    marginBottom: 8,
-  },
-
   headerTitle: {
     color: '#FFFFFF',
-    fontSize: 31,
-    lineHeight: 36,
-    fontWeight: '900',
-  },
-
-  content: {
     flex: 1,
-    marginTop: -46,
-  },
-
-  contentContainer: {
-    paddingHorizontal: 18,
-    paddingBottom: 28,
-  },
-
-  summaryCard: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 22,
-    padding: 18,
-    shadowColor: '#0A2A55',
-    shadowOffset: { width: 0, height: 12 },
-    shadowOpacity: 0.12,
-    shadowRadius: 24,
-    elevation: 5,
-  },
-
-  summaryLabel: {
-    color: '#65758A',
-    fontSize: 12,
-    fontWeight: '800',
-  },
-
-  summaryTitle: {
-    color: '#082D63',
-    fontSize: 23,
-    lineHeight: 29,
-    fontWeight: '900',
-    marginTop: 4,
-  },
-
-  summaryText: {
-    color: '#53677D',
-    fontSize: 14,
-    lineHeight: 21,
-    fontWeight: '600',
-    marginTop: 8,
-  },
-
-  sectionTitle: {
-    color: '#082D63',
     fontSize: 21,
     fontWeight: '900',
-    marginTop: 24,
-    marginBottom: 12,
+    marginLeft: 10,
   },
-
-  lineGrid: {
+  busIcon: {
+    borderColor: '#FFFFFF',
+    borderRadius: 5,
+    borderWidth: 2,
+    flexDirection: 'row',
+    height: 24,
+    justifyContent: 'space-evenly',
+    paddingTop: 4,
+    position: 'relative',
+    width: 30,
+  },
+  busWindow: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 1,
+    height: 7,
+    width: 8,
+  },
+  busWheelLeft: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 3,
+    bottom: -4,
+    height: 6,
+    left: 4,
+    position: 'absolute',
+    width: 6,
+  },
+  busWheelRight: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 3,
+    bottom: -4,
+    height: 6,
+    position: 'absolute',
+    right: 4,
+    width: 6,
+  },
+  logoutButton: {
+    alignItems: 'center',
+    backgroundColor: '#1E3A8A',
+    borderRadius: 11,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    minHeight: 46,
+    paddingHorizontal: 14,
+  },
+  logoutText: {
+    color: '#FFFFFF',
+    fontSize: 14,
+    fontWeight: '900',
+    marginLeft: 7,
+  },
+  logoutIcon: {
+    color: '#FFFFFF',
+    fontSize: 27,
+    fontWeight: '500',
+    lineHeight: 28,
+    transform: [{ rotate: '180deg' }],
+  },
+  scrollContent: {
+    paddingBottom: 34,
+    paddingHorizontal: 16,
+    paddingTop: 30,
+  },
+  intro: {
+    marginBottom: 24,
+  },
+  eyebrow: {
+    color: '#BFDBFE',
+    fontSize: 12,
+    fontWeight: '900',
+    letterSpacing: 0.5,
+    marginBottom: 8,
+  },
+  pageTitle: {
+    color: '#FFFFFF',
+    fontSize: 31,
+    fontWeight: '900',
+    letterSpacing: -0.7,
+    lineHeight: 37,
+  },
+  pageDescription: {
+    color: 'rgba(255, 255, 255, 0.78)',
+    fontSize: 15,
+    fontWeight: '600',
+    lineHeight: 23,
+    marginTop: 10,
+    maxWidth: 620,
+  },
+  grid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 10,
+    justifyContent: 'space-between',
   },
-
-  lineButton: {
-    width: '48%',
-    minHeight: 58,
-    borderRadius: 16,
-    backgroundColor: '#FFFFFF',
-    paddingHorizontal: 14,
-    flexDirection: 'row',
+  cardShell: {
+    borderRadius: 20,
+    marginBottom: 16,
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 14 },
+    shadowOpacity: 0.3,
+    shadowRadius: 24,
+    elevation: 9,
+  },
+  cardFull: {
+    width: '100%',
+  },
+  cardHalf: {
+    width: '48.6%',
+  },
+  cardTouchArea: {
+    borderRadius: 20,
+    overflow: 'hidden',
+  },
+  card: {
+    backgroundColor: 'rgba(255, 255, 255, 0.11)',
+    borderColor: 'rgba(255, 255, 255, 0.22)',
+    borderRadius: 20,
+    borderWidth: 1,
+    minHeight: 380,
+    overflow: 'hidden',
+  },
+  cardContent: {
+    flex: 1,
+    padding: 20,
+  },
+  cardImage: {
+    alignSelf: 'center',
+    height: 126,
+    width: '100%',
+  },
+  cardIconArea: {
     alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#E3EAF3',
+    height: 126,
+    justifyContent: 'center',
   },
-
-  lineDot: {
-    width: 14,
-    height: 14,
-    borderRadius: 7,
-    marginRight: 10,
+  driverIcon: {
+    alignItems: 'center',
+    height: 100,
+    justifyContent: 'flex-end',
+    position: 'relative',
+    width: 112,
   },
-
-  lineButtonText: {
-    color: '#082D63',
-    fontSize: 16,
-    fontWeight: '900',
+  driverHead: {
+    borderColor: '#DBEAFE',
+    borderRadius: 23,
+    borderWidth: 7,
+    height: 46,
+    position: 'absolute',
+    top: 3,
+    width: 46,
   },
-
-  lineButtonTextActive: {
+  driverBody: {
+    borderColor: '#DBEAFE',
+    borderBottomWidth: 0,
+    borderRadius: 34,
+    borderWidth: 7,
+    height: 52,
+    width: 72,
+  },
+  driverPlus: {
+    color: '#DBEAFE',
+    fontSize: 42,
+    fontWeight: '600',
+    position: 'absolute',
+    right: 0,
+    top: 43,
+  },
+  cardCopy: {
+    flex: 1,
+    marginTop: 12,
+  },
+  cardTitle: {
     color: '#FFFFFF',
-  },
-
-  formCard: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 22,
-    padding: 18,
-    marginTop: 16,
-    borderWidth: 1,
-    borderColor: '#E3EAF3',
-  },
-
-  formTitle: {
-    color: '#082D63',
     fontSize: 22,
     fontWeight: '900',
-    marginBottom: 16,
+    lineHeight: 27,
   },
-
-  inputGroup: {
-    marginBottom: 14,
+  cardDescription: {
+    color: 'rgba(255, 255, 255, 0.76)',
+    fontSize: 14,
+    fontWeight: '600',
+    lineHeight: 21,
+    marginTop: 9,
   },
-
-  label: {
-    color: '#65758A',
-    fontSize: 13,
-    fontWeight: '800',
-    marginBottom: 7,
+  cardActions: {
+    marginTop: 18,
   },
-
-  input: {
-    minHeight: 52,
-    backgroundColor: '#F4F7FB',
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: '#E1E8F0',
-    paddingHorizontal: 14,
-    color: '#16263A',
-    fontSize: 15,
-    fontWeight: '700',
+  actionButton: {
+    borderRadius: 11,
+    marginTop: 10,
+    overflow: 'hidden',
   },
-
-  textArea: {
-    minHeight: 92,
-    backgroundColor: '#F4F7FB',
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: '#E1E8F0',
-    padding: 14,
-    color: '#16263A',
-    fontSize: 15,
-    fontWeight: '700',
-    textAlignVertical: 'top',
-  },
-
-  primaryButton: {
-    minHeight: 52,
-    backgroundColor: '#073D8F',
-    borderRadius: 14,
+  actionGradient: {
     alignItems: 'center',
+    flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: 4,
+    minHeight: 50,
+    paddingHorizontal: 14,
   },
-
-  primaryButtonText: {
+  actionIcon: {
+    alignItems: 'center',
+    borderColor: 'rgba(255, 255, 255, 0.9)',
+    borderRadius: 5,
+    borderWidth: 1.5,
+    height: 22,
+    justifyContent: 'center',
+    width: 22,
+  },
+  actionIconText: {
     color: '#FFFFFF',
-    fontSize: 16,
+    fontSize: 12,
     fontWeight: '900',
+    lineHeight: 15,
+  },
+  actionText: {
+    color: '#FFFFFF',
+    fontSize: 15,
+    fontWeight: '900',
+    marginLeft: 8,
   },
 });
 

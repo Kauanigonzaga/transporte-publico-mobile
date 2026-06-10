@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
 import styles from './styles';
+import { get } from '../../services/api';
 
 export default function Login() {
   const navigation = useNavigation();
@@ -11,6 +12,7 @@ export default function Login() {
   const [user, setUser] = useState('');
   const [password, setPassword] = useState('');
   const [loginType, setLoginType] = useState('motorista');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (route.params?.loginType === 'admin' || route.params?.loginType === 'motorista') {
@@ -18,14 +20,50 @@ export default function Login() {
     }
   }, [route.params?.loginType]);
 
-  function handleLogin() {
+  async function handleLogin() {
     if (!user.trim() || !password.trim()) {
       Alert.alert('Dados obrigatorios', 'Informe usuario e senha para continuar.');
       return;
     }
 
-    // Depois, troque este trecho por uma chamada POST para a API de login.
-    navigation.navigate(loginType === 'motorista' ? 'HomeMotorista' : 'HomeAdmin');
+    if (loginType === 'admin') {
+      navigation.navigate('HomeAdmin');
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      const response = await get('/usuarios');
+      const authenticatedUser = (response.dados || []).find(
+        (item) =>
+          String(item.nome_usuario) === user.trim() &&
+          String(item.senha_usuario) === password &&
+          Number(item.id_tipo_usuario) === 2,
+      );
+
+      if (!authenticatedUser) {
+        Alert.alert('Acesso negado', 'Usuario ou senha invalidos.');
+        return;
+      }
+
+      const driverId =
+        authenticatedUser.id_motorista || authenticatedUser.id_usuario;
+
+      navigation.reset({
+        index: 0,
+        routes: [
+          {
+            name: 'HomeMotorista',
+            params: { id_motorista: Number(driverId) },
+          },
+        ],
+      });
+    } catch (loginError) {
+      Alert.alert('Erro ao entrar', loginError.message);
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -115,12 +153,17 @@ export default function Login() {
         </View>
 
         <TouchableOpacity
-          style={styles.primaryButton}
+          style={[styles.primaryButton, loading && { opacity: 0.65 }]}
           activeOpacity={0.86}
           onPress={handleLogin}
+          disabled={loading}
         >
           <Text style={styles.primaryButtonText}>
-            {loginType === 'motorista' ? 'Entrar como motorista' : 'Entrar como admin'}
+            {loading
+              ? 'Entrando...'
+              : loginType === 'motorista'
+                ? 'Entrar como motorista'
+                : 'Entrar como admin'}
           </Text>
         </TouchableOpacity>
 
