@@ -56,7 +56,7 @@ export default function Home() {
             <View style={styles.logoIcon}>
               <BusIcon />
             </View>
-            <Text style={styles.brand}>Busly</Text>
+            <Text style={styles.brand}>OminiBus</Text>
           </View>
         </View>
 

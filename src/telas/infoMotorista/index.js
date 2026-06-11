@@ -149,7 +149,7 @@ export default function InfoMotorista() {
         </TouchableOpacity>
 
         <View style={styles.headerTextGroup}>
-          <Text style={styles.brand}>BUSLY</Text>
+          <Text style={styles.brand}>OminiBus</Text>
           <Text style={styles.title}>Motorista</Text>
         </View>
       </View>

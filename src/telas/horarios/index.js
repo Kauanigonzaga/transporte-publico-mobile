@@ -65,6 +65,13 @@ export default function Horarios() {
   const navigation = useNavigation();
   const [selectedLineId, setSelectedLineId] = useState(SCHEDULES[0].id);
 
+  function goHome() {
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Home' }],
+    });
+  }
+
   const selectedLine = useMemo(
     () => SCHEDULES.find((line) => line.id === selectedLineId) || SCHEDULES[0],
     [selectedLineId],
@@ -78,13 +85,13 @@ export default function Horarios() {
         <TouchableOpacity
           style={styles.backButton}
           activeOpacity={0.85}
-          onPress={() => navigation.navigate('Home')}
+          onPress={goHome}
         >
           <Text style={styles.backButtonText}>{'<'}</Text>
         </TouchableOpacity>
 
         <View style={styles.headerTextGroup}>
-          <Text style={styles.brand}>BUSLY</Text>
+          <Text style={styles.brand}>OminiBus</Text>
           <Text style={styles.headerTitle}>Horarios</Text>
         </View>
       </View>

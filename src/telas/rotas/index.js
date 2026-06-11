@@ -172,6 +172,13 @@ export default function RotasScreen() {
     });
   }
 
+  function goHome() {
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Home' }],
+    });
+  }
+
   function renderPanelContent() {
     if (loadingDetails) {
       return (
@@ -289,14 +296,14 @@ export default function RotasScreen() {
     <SafeAreaView style={styles.screen}>
       <View style={styles.header}>
         <View style={styles.headerCopy}>
-          <Text style={styles.brand}>BUSLY</Text>
+          <Text style={styles.brand}>OminiBus</Text>
           <Text style={styles.headerTitle}>Escolha sua rota</Text>
         </View>
 
         <TouchableOpacity
           style={styles.homeButton}
           activeOpacity={0.85}
-          onPress={() => navigation.navigate('Home')}
+          onPress={goHome}
         >
           <Text style={styles.homeButtonText}>Home</Text>
         </TouchableOpacity>

@@ -57,6 +57,13 @@ export default function LinhasPontos() {
   const navigation = useNavigation();
   const [selectedLineId, setSelectedLineId] = useState(LINES[0].id);
 
+  function goHome() {
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Home' }],
+    });
+  }
+
   const selectedLine = useMemo(
     () => LINES.find((line) => line.id === selectedLineId) || LINES[0],
     [selectedLineId],
@@ -68,13 +75,13 @@ export default function LinhasPontos() {
         <TouchableOpacity
           style={styles.backButton}
           activeOpacity={0.85}
-          onPress={() => navigation.navigate('Home')}
+          onPress={goHome}
         >
           <Text style={styles.backButtonText}>{'<'}</Text>
         </TouchableOpacity>
 
         <View style={styles.headerTextGroup}>
-          <Text style={styles.brand}>BUSLY</Text>
+          <Text style={styles.brand}>OminiBus</Text>
           <Text style={styles.headerTitle}>Linhas e pontos</Text>
         </View>
       </View>

@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
 import styles from './styles';
-import { get } from '../../services/api';
+import { post } from '../../services/api';
 
 export default function Login() {
   const navigation = useNavigation();
@@ -20,42 +20,51 @@ export default function Login() {
     }
   }, [route.params?.loginType]);
 
+  function goHome() {
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Home' }],
+    });
+  }
+
   async function handleLogin() {
     if (!user.trim() || !password.trim()) {
       Alert.alert('Dados obrigatorios', 'Informe usuario e senha para continuar.');
       return;
     }
 
-    if (loginType === 'admin') {
-      navigation.navigate('HomeAdmin');
-      return;
-    }
-
     try {
       setLoading(true);
 
-      const response = await get('/usuarios');
-      const authenticatedUser = (response.dados || []).find(
-        (item) =>
-          String(item.nome_usuario) === user.trim() &&
-          String(item.senha_usuario) === password &&
-          Number(item.id_tipo_usuario) === 2,
-      );
+      const response = await post('/login', {
+        usuario: user.trim(),
+        senha: password,
+        tipo: loginType,
+      });
+      const authenticatedUser = response.dados;
 
-      if (!authenticatedUser) {
-        Alert.alert('Acesso negado', 'Usuario ou senha invalidos.');
+      if (loginType === 'admin') {
+        navigation.reset({
+          index: 0,
+          routes: [
+            {
+              name: 'HomeAdmin',
+              params: { usuario: authenticatedUser },
+            },
+          ],
+        });
         return;
       }
-
-      const driverId =
-        authenticatedUser.id_motorista || authenticatedUser.id_usuario;
 
       navigation.reset({
         index: 0,
         routes: [
           {
             name: 'HomeMotorista',
-            params: { id_motorista: Number(driverId) },
+            params: {
+              id_motorista: Number(authenticatedUser.id_motorista),
+              usuario: authenticatedUser,
+            },
           },
         ],
       });
@@ -72,18 +81,18 @@ export default function Login() {
         <TouchableOpacity
           style={styles.backButton}
           activeOpacity={0.85}
-          onPress={() => navigation.navigate('Home')}
+          onPress={goHome}
         >
           <Text style={styles.backButtonText}>{'<'}</Text>
         </TouchableOpacity>
 
-        <Text style={styles.brand}>BUSLY</Text>
+        <Text style={styles.brand}>OminiBus</Text>
       </View>
 
       <View style={styles.hero}>
         <Text style={styles.title}>Acesse sua conta</Text>
         <Text style={styles.subtitle}>
-          Entre como motorista para ver sua rota ou como administrador para gerenciar o Busly.
+          Entre como motorista para ver sua rota ou como administrador para gerenciar o OminiBus.
         </Text>
       </View>
 
@@ -170,7 +179,7 @@ export default function Login() {
         <TouchableOpacity
           style={styles.secondaryButton}
           activeOpacity={0.86}
-          onPress={() => navigation.navigate('Home')}
+          onPress={goHome}
         >
           <Text style={styles.secondaryButtonText}>Entrar como passageiro</Text>
         </TouchableOpacity>
