@@ -2,10 +2,12 @@ import { useCallback, useMemo, useState } from 'react';
 import {
   ActivityIndicator,
   FlatList,
+  ImageBackground,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
+import { BlurView } from 'expo-blur';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   useFocusEffect,
@@ -27,7 +29,7 @@ function Stars({ rating }) {
             star <= rating ? styles.starActive : styles.starInactive,
           ]}
         >
-          *
+          ★
         </Text>
       ))}
     </View>
@@ -85,7 +87,12 @@ export default function AvaliacoesMotorista() {
   }, [reviews]);
 
   const renderReview = ({ item, index }) => (
-    <View style={styles.reviewCard}>
+    <BlurView
+      intensity={24}
+      tint="dark"
+      experimentalBlurMethod="dimezisBlurView"
+      style={styles.reviewCard}
+    >
       <View style={styles.reviewHeader}>
         <View>
           <Text style={styles.reviewAuthor}>Passageiro {index + 1}</Text>
@@ -109,88 +116,106 @@ export default function AvaliacoesMotorista() {
         {item.comentario_avaliacao?.trim() ||
           'Avaliação enviada sem comentário.'}
       </Text>
-    </View>
+    </BlurView>
   );
 
   return (
-    <SafeAreaView style={styles.screen}>
-      <View style={styles.header}>
-        <TouchableOpacity
-          style={styles.backButton}
-          activeOpacity={0.85}
-          onPress={() => navigation.goBack()}
-        >
-          <Text style={styles.backButtonText}>{'<'}</Text>
-        </TouchableOpacity>
+    <ImageBackground
+      source={require('../../../assets/fundo.png')}
+      resizeMode="cover"
+      style={styles.background}
+    >
+      <View style={styles.backgroundOverlay} />
 
-        <View style={styles.headerTextGroup}>
-          <Text style={styles.brand}>OminiBus</Text>
-          <Text style={styles.title}>Avaliações</Text>
-        </View>
-      </View>
-
-      <View style={styles.summaryCard}>
-        <View>
-          <Text style={styles.summaryLabel}>Nota média de {driverName}</Text>
-          <Text style={styles.summaryScore}>{average}</Text>
-        </View>
-
-        <View style={styles.summaryRight}>
-          <Stars rating={Math.round(Number(average))} />
-          <Text style={styles.summaryCount}>
-            {reviews.length}{' '}
-            {reviews.length === 1 ? 'avaliação' : 'avaliações'}
-          </Text>
-        </View>
-      </View>
-
-      {loading ? (
-        <View style={styles.feedbackContainer}>
-          <ActivityIndicator color="#12355B" size="large" />
-          <Text style={styles.feedbackText}>Carregando avaliações...</Text>
-        </View>
-      ) : error ? (
-        <View style={styles.feedbackContainer}>
-          <Text style={styles.errorText}>{error}</Text>
-          <TouchableOpacity style={styles.emptyButton} onPress={loadReviews}>
-            <Text style={styles.emptyButtonText}>Tentar novamente</Text>
+      <SafeAreaView style={styles.screen}>
+        <View style={styles.header}>
+          <TouchableOpacity
+            style={styles.backButton}
+            activeOpacity={0.85}
+            onPress={() => navigation.goBack()}
+          >
+            <Text style={styles.backButtonText}>{'<'}</Text>
           </TouchableOpacity>
-        </View>
-      ) : (
-        <FlatList
-          data={reviews}
-          keyExtractor={(item) => String(item.id_avaliacao)}
-          renderItem={renderReview}
-          contentContainerStyle={[
-            styles.listContent,
-            reviews.length === 0 && styles.emptyListContent,
-          ]}
-          showsVerticalScrollIndicator={false}
-          ListEmptyComponent={
-            <View style={styles.emptyCard}>
-              <Text style={styles.emptyTitle}>Ainda não há avaliações</Text>
-              <Text style={styles.emptyText}>
-                Quando os passageiros avaliarem este motorista, os comentários
-                e notas aparecerão aqui.
-              </Text>
 
-              <TouchableOpacity
-                style={styles.emptyButton}
-                activeOpacity={0.85}
-                onPress={() =>
-                  navigation.navigate('InfoMotorista', {
-                    id_motorista: Number(driverId),
-                    driver,
-                    routeName: route.params?.routeName,
-                  })
-                }
+          <View style={styles.headerTextGroup}>
+            <Text style={styles.brand}>OminiBus</Text>
+            <Text style={styles.title}>Avaliações</Text>
+          </View>
+        </View>
+
+        <BlurView
+          intensity={28}
+          tint="dark"
+          experimentalBlurMethod="dimezisBlurView"
+          style={styles.summaryCard}
+        >
+          <View style={styles.summaryCopy}>
+            <Text style={styles.summaryLabel}>Nota média de {driverName}</Text>
+            <Text style={styles.summaryScore}>{average}</Text>
+          </View>
+
+          <View style={styles.summaryRight}>
+            <Stars rating={Math.round(Number(average))} />
+            <Text style={styles.summaryCount}>
+              {reviews.length}{' '}
+              {reviews.length === 1 ? 'avaliação' : 'avaliações'}
+            </Text>
+          </View>
+        </BlurView>
+
+        {loading ? (
+          <View style={styles.feedbackContainer}>
+            <ActivityIndicator color="#E0F2FE" size="large" />
+            <Text style={styles.feedbackText}>Carregando avaliações...</Text>
+          </View>
+        ) : error ? (
+          <View style={styles.feedbackContainer}>
+            <Text style={styles.errorText}>{error}</Text>
+            <TouchableOpacity style={styles.emptyButton} onPress={loadReviews}>
+              <Text style={styles.emptyButtonText}>Tentar novamente</Text>
+            </TouchableOpacity>
+          </View>
+        ) : (
+          <FlatList
+            data={reviews}
+            keyExtractor={(item) => String(item.id_avaliacao)}
+            renderItem={renderReview}
+            contentContainerStyle={[
+              styles.listContent,
+              reviews.length === 0 && styles.emptyListContent,
+            ]}
+            showsVerticalScrollIndicator={false}
+            ListEmptyComponent={
+              <BlurView
+                intensity={24}
+                tint="dark"
+                experimentalBlurMethod="dimezisBlurView"
+                style={styles.emptyCard}
               >
-                <Text style={styles.emptyButtonText}>Avaliar motorista</Text>
-              </TouchableOpacity>
-            </View>
-          }
-        />
-      )}
-    </SafeAreaView>
+                <Text style={styles.emptyTitle}>Ainda não há avaliações</Text>
+                <Text style={styles.emptyText}>
+                  Quando os passageiros avaliarem este motorista, os
+                  comentários e notas aparecerão aqui.
+                </Text>
+
+                <TouchableOpacity
+                  style={styles.emptyButton}
+                  activeOpacity={0.85}
+                  onPress={() =>
+                    navigation.navigate('InfoMotorista', {
+                      id_motorista: Number(driverId),
+                      driver,
+                      routeName: route.params?.routeName,
+                    })
+                  }
+                >
+                  <Text style={styles.emptyButtonText}>Avaliar motorista</Text>
+                </TouchableOpacity>
+              </BlurView>
+            }
+          />
+        )}
+      </SafeAreaView>
+    </ImageBackground>
   );
 }

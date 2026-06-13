@@ -16,29 +16,6 @@ import styles from './styles';
 import motoristaImage from '../../../assets/imgMotorista.png';
 import { get, getAssetUrl } from '../../services/api';
 
-const MAPS = {
-  ROXA: {
-    color: '#7C3AED',
-    softColor: '#EDE9FE',
-    url: 'https://www.google.com/maps/d/embed?mid=1EifQjeD8Cx_JHRKUjpf0wx2JezX3bxw&ehbc=2E312F',
-  },
-  AZUL: {
-    color: '#2563EB',
-    softColor: '#DBEAFE',
-    url: 'https://www.google.com/maps/d/embed?mid=1PZnUg7Xd-2Y_LuZgKu0I8XBxSUJqOGg&ehbc=2E312F',
-  },
-  LARANJA: {
-    color: '#EA580C',
-    softColor: '#FFEDD5',
-    url: 'https://www.google.com/maps/d/embed?mid=1bUGpvBgmP-nTU3OPTjyh48C8-2XWEt4&ehbc=2E312F',
-  },
-  AMARELA: {
-    color: '#EAB308',
-    softColor: '#FEF3C7',
-    url: 'https://www.google.com/maps/d/embed?mid=1oHTQrYTHxzncd8IdKuHOWY9z0damzVE&ehbc=2E312F',
-  },
-};
-
 const FALLBACK_COLORS = [
   { color: '#1D4ED8', softColor: '#DBEAFE' },
   { color: '#7C3AED', softColor: '#EDE9FE' },
@@ -47,11 +24,26 @@ const FALLBACK_COLORS = [
 ];
 
 function routeTheme(route, index = 0) {
-  const name = String(route?.nome_linhas || route?.nome_rota || '')
-    .trim()
-    .toUpperCase();
+  if (route?.cor || route?.color) {
+    return {
+      color: route.cor || route.color,
+      softColor: route.cor_suave || route.softColor || route.cor_clara || '#DBEAFE',
+    };
+  }
 
-  return MAPS[name] || FALLBACK_COLORS[index % FALLBACK_COLORS.length];
+  return FALLBACK_COLORS[index % FALLBACK_COLORS.length];
+}
+
+function routeMap(route, details) {
+  return (
+    details?.mapa ||
+    details?.url_mapa ||
+    details?.mapa_rota ||
+    route?.mapa ||
+    route?.url_mapa ||
+    route?.mapa_rota ||
+    ''
+  );
 }
 
 function normalizeRoutes(items) {
@@ -153,7 +145,7 @@ export default function RotasScreen() {
     ),
   );
 
-  const mapUrl = selectedRoute?.mapa || selectedTheme.url;
+  const mapUrl = routeMap(selectedRoute, routeDetails);
   const scheduleGroups = useMemo(
     () => Array.from(groupSchedules(routeDetails?.horarios || []).values()),
     [routeDetails],

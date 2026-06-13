@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "expo start",
-    "android": "expo start --android",
+    "start": "expo start --port 8090",
+    "start:clear": "expo start --clear --port 8090",
+    "android": "expo start --android --port 8090",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web --port 8090"
   },
   "dependencies": {
     "@react-navigation/elements": "^2.9.10",

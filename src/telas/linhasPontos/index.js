@@ -1,61 +1,104 @@
-import React, { useMemo, useState } from 'react';
-import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { useEffect, useMemo, useState } from 'react';
+import {
+  ActivityIndicator,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 
 import styles from './styles';
+import { get } from '../../services/api';
 
-// Troque este array pelo retorno da API quando o back estiver pronto.
-const LINES = [
-  {
-    id: 'azul',
-    name: 'Azul',
-    color: '#1D4ED8',
-    softColor: '#DBEAFE',
-    origin: 'Centro',
-    destination: 'Bairro A',
-    description:
-      'Sai do Terminal Central, passa pela Av. Brasil, Escola Estadual e finaliza no Bairro A.',
-    points: ['Terminal Central', 'Av. Brasil', 'Escola Estadual', 'Bairro A'],
-  },
-  {
-    id: 'roxa',
-    name: 'Roxa',
-    color: '#7C3AED',
-    softColor: '#EDE9FE',
-    origin: 'Centro',
-    destination: 'Bairro B',
-    description:
-      'Sai do Terminal Central, passa pelo Hospital Municipal, Praca Central e finaliza no Bairro B.',
-    points: ['Terminal Central', 'Hospital Municipal', 'Praca Central', 'Bairro B'],
-  },
-  {
-    id: 'amarela',
-    name: 'Amarela',
-    color: '#EAB308',
-    softColor: '#FEF3C7',
-    origin: 'Bairro D',
-    destination: 'Centro',
-    description:
-      'Parte do Bairro D, passa pela Rua das Flores, Mercado Municipal e chega ao centro.',
-    points: ['Bairro D', 'Rua das Flores', 'Mercado Municipal', 'Centro'],
-  },
-  {
-    id: 'laranja',
-    name: 'Laranja',
-    color: '#F97316',
-    softColor: '#FFEDD5',
-    origin: 'Bairro C',
-    destination: 'Centro',
-    description:
-      'Parte do Bairro C, passa pela Rua das Flores, Mercado Municipal e chega ao centro.',
-    points: ['Bairro C', 'Rua das Flores', 'Mercado Municipal', 'Centro'],
-  },
+const ROUTE_THEMES = [
+  { color: '#1D4ED8', softColor: '#DBEAFE' },
+  { color: '#7C3AED', softColor: '#EDE9FE' },
+  { color: '#EAB308', softColor: '#FEF3C7' },
+  { color: '#F97316', softColor: '#FFEDD5' },
 ];
+
+function getRouteName(route) {
+  return route?.nome_linhas || route?.nome_rota || `Rota ${route?.id_rota}`;
+}
+
+function routeTheme(route, index) {
+  if (route?.cor || route?.color) {
+    return {
+      color: route.cor || route.color,
+      softColor: route.cor_suave || route.softColor || route.cor_clara || '#DBEAFE',
+    };
+  }
+
+  return ROUTE_THEMES[index % ROUTE_THEMES.length];
+}
+
+function normalizeLine(route, details, index) {
+  const theme = routeTheme(route, index);
+  const points = (details?.pontos || []).map((point) => ({
+    id: point.id_ponto || point.id || point.nome_ponto || point.nome_pontos,
+    name: point.nome_ponto || point.nome_pontos || 'Ponto sem nome',
+  }));
+  const origin =
+    details?.origem ||
+    route?.origem ||
+    points[0]?.name ||
+    'Origem não informada';
+  const destination =
+    details?.destino ||
+    route?.destino ||
+    points[points.length - 1]?.name ||
+    'Destino não informado';
+
+  return {
+    id: route.id_rota,
+    name: getRouteName(route),
+    color: theme.color,
+    softColor: theme.softColor,
+    origin,
+    destination,
+    description:
+      details?.descricao ||
+      route?.descricao ||
+      `Linha ${getRouteName(route)} de ${origin} até ${destination}.`,
+    points,
+  };
+}
 
 export default function LinhasPontos() {
   const navigation = useNavigation();
-  const [selectedLineId, setSelectedLineId] = useState(LINES[0].id);
+  const [lines, setLines] = useState([]);
+  const [selectedLineId, setSelectedLineId] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    loadLines();
+  }, []);
+
+  async function loadLines() {
+    try {
+      setLoading(true);
+      setError('');
+
+      const routesResponse = await get('/rotas');
+      const routes = routesResponse.dados || [];
+      const linesFromApi = await Promise.all(
+        routes.map(async (item, index) => {
+          const detailsResponse = await get(`/rotas/${item.id_rota}/detalhes`);
+          return normalizeLine(item, detailsResponse.dados || {}, index);
+        }),
+      );
+
+      setLines(linesFromApi);
+      setSelectedLineId((currentId) => currentId || linesFromApi[0]?.id || null);
+    } catch (loadError) {
+      setError(loadError.message);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   function goHome() {
     navigation.reset({
@@ -65,8 +108,8 @@ export default function LinhasPontos() {
   }
 
   const selectedLine = useMemo(
-    () => LINES.find((line) => line.id === selectedLineId) || LINES[0],
-    [selectedLineId],
+    () => lines.find((line) => Number(line.id) === Number(selectedLineId)) || lines[0],
+    [lines, selectedLineId],
   );
 
   return (
@@ -86,109 +129,131 @@ export default function LinhasPontos() {
         </View>
       </View>
 
-      <ScrollView
-        style={styles.content}
-        contentContainerStyle={styles.contentContainer}
-        showsVerticalScrollIndicator={false}
-      >
-        <View style={styles.summaryCard}>
-          <View style={[styles.summaryIcon, { backgroundColor: selectedLine.color }]}>
-            <Text style={styles.summaryIconText}>{selectedLine.name[0]}</Text>
-          </View>
-
-          <View style={styles.summaryInfo}>
-            <Text style={styles.summaryLabel}>Linha selecionada</Text>
-            <Text style={styles.summaryTitle}>Linha {selectedLine.name}</Text>
-            <Text style={styles.summaryRoute}>
-              {selectedLine.origin} {'>'} {selectedLine.destination}
-            </Text>
-          </View>
+      {loading ? (
+        <View style={styles.feedback}>
+          <ActivityIndicator color="#073D8F" size="large" />
+          <Text style={styles.feedbackText}>Carregando linhas e pontos...</Text>
         </View>
+      ) : error ? (
+        <View style={styles.feedback}>
+          <Text style={styles.errorText}>{error}</Text>
+          <TouchableOpacity style={styles.retryButton} onPress={loadLines}>
+            <Text style={styles.retryButtonText}>Tentar novamente</Text>
+          </TouchableOpacity>
+        </View>
+      ) : !selectedLine ? (
+        <View style={styles.feedback}>
+          <Text style={styles.feedbackText}>Nenhuma rota cadastrada.</Text>
+        </View>
+      ) : (
+        <ScrollView
+          style={styles.content}
+          contentContainerStyle={styles.contentContainer}
+          showsVerticalScrollIndicator={false}
+        >
+          <View style={styles.summaryCard}>
+            <View style={[styles.summaryIcon, { backgroundColor: selectedLine.color }]}>
+              <Text style={styles.summaryIconText}>{selectedLine.name[0]}</Text>
+            </View>
 
-        <Text style={styles.sectionTitle}>Escolha uma linha</Text>
+            <View style={styles.summaryInfo}>
+              <Text style={styles.summaryLabel}>Linha selecionada</Text>
+              <Text style={styles.summaryTitle}>Linha {selectedLine.name}</Text>
+              <Text style={styles.summaryRoute}>
+                {selectedLine.origin} {'>'} {selectedLine.destination}
+              </Text>
+            </View>
+          </View>
 
-        <View style={styles.lineGrid}>
-          {LINES.map((line) => {
-            const isSelected = line.id === selectedLine.id;
+          <Text style={styles.sectionTitle}>Escolha uma linha</Text>
 
-            return (
-              <TouchableOpacity
-                key={line.id}
-                style={[
-                  styles.lineButton,
-                  { backgroundColor: line.softColor },
-                  isSelected && { backgroundColor: line.color },
-                ]}
-                activeOpacity={0.86}
-                onPress={() => setSelectedLineId(line.id)}
-              >
-                <View
+          <View style={styles.lineGrid}>
+            {lines.map((line) => {
+              const isSelected = Number(line.id) === Number(selectedLine.id);
+
+              return (
+                <TouchableOpacity
+                  key={line.id}
                   style={[
-                    styles.lineDot,
-                    { backgroundColor: isSelected ? '#FFFFFF' : line.color },
+                    styles.lineButton,
+                    { backgroundColor: line.softColor },
+                    isSelected && { backgroundColor: line.color },
                   ]}
-                />
-                <Text
-                  style={[
-                    styles.lineButtonText,
-                    isSelected && styles.lineButtonTextActive,
-                  ]}
+                  activeOpacity={0.86}
+                  onPress={() => setSelectedLineId(line.id)}
                 >
-                  {line.name}
-                </Text>
-              </TouchableOpacity>
-            );
-          })}
-        </View>
-
-        <View style={styles.descriptionCard}>
-          <Text style={styles.descriptionTitle}>Sobre o trajeto</Text>
-          <Text style={styles.descriptionText}>{selectedLine.description}</Text>
-        </View>
-
-        <Text style={styles.sectionTitle}>Pontos da linha</Text>
-
-        <View style={styles.pointsCard}>
-          {selectedLine.points.map((point, index) => {
-            const isLast = index === selectedLine.points.length - 1;
-
-            return (
-              <View key={point} style={styles.pointRow}>
-                <View style={styles.pointTrack}>
                   <View
                     style={[
-                      styles.pointMarker,
-                      { backgroundColor: selectedLine.color },
+                      styles.lineDot,
+                      { backgroundColor: isSelected ? '#FFFFFF' : line.color },
+                    ]}
+                  />
+                  <Text
+                    style={[
+                      styles.lineButtonText,
+                      isSelected && styles.lineButtonTextActive,
                     ]}
                   >
-                    <Text style={styles.pointMarkerText}>{index + 1}</Text>
-                  </View>
-                  {!isLast && <View style={styles.pointLine} />}
-                </View>
-
-                <View style={[styles.pointInfo, isLast && styles.pointInfoLast]}>
-                  <Text style={styles.pointName}>{point}</Text>
-                  <Text style={styles.pointHint}>
-                    {index === 0
-                      ? 'Ponto inicial'
-                      : isLast
-                        ? 'Ponto final'
-                        : 'Parada intermediaria'}
+                    {line.name}
                   </Text>
-                </View>
-              </View>
-            );
-          })}
-        </View>
+                </TouchableOpacity>
+              );
+            })}
+          </View>
 
-        <TouchableOpacity
-          style={styles.primaryButton}
-          activeOpacity={0.86}
-          onPress={() => navigation.navigate('Horarios')}
-        >
-          <Text style={styles.primaryButtonText}>Ver horarios desta linha</Text>
-        </TouchableOpacity>
-      </ScrollView>
+          <View style={styles.descriptionCard}>
+            <Text style={styles.descriptionTitle}>Sobre o trajeto</Text>
+            <Text style={styles.descriptionText}>{selectedLine.description}</Text>
+          </View>
+
+          <Text style={styles.sectionTitle}>Pontos da linha</Text>
+
+          <View style={styles.pointsCard}>
+            {selectedLine.points.length ? (
+              selectedLine.points.map((point, index) => {
+                const isLast = index === selectedLine.points.length - 1;
+
+                return (
+                  <View key={point.id || point.name} style={styles.pointRow}>
+                    <View style={styles.pointTrack}>
+                      <View
+                        style={[
+                          styles.pointMarker,
+                          { backgroundColor: selectedLine.color },
+                        ]}
+                      >
+                        <Text style={styles.pointMarkerText}>{index + 1}</Text>
+                      </View>
+                      {!isLast && <View style={styles.pointLine} />}
+                    </View>
+
+                    <View style={[styles.pointInfo, isLast && styles.pointInfoLast]}>
+                      <Text style={styles.pointName}>{point.name}</Text>
+                      <Text style={styles.pointHint}>
+                        {index === 0
+                          ? 'Ponto inicial'
+                          : isLast
+                            ? 'Ponto final'
+                            : 'Parada intermediária'}
+                      </Text>
+                    </View>
+                  </View>
+                );
+              })
+            ) : (
+              <Text style={styles.emptyText}>Nenhum ponto cadastrado nesta linha.</Text>
+            )}
+          </View>
+
+          <TouchableOpacity
+            style={styles.primaryButton}
+            activeOpacity={0.86}
+            onPress={() => navigation.navigate('Horarios', { routeId: selectedLine.id })}
+          >
+            <Text style={styles.primaryButtonText}>Ver horários desta linha</Text>
+          </TouchableOpacity>
+        </ScrollView>
+      )}
     </SafeAreaView>
   );
 }

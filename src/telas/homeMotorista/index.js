@@ -21,17 +21,6 @@ import styles from './styles';
 import motoristaImage from '../../../assets/imgMotorista.png';
 import { get, getAssetUrl } from '../../services/api';
 
-const ROUTE_MAPS = {
-  ROXA:
-    'https://www.google.com/maps/d/embed?mid=1EifQjeD8Cx_JHRKUjpf0wx2JezX3bxw&ehbc=2E312F',
-  AZUL:
-    'https://www.google.com/maps/d/embed?mid=1PZnUg7Xd-2Y_LuZgKu0I8XBxSUJqOGg&ehbc=2E312F',
-  LARANJA:
-    'https://www.google.com/maps/d/embed?mid=1bUGpvBgmP-nTU3OPTjyh48C8-2XWEt4&ehbc=2E312F',
-  AMARELA:
-    'https://www.google.com/maps/d/embed?mid=1oHTQrYTHxzncd8IdKuHOWY9z0damzVE&ehbc=2E312F',
-};
-
 if (
   Platform.OS === 'android' &&
   UIManager.setLayoutAnimationEnabledExperimental
@@ -70,11 +59,7 @@ function normalizeRouteName(route) {
 }
 
 function routeMap(route) {
-  if (route?.mapa) {
-    return route.mapa;
-  }
-
-  return ROUTE_MAPS[normalizeRouteName(route).trim().toUpperCase()] || '';
+  return route?.mapa || route?.url_mapa || route?.mapa_rota || '';
 }
 
 function nextSchedule(schedules = []) {

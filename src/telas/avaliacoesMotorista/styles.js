@@ -1,42 +1,68 @@
 import { StyleSheet } from 'react-native';
 
+const glassCard = {
+  borderRadius: 8,
+  borderWidth: 1,
+  borderColor: 'rgba(255, 255, 255, 0.18)',
+  backgroundColor: 'rgba(255, 255, 255, 0.12)',
+  overflow: 'hidden',
+  shadowColor: '#020617',
+  shadowOffset: { width: 0, height: 14 },
+  shadowOpacity: 0.28,
+  shadowRadius: 22,
+  elevation: 7,
+};
+
 const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    backgroundColor: '#0F172A',
+  },
+
+  backgroundOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(15, 23, 42, 0.72)',
+  },
+
   screen: {
     flex: 1,
-    backgroundColor: '#F4F7FB',
+    backgroundColor: 'transparent',
   },
 
   header: {
-    backgroundColor: '#12355B',
-    paddingHorizontal: 20,
-    paddingTop: 12,
-    paddingBottom: 20,
+    paddingHorizontal: 16,
+    paddingTop: 10,
+    paddingBottom: 14,
     flexDirection: 'row',
     alignItems: 'center',
   },
 
   backButton: {
-    width: 42,
-    height: 42,
+    width: 46,
+    height: 46,
     borderRadius: 8,
-    backgroundColor: '#FFFFFF',
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.18)',
+    backgroundColor: 'rgba(8, 20, 36, 0.78)',
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 14,
+    marginRight: 12,
   },
 
   backButtonText: {
-    color: '#12355B',
-    fontSize: 22,
+    color: '#FFFFFF',
+    fontSize: 24,
     fontWeight: '900',
+    lineHeight: 26,
   },
 
   headerTextGroup: {
     flex: 1,
+    minWidth: 0,
   },
 
   brand: {
-    color: '#8FD8FF',
+    color: '#E0F2FE',
     fontSize: 13,
     fontWeight: '800',
     letterSpacing: 0,
@@ -44,55 +70,58 @@ const styles = StyleSheet.create({
 
   title: {
     color: '#FFFFFF',
-    fontSize: 25,
+    fontSize: 26,
+    lineHeight: 31,
     fontWeight: '900',
     marginTop: 2,
   },
 
   summaryCard: {
-    marginHorizontal: 18,
-    marginTop: 18,
-    padding: 18,
-    backgroundColor: '#FFFFFF',
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#E3EAF3',
+    ...glassCard,
+    marginHorizontal: 16,
+    marginTop: 6,
+    padding: 16,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    shadowColor: '#0F172A',
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.08,
-    shadowRadius: 14,
-    elevation: 3,
+    gap: 14,
+  },
+
+  summaryCopy: {
+    flex: 1,
+    minWidth: 0,
   },
 
   summaryLabel: {
-    color: '#617489',
+    color: '#E0F2FE',
     fontSize: 13,
+    lineHeight: 18,
     fontWeight: '700',
   },
 
   summaryScore: {
-    color: '#12355B',
+    color: '#FFFFFF',
     fontSize: 42,
+    lineHeight: 48,
     fontWeight: '900',
     marginTop: 2,
   },
 
   summaryRight: {
     alignItems: 'flex-end',
+    flexShrink: 0,
   },
 
   summaryCount: {
-    color: '#65758A',
-    fontSize: 13,
+    color: 'rgba(255, 255, 255, 0.76)',
+    fontSize: 12,
     fontWeight: '700',
     marginTop: 6,
   },
 
   listContent: {
-    padding: 18,
+    paddingHorizontal: 16,
+    paddingTop: 14,
     paddingBottom: 28,
   },
 
@@ -108,14 +137,14 @@ const styles = StyleSheet.create({
   },
 
   feedbackText: {
-    color: '#65758A',
+    color: '#E0F2FE',
     fontSize: 14,
     fontWeight: '700',
     marginTop: 12,
   },
 
   errorText: {
-    color: '#BE123C',
+    color: '#FCA5A5',
     fontSize: 15,
     lineHeight: 21,
     fontWeight: '700',
@@ -124,45 +153,53 @@ const styles = StyleSheet.create({
   },
 
   reviewCard: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#E3EAF3',
+    ...glassCard,
+    width: '100%',
+    maxWidth: 560,
+    alignSelf: 'center',
     padding: 16,
     marginBottom: 12,
   },
 
   reviewHeader: {
     flexDirection: 'row',
+    flexWrap: 'wrap',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
+    gap: 10,
     marginBottom: 10,
   },
 
   reviewAuthor: {
-    color: '#16263A',
+    color: '#FFFFFF',
     fontSize: 16,
+    lineHeight: 21,
     fontWeight: '900',
   },
 
   reviewDate: {
-    color: '#7A8A9C',
+    color: '#E0F2FE',
     fontSize: 12,
+    lineHeight: 17,
     fontWeight: '600',
     marginTop: 3,
   },
 
   ratingPill: {
     minWidth: 54,
+    minHeight: 32,
     paddingHorizontal: 10,
     paddingVertical: 6,
-    backgroundColor: '#E8F2FF',
+    backgroundColor: 'rgba(224, 242, 254, 0.16)',
     borderRadius: 8,
+    borderWidth: 1,
+    borderColor: 'rgba(224, 242, 254, 0.25)',
     alignItems: 'center',
+    justifyContent: 'center',
   },
 
   ratingPillText: {
-    color: '#12355B',
+    color: '#E0F2FE',
     fontSize: 13,
     fontWeight: '900',
   },
@@ -174,65 +211,113 @@ const styles = StyleSheet.create({
 
   star: {
     fontSize: 20,
+    lineHeight: 23,
     fontWeight: '900',
     marginRight: 3,
   },
 
   starActive: {
-    color: '#F4B000',
+    color: '#FBBF24',
   },
 
   starInactive: {
-    color: '#C9D3DF',
+    color: 'rgba(255, 255, 255, 0.28)',
   },
 
   reviewText: {
-    color: '#53677D',
+    color: 'rgba(255, 255, 255, 0.86)',
     fontSize: 14,
-    lineHeight: 20,
+    lineHeight: 21,
     marginTop: 10,
   },
 
   emptyCard: {
+    ...glassCard,
     flex: 1,
-    backgroundColor: '#FFFFFF',
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#E3EAF3',
+    width: '100%',
+    maxWidth: 560,
+    alignSelf: 'center',
     padding: 22,
     justifyContent: 'center',
     alignItems: 'center',
   },
 
   emptyTitle: {
-    color: '#16263A',
+    color: '#FFFFFF',
     fontSize: 21,
+    lineHeight: 27,
     fontWeight: '900',
     textAlign: 'center',
   },
 
   emptyText: {
-    color: '#65758A',
+    color: '#E0F2FE',
     fontSize: 14,
-    lineHeight: 20,
+    lineHeight: 21,
     textAlign: 'center',
     marginTop: 8,
     marginBottom: 18,
   },
 
   emptyButton: {
-    minHeight: 44,
+    minHeight: 46,
     paddingHorizontal: 18,
     borderRadius: 8,
-    backgroundColor: '#12355B',
+    backgroundColor: '#0EA5E9',
     alignItems: 'center',
     justifyContent: 'center',
+    shadowColor: '#0EA5E9',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.25,
+    shadowRadius: 12,
+    elevation: 4,
   },
 
   emptyButtonText: {
     color: '#FFFFFF',
     fontSize: 14,
     fontWeight: '900',
+  },
+
+  container: {
+    flex: 1,
+    backgroundColor: 'transparent',
+  },
+  botaoVoltar: {
+    width: 46,
+    height: 46,
+  },
+  titulo: {
+    color: '#FFFFFF',
+  },
+  subtitulo: {
+    color: '#E0F2FE',
+  },
+  listaAvaliacoes: {
+    paddingHorizontal: 16,
+  },
+  listaAvaliacoesComScroll: {
+    paddingBottom: 28,
+  },
+  card: {
+    ...glassCard,
+  },
+  topoCard: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 10,
+  },
+  data: {
+    color: '#E0F2FE',
+  },
+  estrelas: {
+    flexDirection: 'row',
+  },
+  comentario: {
+    color: 'rgba(255, 255, 255, 0.86)',
+  },
+  semAvaliacao: {
+    color: '#E0F2FE',
   },
 });
 
