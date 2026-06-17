@@ -1,16 +1,25 @@
 import { StyleSheet } from 'react-native';
 
+const glassFill = 'rgba(255, 255, 255, 0.14)';
+const glassBorder = 'rgba(255, 255, 255, 0.22)';
+
 const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+  },
+
+  overlay: {
+    flex: 1,
+  },
+
   screen: {
     flex: 1,
-    backgroundColor: '#F4F7FB',
   },
 
   header: {
-    backgroundColor: '#12355B',
     paddingHorizontal: 20,
-    paddingTop: 12,
-    paddingBottom: 20,
+    paddingTop: 14,
+    paddingBottom: 18,
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -18,15 +27,20 @@ const styles = StyleSheet.create({
   backButton: {
     width: 42,
     height: 42,
-    borderRadius: 8,
-    backgroundColor: '#FFFFFF',
+    borderRadius: 12,
+    backgroundColor: 'rgba(255, 255, 255, 0.92)',
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 14,
+    shadowColor: '#001B44',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.18,
+    shadowRadius: 14,
+    elevation: 4,
   },
 
   backButtonText: {
-    color: '#12355B',
+    color: '#073D8F',
     fontSize: 22,
     fontWeight: '900',
   },
@@ -38,15 +52,16 @@ const styles = StyleSheet.create({
   brand: {
     color: '#8FD8FF',
     fontSize: 13,
-    fontWeight: '800',
+    fontWeight: '900',
     letterSpacing: 0,
   },
 
   title: {
     color: '#FFFFFF',
-    fontSize: 25,
+    fontSize: 28,
+    lineHeight: 34,
     fontWeight: '900',
-    marginTop: 2,
+    marginTop: 3,
   },
 
   content: {
@@ -54,8 +69,8 @@ const styles = StyleSheet.create({
   },
 
   contentContainer: {
-    padding: 18,
-    paddingBottom: 28,
+    paddingHorizontal: 18,
+    paddingBottom: 30,
   },
 
   loadingContainer: {
@@ -66,32 +81,32 @@ const styles = StyleSheet.create({
   },
 
   loadingText: {
-    color: '#617489',
+    color: '#EAF4FF',
     fontSize: 14,
-    fontWeight: '700',
+    fontWeight: '800',
     marginTop: 12,
   },
 
   errorText: {
-    color: '#BE123C',
+    color: '#FFFFFF',
     fontSize: 15,
     lineHeight: 21,
-    fontWeight: '700',
+    fontWeight: '800',
     textAlign: 'center',
     marginBottom: 18,
   },
 
   profileCard: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 8,
+    backgroundColor: glassFill,
+    borderRadius: 22,
     padding: 16,
     borderWidth: 1,
-    borderColor: '#E3EAF3',
-    shadowColor: '#0F172A',
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.08,
-    shadowRadius: 14,
-    elevation: 3,
+    borderColor: glassBorder,
+    shadowColor: '#001B44',
+    shadowOffset: { width: 0, height: 14 },
+    shadowOpacity: 0.20,
+    shadowRadius: 24,
+    elevation: 6,
   },
 
   profileTop: {
@@ -100,12 +115,12 @@ const styles = StyleSheet.create({
   },
 
   avatar: {
-    width: 86,
-    height: 86,
-    borderRadius: 43,
-    backgroundColor: '#E8F2FF',
+    width: 88,
+    height: 88,
+    borderRadius: 44,
+    backgroundColor: 'rgba(255, 255, 255, 0.26)',
     borderWidth: 3,
-    borderColor: '#D7E8FA',
+    borderColor: 'rgba(255, 255, 255, 0.58)',
     marginRight: 14,
   },
 
@@ -115,8 +130,8 @@ const styles = StyleSheet.create({
 
   statusPill: {
     alignSelf: 'flex-start',
-    backgroundColor: '#DDF8E8',
-    borderRadius: 8,
+    backgroundColor: 'rgba(221, 248, 232, 0.96)',
+    borderRadius: 10,
     paddingHorizontal: 10,
     paddingVertical: 5,
     marginBottom: 8,
@@ -129,37 +144,39 @@ const styles = StyleSheet.create({
   },
 
   driverName: {
-    color: '#16263A',
+    color: '#FFFFFF',
     fontSize: 24,
+    lineHeight: 29,
     fontWeight: '900',
   },
 
   driverRoute: {
-    color: '#617489',
+    color: '#D6E8FF',
     fontSize: 14,
+    lineHeight: 20,
     fontWeight: '700',
-    marginTop: 3,
+    marginTop: 4,
   },
 
   ratingSummary: {
     marginTop: 16,
     paddingTop: 16,
     borderTopWidth: 1,
-    borderTopColor: '#E8EEF6',
+    borderTopColor: 'rgba(255, 255, 255, 0.20)',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
 
   summaryLabel: {
-    color: '#617489',
+    color: '#C9E3FF',
     fontSize: 13,
-    fontWeight: '700',
+    fontWeight: '800',
   },
 
   summaryScore: {
-    color: '#12355B',
-    fontSize: 38,
+    color: '#FFFFFF',
+    fontSize: 42,
     fontWeight: '900',
     marginTop: 2,
   },
@@ -169,9 +186,9 @@ const styles = StyleSheet.create({
   },
 
   summaryCount: {
-    color: '#65758A',
+    color: '#D6E8FF',
     fontSize: 13,
-    fontWeight: '700',
+    fontWeight: '800',
     marginTop: 6,
   },
 
@@ -181,107 +198,121 @@ const styles = StyleSheet.create({
   },
 
   starButton: {
-    minWidth: 25,
+    minWidth: 30,
     alignItems: 'center',
   },
 
   star: {
-    color: '#C9D3DF',
+    color: 'rgba(255, 255, 255, 0.34)',
     fontSize: 20,
     fontWeight: '900',
   },
 
   starLarge: {
-    fontSize: 34,
+    fontSize: 36,
   },
 
   starActive: {
-    color: '#F4B000',
+    color: '#FFD166',
   },
 
   starInactive: {
-    color: '#C9D3DF',
+    color: 'rgba(255, 255, 255, 0.34)',
   },
 
-  infoGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 10,
+  routesCard: {
+    backgroundColor: glassFill,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: glassBorder,
+    padding: 16,
     marginTop: 16,
   },
 
-  infoBox: {
-    width: '48%',
-    minHeight: 76,
-    backgroundColor: '#FFFFFF',
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#E3EAF3',
-    padding: 14,
-    justifyContent: 'center',
+  routePill: {
+    minHeight: 40,
+    borderRadius: 12,
+    paddingHorizontal: 12,
+    paddingVertical: 9,
+    backgroundColor: 'rgba(255, 255, 255, 0.16)',
+    marginTop: 9,
   },
 
-  infoLabel: {
-    color: '#617489',
-    fontSize: 12,
-    fontWeight: '700',
-    marginBottom: 5,
-  },
-
-  infoValue: {
-    color: '#16263A',
-    fontSize: 15,
-    fontWeight: '900',
+  routePillText: {
+    color: '#FFFFFF',
+    fontSize: 14,
+    fontWeight: '800',
   },
 
   reviewCard: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 8,
+    backgroundColor: glassFill,
+    borderRadius: 20,
     borderWidth: 1,
-    borderColor: '#E3EAF3',
+    borderColor: glassBorder,
     padding: 16,
     marginTop: 16,
   },
 
   sectionTitle: {
-    color: '#16263A',
+    color: '#FFFFFF',
     fontSize: 20,
     fontWeight: '900',
   },
 
   sectionDescription: {
-    color: '#65758A',
+    color: '#D6E8FF',
     fontSize: 14,
     lineHeight: 20,
+    fontWeight: '700',
     marginTop: 5,
+  },
+
+  emptyText: {
+    color: '#D6E8FF',
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: '700',
+    marginTop: 9,
   },
 
   largeStarsWrapper: {
     alignItems: 'center',
-    marginTop: 14,
-    marginBottom: 12,
+    marginTop: 16,
+    marginBottom: 14,
   },
 
   input: {
-    minHeight: 108,
-    backgroundColor: '#F4F7FB',
-    borderRadius: 8,
+    minHeight: 112,
+    backgroundColor: 'rgba(255, 255, 255, 0.92)',
+    borderRadius: 14,
     borderWidth: 1,
-    borderColor: '#E1E8F0',
-    padding: 12,
-    color: '#16263A',
+    borderColor: 'rgba(255, 255, 255, 0.35)',
+    padding: 13,
+    color: '#10243D',
     fontSize: 14,
     textAlignVertical: 'top',
     marginBottom: 12,
   },
 
+  successText: {
+    color: '#DDF8E8',
+    fontSize: 13,
+    fontWeight: '900',
+    marginBottom: 12,
+    textAlign: 'center',
+  },
+
   primaryButton: {
     minHeight: 48,
-    backgroundColor: '#12355B',
-    borderRadius: 8,
+    backgroundColor: '#1769E0',
+    borderRadius: 14,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 10,
+  },
+
+  buttonDisabled: {
+    opacity: 0.72,
   },
 
   primaryButtonText: {
@@ -292,14 +323,14 @@ const styles = StyleSheet.create({
 
   secondaryButton: {
     minHeight: 48,
-    backgroundColor: '#E8F2FF',
-    borderRadius: 8,
+    backgroundColor: 'rgba(255, 255, 255, 0.92)',
+    borderRadius: 14,
     alignItems: 'center',
     justifyContent: 'center',
   },
 
   secondaryButtonText: {
-    color: '#12355B',
+    color: '#073D8F',
     fontSize: 15,
     fontWeight: '900',
   },

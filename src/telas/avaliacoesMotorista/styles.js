@@ -1,168 +1,196 @@
 import { StyleSheet } from 'react-native';
 
+const glassFill = 'rgba(255, 255, 255, 0.14)';
+const glassBorder = 'rgba(255, 255, 255, 0.22)';
+
 const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+  },
+
+  overlay: {
+    flex: 1,
+  },
+
   screen: {
     flex: 1,
-    backgroundColor: '#F4F7FB',
   },
 
   header: {
-    backgroundColor: '#12355B',
     paddingHorizontal: 20,
-    paddingTop: 12,
-    paddingBottom: 20,
+    paddingTop: 14,
+    paddingBottom: 18,
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start',
   },
 
   backButton: {
     width: 42,
     height: 42,
-    borderRadius: 8,
-    backgroundColor: '#FFFFFF',
+    borderRadius: 12,
+    backgroundColor: 'rgba(255, 255, 255, 0.92)',
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 14,
+    shadowColor: '#001B44',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.18,
+    shadowRadius: 14,
+    elevation: 4,
   },
 
   backButtonText: {
-    color: '#12355B',
+    color: '#073D8F',
     fontSize: 22,
     fontWeight: '900',
   },
 
   headerTextGroup: {
     flex: 1,
+    paddingTop: 1,
   },
 
   brand: {
     color: '#8FD8FF',
     fontSize: 13,
-    fontWeight: '800',
+    fontWeight: '900',
     letterSpacing: 0,
   },
 
   title: {
     color: '#FFFFFF',
-    fontSize: 25,
+    fontSize: 29,
+    lineHeight: 34,
     fontWeight: '900',
-    marginTop: 2,
+    marginTop: 3,
   },
 
-  summaryCard: {
-    marginHorizontal: 18,
-    marginTop: 18,
-    padding: 18,
-    backgroundColor: '#FFFFFF',
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#E3EAF3',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    shadowColor: '#0F172A',
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.08,
-    shadowRadius: 14,
-    elevation: 3,
-  },
-
-  summaryLabel: {
-    color: '#617489',
-    fontSize: 13,
+  subtitle: {
+    color: '#D6E8FF',
+    fontSize: 14,
+    lineHeight: 20,
     fontWeight: '700',
-  },
-
-  summaryScore: {
-    color: '#12355B',
-    fontSize: 42,
-    fontWeight: '900',
-    marginTop: 2,
-  },
-
-  summaryRight: {
-    alignItems: 'flex-end',
-  },
-
-  summaryCount: {
-    color: '#65758A',
-    fontSize: 13,
-    fontWeight: '700',
-    marginTop: 6,
+    marginTop: 7,
   },
 
   listContent: {
-    padding: 18,
-    paddingBottom: 28,
+    paddingBottom: 30,
   },
 
   emptyListContent: {
     flexGrow: 1,
   },
 
-  feedbackContainer: {
-    flex: 1,
-    padding: 24,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  feedbackText: {
-    color: '#65758A',
-    fontSize: 14,
-    fontWeight: '700',
-    marginTop: 12,
-  },
-
-  errorText: {
-    color: '#BE123C',
-    fontSize: 15,
-    lineHeight: 21,
-    fontWeight: '700',
-    textAlign: 'center',
+  summaryCard: {
+    marginHorizontal: 18,
+    marginTop: 2,
     marginBottom: 18,
+    padding: 18,
+    minHeight: 132,
+    backgroundColor: glassFill,
+    borderRadius: 22,
+    borderWidth: 1,
+    borderColor: glassBorder,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    shadowColor: '#001B44',
+    shadowOffset: { width: 0, height: 14 },
+    shadowOpacity: 0.20,
+    shadowRadius: 24,
+    elevation: 6,
+  },
+
+  summaryScoreGroup: {
+    flex: 1,
+    paddingRight: 16,
+  },
+
+  summaryLabel: {
+    color: '#C9E3FF',
+    fontSize: 13,
+    fontWeight: '800',
+  },
+
+  summaryScore: {
+    color: '#FFFFFF',
+    fontSize: 48,
+    fontWeight: '900',
+    marginTop: 2,
+  },
+
+  summaryRight: {
+    flex: 1.15,
+    alignItems: 'flex-end',
+  },
+
+  summaryCount: {
+    color: '#D6E8FF',
+    fontSize: 13,
+    fontWeight: '800',
+    marginTop: 8,
+  },
+
+  driverName: {
+    color: '#FFFFFF',
+    fontSize: 15,
+    fontWeight: '900',
+    marginTop: 6,
+    textAlign: 'right',
   },
 
   reviewCard: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#E3EAF3',
+    marginHorizontal: 18,
+    marginBottom: 13,
     padding: 16,
-    marginBottom: 12,
+    backgroundColor: glassFill,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: glassBorder,
+    shadowColor: '#001B44',
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.16,
+    shadowRadius: 18,
+    elevation: 5,
   },
 
   reviewHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
-    marginBottom: 10,
+    marginBottom: 12,
   },
 
-  reviewAuthor: {
-    color: '#16263A',
-    fontSize: 16,
+  reviewTitleGroup: {
+    flex: 1,
+    paddingRight: 12,
+  },
+
+  reviewTitle: {
+    color: '#FFFFFF',
+    fontSize: 17,
     fontWeight: '900',
   },
 
   reviewDate: {
-    color: '#7A8A9C',
+    color: '#C9E3FF',
     fontSize: 12,
-    fontWeight: '600',
-    marginTop: 3,
+    fontWeight: '700',
+    marginTop: 4,
   },
 
   ratingPill: {
-    minWidth: 54,
+    minWidth: 56,
+    minHeight: 36,
     paddingHorizontal: 10,
-    paddingVertical: 6,
-    backgroundColor: '#E8F2FF',
-    borderRadius: 8,
+    borderRadius: 12,
+    backgroundColor: 'rgba(255, 255, 255, 0.92)',
     alignItems: 'center',
+    justifyContent: 'center',
   },
 
   ratingPillText: {
-    color: '#12355B',
+    color: '#073D8F',
     fontSize: 13,
     fontWeight: '900',
   },
@@ -173,66 +201,97 @@ const styles = StyleSheet.create({
   },
 
   star: {
-    fontSize: 20,
     fontWeight: '900',
     marginRight: 3,
   },
 
   starActive: {
-    color: '#F4B000',
+    color: '#FFD166',
   },
 
   starInactive: {
-    color: '#C9D3DF',
+    color: 'rgba(255, 255, 255, 0.34)',
   },
 
   reviewText: {
-    color: '#53677D',
+    color: '#F4F8FF',
     fontSize: 14,
-    lineHeight: 20,
-    marginTop: 10,
+    lineHeight: 21,
+    fontWeight: '600',
+    marginTop: 12,
+  },
+
+  feedbackContainer: {
+    flex: 1,
+    padding: 24,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  feedbackText: {
+    color: '#EAF4FF',
+    fontSize: 14,
+    fontWeight: '800',
+    marginTop: 12,
+  },
+
+  errorScreen: {
+    flex: 1,
+  },
+
+  feedbackCard: {
+    marginHorizontal: 18,
+    marginTop: 8,
+    padding: 18,
+    borderRadius: 20,
+    backgroundColor: glassFill,
+    borderWidth: 1,
+    borderColor: glassBorder,
+    alignItems: 'center',
+  },
+
+  errorText: {
+    color: '#FFFFFF',
+    fontSize: 15,
+    lineHeight: 21,
+    fontWeight: '800',
+    textAlign: 'center',
+    marginBottom: 16,
+  },
+
+  retryButton: {
+    minHeight: 44,
+    paddingHorizontal: 18,
+    borderRadius: 12,
+    backgroundColor: '#FFFFFF',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  retryButtonText: {
+    color: '#073D8F',
+    fontSize: 14,
+    fontWeight: '900',
   },
 
   emptyCard: {
-    flex: 1,
-    backgroundColor: '#FFFFFF',
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#E3EAF3',
+    marginHorizontal: 18,
     padding: 22,
+    minHeight: 150,
+    borderRadius: 20,
+    backgroundColor: glassFill,
+    borderWidth: 1,
+    borderColor: glassBorder,
     justifyContent: 'center',
     alignItems: 'center',
   },
 
   emptyTitle: {
-    color: '#16263A',
-    fontSize: 21,
-    fontWeight: '900',
-    textAlign: 'center',
-  },
-
-  emptyText: {
-    color: '#65758A',
-    fontSize: 14,
-    lineHeight: 20,
-    textAlign: 'center',
-    marginTop: 8,
-    marginBottom: 18,
-  },
-
-  emptyButton: {
-    minHeight: 44,
-    paddingHorizontal: 18,
-    borderRadius: 8,
-    backgroundColor: '#12355B',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  emptyButtonText: {
     color: '#FFFFFF',
-    fontSize: 14,
+    fontSize: 18,
+    lineHeight: 24,
     fontWeight: '900',
+    textAlign: 'center',
   },
 });
 

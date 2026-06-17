@@ -14,67 +14,62 @@ import { WebView } from 'react-native-webview';
 
 import styles from './styles';
 import motoristaImage from '../../../assets/imgMotorista.png';
-import { get, getAssetUrl } from '../../services/api';
+import { getAssetUrl } from '../../services/api';
+import { buscarDetalhesRota, listarRotas } from '../../services/rotas';
 
-const MAPS = {
-  ROXA: {
-    color: '#7C3AED',
-    softColor: '#EDE9FE',
-    url: 'https://www.google.com/maps/d/embed?mid=1EifQjeD8Cx_JHRKUjpf0wx2JezX3bxw&ehbc=2E312F',
-  },
-  AZUL: {
-    color: '#2563EB',
-    softColor: '#DBEAFE',
-    url: 'https://www.google.com/maps/d/embed?mid=1PZnUg7Xd-2Y_LuZgKu0I8XBxSUJqOGg&ehbc=2E312F',
-  },
-  LARANJA: {
-    color: '#EA580C',
-    softColor: '#FFEDD5',
-    url: 'https://www.google.com/maps/d/embed?mid=1bUGpvBgmP-nTU3OPTjyh48C8-2XWEt4&ehbc=2E312F',
-  },
-  AMARELA: {
-    color: '#EAB308',
-    softColor: '#FEF3C7',
-    url: 'https://www.google.com/maps/d/embed?mid=1oHTQrYTHxzncd8IdKuHOWY9z0damzVE&ehbc=2E312F',
-  },
-};
+const DEFAULT_ROUTE_COLOR = '#1769E0';
+const DEFAULT_ROUTE_SOFT_COLOR = '#EAF2FF';
 
-const FALLBACK_COLORS = [
-  { color: '#1D4ED8', softColor: '#DBEAFE' },
-  { color: '#7C3AED', softColor: '#EDE9FE' },
-  { color: '#EAB308', softColor: '#FEF3C7' },
-  { color: '#F97316', softColor: '#FFEDD5' },
-];
+function getRouteName(route) {
+  return (
+    route?.nome_linhas ||
+    route?.nome_rota ||
+    route?.nome ||
+    `Rota ${route?.id_rota || ''}`.trim()
+  );
+}
 
-function routeTheme(route, index = 0) {
-  const name = String(route?.nome_linhas || route?.nome_rota || '')
-    .trim()
-    .toUpperCase();
+function getRouteId(route) {
+  return route?.id_rota || route?.id || route?.idRota;
+}
 
-  return MAPS[name] || FALLBACK_COLORS[index % FALLBACK_COLORS.length];
+function routeTheme(route) {
+  return {
+    color: route?.cor_rota || route?.corRota || route?.cor || DEFAULT_ROUTE_COLOR,
+    softColor:
+      route?.cor_rota_suave ||
+      route?.corRotaSuave ||
+      route?.cor_suave ||
+      DEFAULT_ROUTE_SOFT_COLOR,
+  };
 }
 
 function normalizeRoutes(items) {
   const seen = new Set();
 
-  return items.filter((route) => {
-    const id = Number(route.id_rota);
+  return items.reduce((routes, route) => {
+    const id = Number(getRouteId(route));
 
     if (!Number.isFinite(id) || seen.has(id)) {
-      return false;
+      return routes;
     }
 
     seen.add(id);
-    return true;
-  });
+    routes.push({
+      ...route,
+      id_rota: id,
+    });
+
+    return routes;
+  }, []);
 }
 
 function groupSchedules(schedules) {
   return schedules.reduce((groups, schedule) => {
-    const key = String(schedule.id_ponto);
+    const key = String(schedule.id_ponto || schedule.id_pontos || schedule.id);
     const current = groups.get(key) || {
-      id_ponto: schedule.id_ponto,
-      nome_ponto: schedule.nome_ponto,
+      id_ponto: schedule.id_ponto || schedule.id_pontos || schedule.id,
+      nome_ponto: schedule.nome_ponto || schedule.nome_pontos || '',
       horarios: [],
     };
 
@@ -109,8 +104,7 @@ export default function RotasScreen() {
       setLoadingRoutes(true);
       setError('');
 
-      const response = await get('/rotas');
-      const loadedRoutes = normalizeRoutes(response.dados || []);
+      const loadedRoutes = normalizeRoutes(await listarRotas());
 
       setRoutes(loadedRoutes);
       setSelectedRouteId((currentId) => currentId || loadedRoutes[0]?.id_rota || null);
@@ -127,8 +121,18 @@ export default function RotasScreen() {
       setError('');
       setRouteDetails(null);
 
-      const response = await get(`/rotas/${routeId}/detalhes`);
-      setRouteDetails(response.dados || null);
+      const selectedRouteData = routes.find(
+        (route) => Number(getRouteId(route)) === Number(routeId),
+      );
+      const details = await buscarDetalhesRota(routeId);
+
+      setRouteDetails({
+        ...selectedRouteData,
+        ...details,
+        pontos: details.pontos || [],
+        horarios: details.horarios || [],
+        motoristas: details.motoristas || [],
+      });
     } catch (loadError) {
       setError(loadError.message);
     } finally {
@@ -138,22 +142,20 @@ export default function RotasScreen() {
 
   const selectedRoute = useMemo(
     () =>
-      routes.find((route) => Number(route.id_rota) === Number(selectedRouteId)) ||
+      routes.find((route) => Number(getRouteId(route)) === Number(selectedRouteId)) ||
       null,
     [routes, selectedRouteId],
   );
+  const selectedTheme = routeTheme(routeDetails || selectedRoute);
 
-  const selectedTheme = routeTheme(
-    selectedRoute,
-    Math.max(
-      routes.findIndex(
-        (route) => Number(route.id_rota) === Number(selectedRouteId),
-      ),
-      0,
-    ),
-  );
-
-  const mapUrl = selectedRoute?.mapa || selectedTheme.url;
+  const mapUrl =
+    routeDetails?.mapa_url ||
+    routeDetails?.mapaUrl ||
+    routeDetails?.mapa ||
+    selectedRoute?.mapa_url ||
+    selectedRoute?.mapaUrl ||
+    selectedRoute?.mapa ||
+    '';
   const scheduleGroups = useMemo(
     () => Array.from(groupSchedules(routeDetails?.horarios || []).values()),
     [routeDetails],
@@ -166,9 +168,9 @@ export default function RotasScreen() {
 
   function openDriver(driver, screen) {
     navigation.navigate(screen, {
-      id_motorista: driver.id_motorista,
+      id_motorista: driver.id_motorista || driver.id,
       driver,
-      routeName: routeDetails?.nome_rota,
+      routeName: getRouteName(routeDetails),
     });
   }
 
@@ -200,19 +202,19 @@ export default function RotasScreen() {
     if (selectedTab === 'pontos') {
       return routeDetails.pontos?.length ? (
         routeDetails.pontos.map((point, index) => (
-          <View key={point.id_ponto} style={styles.dataRow}>
+          <View key={point.id_ponto || point.id_pontos || index} style={styles.dataRow}>
             <View style={styles.dataIndex}>
               <Text style={styles.dataIndexText}>{index + 1}</Text>
             </View>
             <View style={styles.dataCopy}>
-              <Text style={styles.dataTitle}>{point.nome_ponto}</Text>
-              <Text style={styles.dataDescription}>
-                {index === 0
-                  ? 'Ponto inicial'
-                  : index === routeDetails.pontos.length - 1
-                    ? 'Ponto final'
-                    : 'Parada da rota'}
+              <Text style={styles.dataTitle}>
+                {point.nome_ponto || point.nome_pontos}
               </Text>
+              {point.descricao_ponto || point.tipo_ponto || point.referencia ? (
+                <Text style={styles.dataDescription}>
+                  {point.descricao_ponto || point.tipo_ponto || point.referencia}
+                </Text>
+              ) : null}
             </View>
           </View>
         ))
@@ -228,8 +230,13 @@ export default function RotasScreen() {
             <Text style={styles.schedulePoint}>{point.nome_ponto}</Text>
             <View style={styles.scheduleTimes}>
               {point.horarios.map((schedule) => (
-                <View key={schedule.id_horario} style={styles.timePill}>
-                  <Text style={styles.timeText}>{schedule.hora}</Text>
+                <View
+                  key={schedule.id_horario || schedule.id || schedule.passagem_horarios}
+                  style={styles.timePill}
+                >
+                  <Text style={styles.timeText}>
+                    {schedule.hora || schedule.passagem_horarios}
+                  </Text>
                 </View>
               ))}
             </View>
@@ -242,28 +249,33 @@ export default function RotasScreen() {
 
     return routeDetails.motoristas?.length ? (
       routeDetails.motoristas.map((driver) => {
-        const photoUrl = getAssetUrl(driver.foto);
+        const driverId = driver.id_motorista || driver.id;
+        const photoUrl = getAssetUrl(driver.foto_motorista || driver.foto);
 
         return (
-          <View key={driver.id_motorista} style={styles.driverCard}>
+          <View key={driverId} style={styles.driverCard}>
             <Image
               source={photoUrl ? { uri: photoUrl } : motoristaImage}
               style={styles.avatar}
             />
 
             <View style={styles.driverInfo}>
-              <Text style={styles.driverName}>{driver.nome}</Text>
-              <Text style={styles.driverCode}>
-                Motorista #{driver.id_motorista}
+              <Text style={styles.driverName}>
+                {driver.nome_motorista || driver.nome}
               </Text>
+              {driverId ? (
+                <Text style={styles.driverCode}>Motorista #{driverId}</Text>
+              ) : null}
               {driver.status ? (
                 <View style={styles.statusPill}>
                   <Text style={styles.statusText}>{driver.status}</Text>
                 </View>
               ) : null}
-              <Text style={styles.driverRating}>
-                Nota média: {Number(driver.media_avaliacao || 0).toFixed(1)}
-              </Text>
+              {driver.media_avaliacao ? (
+                <Text style={styles.driverRating}>
+                  Nota media: {Number(driver.media_avaliacao).toFixed(1)}
+                </Text>
+              ) : null}
             </View>
 
             <View style={styles.driverActions}>
@@ -314,31 +326,39 @@ export default function RotasScreen() {
         contentContainerStyle={styles.contentContainer}
         showsVerticalScrollIndicator={false}
       >
-        <Text style={styles.sectionTitle}>Rotas disponíveis</Text>
+        <View style={styles.routesCard}>
+          <Text style={styles.sectionTitle}>Rotas disponíveis</Text>
 
         {loadingRoutes ? (
-          <ActivityIndicator color="#073D8F" size="large" />
+          <ActivityIndicator color="#8FD8FF" size="large" />
+        ) : routes.length === 0 ? (
+          <Text style={styles.routesEmptyText}>
+            Nenhuma rota cadastrada no momento.
+          </Text>
         ) : (
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={styles.routesList}
           >
-            {routes.map((route, index) => {
-              const isSelected =
-                Number(route.id_rota) === Number(selectedRouteId);
-              const theme = routeTheme(route, index);
+            {routes.map((route) => {
+              const routeId = getRouteId(route);
+              const isSelected = Number(routeId) === Number(selectedRouteId);
+              const theme = routeTheme(route);
 
               return (
                 <TouchableOpacity
-                  key={route.id_rota}
+                  key={routeId}
                   style={[
                     styles.routeButton,
                     { backgroundColor: theme.softColor },
-                    isSelected && { backgroundColor: theme.color },
+                    isSelected && {
+                      backgroundColor: theme.color,
+                      borderColor: '#FFFFFF',
+                    },
                   ]}
                   activeOpacity={0.86}
-                  onPress={() => selectRoute(route.id_rota)}
+                  onPress={() => selectRoute(routeId)}
                 >
                   <View
                     style={[
@@ -351,14 +371,16 @@ export default function RotasScreen() {
                       styles.routeButtonText,
                       isSelected && styles.routeButtonTextActive,
                     ]}
+                    numberOfLines={1}
                   >
-                    {route.nome_linhas || `Rota ${route.id_rota}`}
+                    {getRouteName(route)}
                   </Text>
                 </TouchableOpacity>
               );
             })}
           </ScrollView>
         )}
+        </View>
 
         {error ? (
           <TouchableOpacity
@@ -374,10 +396,18 @@ export default function RotasScreen() {
           </TouchableOpacity>
         ) : null}
 
-        <View style={styles.mapCard}>
-          <Text style={styles.mapTitle}>
-            Mapa {routeDetails?.nome_rota ? `- ${routeDetails.nome_rota}` : ''}
-          </Text>
+        <View style={[styles.mapCard, { borderColor: selectedTheme.color }]}>
+          <View style={styles.mapHeader}>
+            <View style={styles.mapHeaderCopy}>
+              <Text style={styles.mapEyebrow}>Mapa da rota</Text>
+              <Text style={styles.mapTitle} numberOfLines={1}>
+                {routeDetails ? getRouteName(routeDetails) : 'Selecione uma rota'}
+              </Text>
+            </View>
+            {loadingDetails ? (
+              <ActivityIndicator color="#8FD8FF" />
+            ) : null}
+          </View>
 
           <View style={styles.mapContainer}>
             {mapUrl ? (
@@ -388,6 +418,7 @@ export default function RotasScreen() {
                   style={styles.map}
                   startInLoadingState
                 />
+                <View pointerEvents="none" style={styles.mapGlassOverlay} />
                 <TouchableOpacity
                   style={styles.mapButton}
                   activeOpacity={0.86}
@@ -444,7 +475,7 @@ export default function RotasScreen() {
                   : 'Motoristas da rota'}
             </Text>
             <Text style={styles.panelRouteName}>
-              {routeDetails?.nome_rota || 'Selecione uma rota'}
+              {routeDetails ? getRouteName(routeDetails) : 'Selecione uma rota'}
             </Text>
           </View>
 
