@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 import styles from './styles';
 import { buscarDetalhesRota, listarRotas } from '../../services/rotas';
@@ -39,7 +39,7 @@ function routeTheme(route) {
   };
 }
 
-function normalizeRoutes(items) {
+function normalizeRoutes(items = []) {
   const seen = new Set();
 
   return items.reduce((routes, route) => {
@@ -60,7 +60,46 @@ function normalizeRoutes(items) {
 }
 
 function getScheduleTime(schedule) {
-  return schedule?.hora || schedule?.passagem_horarios || '';
+  return schedule?.hora || schedule?.passagem_horarios || schedule?.horario || '';
+}
+
+function groupSchedulesByPoint(points = [], schedules = []) {
+  const pointMap = new Map(
+    points.map((point) => [
+      String(point.id_ponto || point.id_pontos || point.id),
+      {
+        id_ponto: point.id_ponto || point.id_pontos || point.id,
+        nome_ponto:
+          point.nome_ponto || point.nome_pontos || point.nome || 'Ponto sem nome',
+        horarios: [],
+      },
+    ]),
+  );
+
+  schedules.forEach((schedule) => {
+    const pointId =
+      schedule.id_ponto ||
+      schedule.id_pontos ||
+      schedule.ponto_id ||
+      schedule.id;
+
+    const key = String(pointId);
+    const current =
+      pointMap.get(key) || {
+        id_ponto: pointId,
+        nome_ponto:
+          schedule.nome_ponto ||
+          schedule.nome_pontos ||
+          schedule.nome ||
+          'Ponto sem nome',
+        horarios: [],
+      };
+
+    current.horarios.push(schedule);
+    pointMap.set(key, current);
+  });
+
+  return Array.from(pointMap.values());
 }
 
 function getNextSchedule(routeDetails, scheduleGroups) {
@@ -86,115 +125,9 @@ function getNextSchedule(routeDetails, scheduleGroups) {
   return times.find((time) => time >= currentTime) || times[0];
 }
 
-function groupSchedulesByPoint(points = [], schedules = []) {
-  const pointMap = new Map(
-    points.map((point) => [
-      String(point.id_ponto || point.id_pontos || point.id),
-      {
-        id_ponto: point.id_ponto || point.id_pontos || point.id,
-        nome_ponto: point.nome_ponto || point.nome_pontos || '',
-        horarios: [],
-      },
-    ]),
-  );
-
-  schedules.forEach((schedule) => {
-    const pointId = schedule.id_ponto || schedule.id_pontos || schedule.id;
-    const key = String(pointId);
-    const current =
-      pointMap.get(key) || {
-        id_ponto: pointId,
-        nome_ponto: schedule.nome_ponto || schedule.nome_pontos || '',
-        horarios: [],
-      };
-
-    current.horarios.push(schedule);
-    pointMap.set(key, current);
-  });
-
-  return Array.from(pointMap.values());
-}
-
-function getRouteName(route) {
-  return route?.nome_linhas || route?.nome_rota || `Rota ${route?.id_rota}`;
-}
-
-function getScheduleTime(schedule) {
-  return schedule?.hora || schedule?.passagem_horarios || schedule?.horario || '';
-}
-
-function routeTheme(route, index) {
-  if (route?.cor || route?.color) {
-    return {
-      color: route.cor || route.color,
-      softColor: route.cor_suave || route.softColor || route.cor_clara || '#DBEAFE',
-    };
-  }
-
-  return ROUTE_THEMES[index % ROUTE_THEMES.length];
-}
-
-function groupSchedulesByPoint(schedules = []) {
-  return schedules.reduce((groups, schedule) => {
-    const pointId = schedule.id_ponto || schedule.ponto_id || schedule.id;
-    const key = String(pointId || schedule.nome_ponto || groups.size);
-    const current = groups.get(key) || {
-      id: pointId || key,
-      name: schedule.nome_ponto || schedule.nome_pontos || 'Ponto sem nome',
-      times: [],
-    };
-    const time = getScheduleTime(schedule);
-
-    if (time) {
-      current.times.push(time);
-    }
-
-    groups.set(key, current);
-    return groups;
-  }, new Map());
-}
-
-function normalizeLine(route, details, index) {
-  const theme = routeTheme(route, index);
-  const scheduleGroups = groupSchedulesByPoint(details?.horarios || []);
-  const routePoints = details?.pontos || [];
-  const points = routePoints.length
-    ? routePoints.map((point) => {
-        const id = point.id_ponto || point.id;
-        const schedulePoint = scheduleGroups.get(String(id));
-
-        return {
-          id: id || point.nome_ponto || point.nome_pontos,
-          name: point.nome_ponto || point.nome_pontos || 'Ponto sem nome',
-          times: [...(schedulePoint?.times || [])].sort(),
-        };
-      })
-    : Array.from(scheduleGroups.values()).map((point) => ({
-        ...point,
-        times: [...point.times].sort(),
-      }));
-
-  return {
-    id: route.id_rota,
-    name: getRouteName(route),
-    color: theme.color,
-    softColor: theme.softColor,
-    origin:
-      details?.origem ||
-      route?.origem ||
-      points[0]?.name ||
-      'Origem não informada',
-    destination:
-      details?.destino ||
-      route?.destino ||
-      points[points.length - 1]?.name ||
-      'Destino não informado',
-    points,
-  };
-}
-
 export default function Horarios() {
   const navigation = useNavigation();
+
   const [routes, setRoutes] = useState([]);
   const [selectedRouteId, setSelectedRouteId] = useState(null);
   const [routeDetails, setRouteDetails] = useState(null);
@@ -237,19 +170,19 @@ export default function Horarios() {
       const selectedRoute = routes.find(
         (route) => Number(getRouteId(route)) === Number(routeId),
       );
+
       const details = await buscarDetalhesRota(routeId);
 
       setRouteDetails({
         ...selectedRoute,
         ...details,
-        pontos: details.pontos || [],
-        horarios: details.horarios || [],
+        pontos: details?.pontos || [],
+        horarios: details?.horarios || [],
       });
     } catch (loadError) {
       setError(loadError.message);
     } finally {
       setLoadingDetails(false);
-
     }
   }
 
@@ -259,7 +192,6 @@ export default function Horarios() {
       routes: [{ name: 'Home' }],
     });
   }
-
 
   function selectRoute(routeId) {
     setSelectedRouteId(routeId);
@@ -271,15 +203,17 @@ export default function Horarios() {
       null,
     [routes, selectedRouteId],
   );
+
   const selectedLine = routeDetails || selectedRoute;
   const selectedTheme = routeTheme(selectedLine);
   const routeName = selectedLine ? getRouteName(selectedLine) : 'Selecione uma rota';
+
   const scheduleGroups = useMemo(
     () => groupSchedulesByPoint(routeDetails?.pontos || [], routeDetails?.horarios || []),
     [routeDetails],
   );
-  const nextTime = getNextSchedule(routeDetails, scheduleGroups);
 
+  const nextTime = getNextSchedule(routeDetails, scheduleGroups);
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -298,7 +232,6 @@ export default function Horarios() {
         </View>
       </View>
 
-
       <ScrollView
         style={styles.content}
         contentContainerStyle={styles.contentContainer}
@@ -307,9 +240,11 @@ export default function Horarios() {
         <View style={[styles.nextCard, { borderColor: selectedTheme.color }]}>
           <View style={styles.nextInfo}>
             <Text style={styles.nextLabel}>Rota</Text>
+
             <Text style={styles.routeName} numberOfLines={1}>
               {routeName}
             </Text>
+
             {routeDetails?.sentido ? (
               <Text style={styles.routeDirection}>{routeDetails.sentido}</Text>
             ) : null}
@@ -317,9 +252,14 @@ export default function Horarios() {
 
           <View style={styles.nextRight}>
             <Text style={styles.nextLabel}>Próximo horário</Text>
-            <Text style={styles.nextTime}>{loadingDetails ? '--:--' : nextTime}</Text>
+
+            <Text style={styles.nextTime}>
+              {loadingDetails ? '--:--' : nextTime}
+            </Text>
+
             <Text style={styles.pointCount}>
-              {scheduleGroups.length} {scheduleGroups.length === 1 ? 'ponto' : 'pontos'}
+              {scheduleGroups.length}{' '}
+              {scheduleGroups.length === 1 ? 'ponto' : 'pontos'}
             </Text>
           </View>
         </View>
@@ -360,6 +300,7 @@ export default function Horarios() {
                         { backgroundColor: isSelected ? '#FFFFFF' : theme.color },
                       ]}
                     />
+
                     <Text
                       style={[
                         styles.lineButtonText,
@@ -433,7 +374,6 @@ export default function Horarios() {
                   Nenhum horário cadastrado para este ponto.
                 </Text>
               )}
-
             </View>
           ))
         ) : (
@@ -442,10 +382,8 @@ export default function Horarios() {
               Nenhum ponto ou horário cadastrado para esta rota.
             </Text>
           </View>
-
         )}
       </ScrollView>
-
     </SafeAreaView>
   );
 }

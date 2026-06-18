@@ -292,7 +292,15 @@ const styles = StyleSheet.create({
     fontWeight: '900',
   },
 
-
+  glassCard: {
+    backgroundColor: 'rgba(255, 255, 255, 0.12)',
+    borderRadius: 20,
+    padding: 15,
+    marginBottom: 12,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.16)',
+  },
+  
   feedbackCard: {
     minHeight: 120,
     borderRadius: 20,
