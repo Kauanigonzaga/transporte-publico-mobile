@@ -120,12 +120,13 @@ const styles = StyleSheet.create({
 
   lineGrid: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
     gap: 10,
+    paddingRight: 18,
   },
 
   lineButton: {
-    width: '48%',
+    minWidth: 132,
+    maxWidth: 220,
     minHeight: 58,
     borderRadius: 16,
     paddingHorizontal: 16,
@@ -141,6 +142,7 @@ const styles = StyleSheet.create({
   },
 
   lineButtonText: {
+    flexShrink: 1,
     color: '#082D63',
     fontSize: 16,
     fontWeight: '900',
@@ -157,6 +159,48 @@ const styles = StyleSheet.create({
     marginTop: 16,
     borderWidth: 1,
     borderColor: '#E3EAF3',
+  },
+
+  feedbackCard: {
+    minHeight: 90,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 16,
+  },
+
+  feedbackText: {
+    color: '#65758A',
+    fontSize: 13,
+    fontWeight: '700',
+    marginTop: 10,
+  },
+
+  errorCard: {
+    padding: 15,
+    borderRadius: 14,
+    backgroundColor: '#FFF1F2',
+    borderWidth: 1,
+    borderColor: '#FECDD3',
+  },
+
+  errorTitle: {
+    color: '#9F1239',
+    fontSize: 15,
+    fontWeight: '900',
+  },
+
+  errorText: {
+    color: '#BE123C',
+    fontSize: 13,
+    lineHeight: 18,
+    marginTop: 4,
+  },
+
+  errorAction: {
+    color: '#9F1239',
+    fontSize: 12,
+    fontWeight: '800',
+    marginTop: 7,
   },
 
   descriptionTitle: {

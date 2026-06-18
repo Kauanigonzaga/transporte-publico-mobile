@@ -13,7 +13,7 @@ import {
 import { BlurView } from 'expo-blur';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 import styles from './styles';
 
@@ -40,7 +40,7 @@ const MODULES = [
       {
         label: 'Editar horários',
         icon: 'H',
-        screen: 'Horarios',
+        screen: 'EditarHorarios',
       },
     ],
   },
@@ -162,7 +162,10 @@ function AdminCard({ item, columns, onAction }) {
 
 export default function HomeAdmin() {
   const navigation = useNavigation();
+  const route = useRoute();
   const { width } = useWindowDimensions();
+  const usuario = route.params?.usuario;
+  const token = route.params?.token;
   const columns = width >= 600 ? 2 : 1;
 
   function logout() {
@@ -174,7 +177,7 @@ export default function HomeAdmin() {
 
   function handleAction(action) {
     if (action.screen) {
-      navigation.navigate(action.screen, { adminMode: true });
+      navigation.navigate(action.screen, { adminMode: true, usuario, token });
       return;
     }
 

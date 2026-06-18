@@ -34,6 +34,13 @@ export async function buscarDetalhesRota(idRota) {
       payload.nome_linhas ||
       '',
     cor_rota: rota.cor_rota || rota.corRota || payload.cor_rota || payload.corRota || '',
+    sentido: rota.sentido || payload.sentido || '',
+    proxima_saida:
+      rota.proxima_saida ||
+      rota.proximaSaida ||
+      payload.proxima_saida ||
+      payload.proximaSaida ||
+      '',
     mapa_url:
       rota.mapa_url ||
       rota.mapaUrl ||

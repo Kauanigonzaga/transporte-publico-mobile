@@ -1,24 +1,33 @@
-import { useEffect, useState } from 'react';
-import { Alert, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { useState } from 'react';
+import {
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
 import styles from './styles';
 import { post } from '../../services/api';
 
+const USER_TYPE = {
+  admin: 1,
+  motorista: 2,
+};
+
 export default function Login() {
   const navigation = useNavigation();
   const route = useRoute();
   const [user, setUser] = useState('');
   const [password, setPassword] = useState('');
-  const [loginType, setLoginType] = useState('motorista');
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    if (route.params?.loginType === 'admin' || route.params?.loginType === 'motorista') {
-      setLoginType(route.params.loginType);
-    }
-  }, [route.params?.loginType]);
+  const loginType = route.params?.loginType === 'admin' ? 'admin' : 'motorista';
 
   function goHome() {
     navigation.reset({
@@ -29,19 +38,20 @@ export default function Login() {
 
   async function handleLogin() {
     if (!user.trim() || !password.trim()) {
-      Alert.alert('Dados obrigatorios', 'Informe usuario e senha para continuar.');
+      Alert.alert('Dados obrigatórios', 'Informe usuário e senha para continuar.');
       return;
     }
 
     try {
       setLoading(true);
 
-      const response = await post('/login', {
+      const response = await post('/auth/login', {
         usuario: user.trim(),
         senha: password,
-        tipo: loginType,
+        tipoUsuario: USER_TYPE[loginType],
       });
-      const authenticatedUser = response.dados;
+      const authenticatedUser = response.dados?.usuario || response.dados;
+      const token = response.dados?.token;
 
       if (loginType === 'admin') {
         navigation.reset({
@@ -49,7 +59,7 @@ export default function Login() {
           routes: [
             {
               name: 'HomeAdmin',
-              params: { usuario: authenticatedUser },
+              params: { usuario: authenticatedUser, token },
             },
           ],
         });
@@ -64,6 +74,7 @@ export default function Login() {
             params: {
               id_motorista: Number(authenticatedUser.id_motorista),
               usuario: authenticatedUser,
+              token,
             },
           },
         ],
@@ -76,114 +87,81 @@ export default function Login() {
   }
 
   return (
-    <SafeAreaView style={styles.screen}>
-      <View style={styles.header}>
-        <TouchableOpacity
-          style={styles.backButton}
-          activeOpacity={0.85}
-          onPress={goHome}
-        >
-          <Text style={styles.backButtonText}>{'<'}</Text>
-        </TouchableOpacity>
-
-        <Text style={styles.brand}>OminiBus</Text>
-      </View>
-
-      <View style={styles.hero}>
-        <Text style={styles.title}>Acesse sua conta</Text>
-        <Text style={styles.subtitle}>
-          Entre como motorista para ver sua rota ou como administrador para gerenciar o OminiBus.
-        </Text>
-      </View>
-
-      <View style={styles.formCard}>
-        <Text style={styles.formTitle}>Tipo de acesso</Text>
-
-        <View style={styles.roleSelector}>
-          <TouchableOpacity
-            style={[
-              styles.roleButton,
-              loginType === 'motorista' && styles.roleButtonActive,
-            ]}
-            activeOpacity={0.86}
-            onPress={() => setLoginType('motorista')}
-          >
-            <Text
-              style={[
-                styles.roleButtonText,
-                loginType === 'motorista' && styles.roleButtonTextActive,
-              ]}
-            >
-              Motorista
-            </Text>
-          </TouchableOpacity>
+    <LinearGradient
+      colors={['#1E40AF', '#2563EB', '#06142E']}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 1 }}
+      style={styles.screen}
+    >
+      <SafeAreaView style={styles.safeArea}>
+        <View style={styles.topBar}>
+          <Text style={styles.brand}>OminiBus</Text>
 
           <TouchableOpacity
-            style={[
-              styles.roleButton,
-              loginType === 'admin' && styles.roleButtonActive,
-            ]}
-            activeOpacity={0.86}
-            onPress={() => setLoginType('admin')}
+            style={styles.homeButton}
+            activeOpacity={0.85}
+            onPress={goHome}
           >
-            <Text
-              style={[
-                styles.roleButtonText,
-                loginType === 'admin' && styles.roleButtonTextActive,
-              ]}
-            >
-              Admin
-            </Text>
+            <Text style={styles.homeButtonText}>Home</Text>
           </TouchableOpacity>
         </View>
 
-        <View style={styles.inputGroup}>
-          <Text style={styles.label}>Usuario</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Digite seu usuario"
-            placeholderTextColor="#8A98A8"
-            value={user}
-            onChangeText={setUser}
-            autoCapitalize="none"
-          />
-        </View>
-
-        <View style={styles.inputGroup}>
-          <Text style={styles.label}>Senha</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Digite sua senha"
-            placeholderTextColor="#8A98A8"
-            value={password}
-            onChangeText={setPassword}
-            secureTextEntry
-          />
-        </View>
-
-        <TouchableOpacity
-          style={[styles.primaryButton, loading && { opacity: 0.65 }]}
-          activeOpacity={0.86}
-          onPress={handleLogin}
-          disabled={loading}
+        <KeyboardAvoidingView
+          style={styles.centerWrapper}
+          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         >
-          <Text style={styles.primaryButtonText}>
-            {loading
-              ? 'Entrando...'
-              : loginType === 'motorista'
-                ? 'Entrar como motorista'
-                : 'Entrar como admin'}
-          </Text>
-        </TouchableOpacity>
+          <ScrollView
+            style={styles.formScroll}
+            contentContainerStyle={styles.center}
+            keyboardShouldPersistTaps="handled"
+            showsVerticalScrollIndicator={false}
+          >
+            <View style={styles.formCard}>
+              <View style={styles.loginIcon}>
+                <Text style={styles.loginIconText}>✓</Text>
+              </View>
 
-        <TouchableOpacity
-          style={styles.secondaryButton}
-          activeOpacity={0.86}
-          onPress={goHome}
-        >
-          <Text style={styles.secondaryButtonText}>Entrar como passageiro</Text>
-        </TouchableOpacity>
-      </View>
-    </SafeAreaView>
+              <Text style={styles.formTitle}>Login</Text>
+
+              <View style={styles.inputGroup}>
+                <Text style={styles.label}>Usuário</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Digite seu usuário"
+                  placeholderTextColor="#8A98A8"
+                  value={user}
+                  onChangeText={setUser}
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                />
+              </View>
+
+              <View style={styles.inputGroup}>
+                <Text style={styles.label}>Senha</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Digite sua senha"
+                  placeholderTextColor="#8A98A8"
+                  value={password}
+                  onChangeText={setPassword}
+                  secureTextEntry
+                />
+              </View>
+
+              <TouchableOpacity
+                style={[styles.primaryButton, loading && styles.primaryButtonDisabled]}
+                activeOpacity={0.86}
+                onPress={handleLogin}
+                disabled={loading}
+              >
+                <Text style={styles.primaryButtonText}>
+                  {loading ? 'Entrando...' : 'Entrar'}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </ScrollView>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
+    </LinearGradient>
   );
 }

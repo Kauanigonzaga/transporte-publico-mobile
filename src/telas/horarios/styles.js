@@ -3,11 +3,11 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: '#F4F7FB',
+    backgroundColor: '#06142E',
   },
 
   header: {
-    backgroundColor: '#073D8F',
+    backgroundColor: '#061C46',
     paddingHorizontal: 20,
     paddingTop: 14,
     paddingBottom: 22,
@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
   backButton: {
     width: 42,
     height: 42,
-    borderRadius: 8,
+    borderRadius: 12,
     backgroundColor: '#FFFFFF',
     alignItems: 'center',
     justifyContent: 'center',
@@ -59,77 +59,99 @@ const styles = StyleSheet.create({
   },
 
   nextCard: {
-    minHeight: 128,
-    backgroundColor: '#FFFFFF',
-    borderRadius: 22,
+    minHeight: 132,
+    backgroundColor: 'rgba(255, 255, 255, 0.12)',
+    borderRadius: 24,
+    borderWidth: 1,
     padding: 18,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    shadowColor: '#0A2A55',
-    shadowOffset: { width: 0, height: 12 },
-    shadowOpacity: 0.10,
-    shadowRadius: 22,
-    elevation: 5,
+    shadowColor: '#001B44',
+    shadowOffset: { width: 0, height: 14 },
+    shadowOpacity: 0.24,
+    shadowRadius: 24,
+    elevation: 7,
+  },
+
+  nextInfo: {
+    flex: 1,
+    paddingRight: 14,
+  },
+
+  nextRight: {
+    alignItems: 'flex-end',
   },
 
   nextLabel: {
-    color: '#65758A',
-    fontSize: 14,
-    fontWeight: '800',
+    color: '#8FD8FF',
+    fontSize: 12,
+    fontWeight: '900',
+  },
+
+  routeName: {
+    color: '#FFFFFF',
+    fontSize: 24,
+    fontWeight: '900',
+    marginTop: 5,
+  },
+
+  routeDirection: {
+    color: '#D6E8FF',
+    fontSize: 13,
+    fontWeight: '700',
+    marginTop: 6,
   },
 
   nextTime: {
-    color: '#082D63',
-    fontSize: 44,
+    color: '#FFFFFF',
+    fontSize: 38,
     fontWeight: '900',
     marginTop: 4,
   },
 
-  lineBadge: {
-    minWidth: 94,
-    minHeight: 48,
-    borderRadius: 14,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 14,
+  pointCount: {
+    color: '#D6E8FF',
+    fontSize: 12,
+    fontWeight: '800',
+    marginTop: 2,
   },
 
-  lineBadgeText: {
-    color: '#FFFFFF',
-    fontSize: 16,
-    fontWeight: '900',
-  },
-
-  sectionTitle: {
-    color: '#082D63',
-    fontSize: 21,
-    fontWeight: '900',
-    marginTop: 24,
-    marginBottom: 12,
+  routesCard: {
+    marginTop: 16,
+    padding: 14,
+    borderRadius: 22,
+    backgroundColor: 'rgba(255, 255, 255, 0.10)',
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.16)',
   },
 
   lineSelector: {
     gap: 10,
-    paddingRight: 18,
+    paddingRight: 8,
   },
 
   lineButton: {
+    minWidth: 124,
+    maxWidth: 220,
     minHeight: 52,
-    borderRadius: 16,
+    borderRadius: 15,
+    borderWidth: 1,
+    borderColor: 'transparent',
     paddingHorizontal: 16,
     flexDirection: 'row',
     alignItems: 'center',
   },
 
   lineDot: {
-    width: 14,
-    height: 14,
+    width: 13,
+    height: 13,
     borderRadius: 7,
     marginRight: 10,
   },
 
   lineButtonText: {
+    flexShrink: 1,
     color: '#082D63',
     fontSize: 15,
     fontWeight: '900',
@@ -139,35 +161,50 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
   },
 
-  routeCard: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 18,
-    padding: 16,
+  errorCard: {
     marginTop: 16,
+    padding: 15,
+    borderRadius: 16,
+    backgroundColor: '#FFF1F2',
     borderWidth: 1,
-    borderColor: '#E3EAF3',
+    borderColor: '#FECDD3',
   },
 
-  routeLabel: {
-    color: '#65758A',
-    fontSize: 12,
-    fontWeight: '800',
-    marginBottom: 4,
-  },
-
-  routeTitle: {
-    color: '#082D63',
-    fontSize: 19,
+  errorTitle: {
+    color: '#9F1239',
+    fontSize: 15,
     fontWeight: '900',
   },
 
+  errorText: {
+    color: '#BE123C',
+    fontSize: 13,
+    lineHeight: 18,
+    marginTop: 4,
+  },
+
+  errorAction: {
+    color: '#9F1239',
+    fontSize: 12,
+    fontWeight: '800',
+    marginTop: 7,
+  },
+
+  sectionTitle: {
+    color: '#FFFFFF',
+    fontSize: 21,
+    fontWeight: '900',
+    marginTop: 22,
+    marginBottom: 12,
+  },
+
   stopCard: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 18,
-    padding: 16,
+    backgroundColor: 'rgba(255, 255, 255, 0.12)',
+    borderRadius: 20,
+    padding: 15,
     marginBottom: 12,
     borderWidth: 1,
-    borderColor: '#E3EAF3',
+    borderColor: 'rgba(255, 255, 255, 0.16)',
   },
 
   stopHeader: {
@@ -176,9 +213,9 @@ const styles = StyleSheet.create({
   },
 
   stopMarker: {
-    width: 38,
-    height: 38,
-    borderRadius: 19,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 12,
@@ -186,25 +223,15 @@ const styles = StyleSheet.create({
 
   stopMarkerText: {
     color: '#FFFFFF',
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: '900',
-  },
-
-  stopInfo: {
-    flex: 1,
   },
 
   stopName: {
-    color: '#16263A',
-    fontSize: 17,
+    flex: 1,
+    color: '#FFFFFF',
+    fontSize: 16,
     fontWeight: '900',
-  },
-
-  stopHint: {
-    color: '#65758A',
-    fontSize: 12,
-    fontWeight: '700',
-    marginTop: 3,
   },
 
   timesList: {
@@ -216,13 +243,47 @@ const styles = StyleSheet.create({
 
   timePill: {
     color: '#073D8F',
-    backgroundColor: '#E8F2FF',
+    backgroundColor: '#FFFFFF',
     overflow: 'hidden',
     paddingVertical: 8,
     paddingHorizontal: 12,
     borderRadius: 10,
-    fontSize: 15,
+    fontSize: 14,
     fontWeight: '900',
+  },
+
+  feedbackCard: {
+    minHeight: 120,
+    borderRadius: 20,
+    backgroundColor: 'rgba(255, 255, 255, 0.10)',
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.16)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 18,
+  },
+
+  feedbackText: {
+    color: '#D6E8FF',
+    fontSize: 13,
+    fontWeight: '800',
+    marginTop: 10,
+  },
+
+  emptyText: {
+    color: '#D6E8FF',
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: '700',
+    textAlign: 'center',
+  },
+
+  emptyPointText: {
+    color: '#D6E8FF',
+    fontSize: 13,
+    lineHeight: 19,
+    fontWeight: '700',
+    marginTop: 12,
   },
 });
 

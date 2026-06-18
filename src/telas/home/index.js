@@ -34,7 +34,6 @@ function AccessButton({ title, onPress }) {
       onPress={onPress}
     >
       <Text style={styles.accessButtonText}>{title}</Text>
-      <Text style={styles.accessButtonArrow}>{'>'}</Text>
     </TouchableOpacity>
   );
 }
@@ -65,44 +64,33 @@ export default function Home() {
           contentContainerStyle={styles.content}
           showsVerticalScrollIndicator={false}
         >
-          <View style={styles.hero}>
-            <Text style={styles.eyebrow}>Mobilidade urbana inteligente</Text>
-            <Text style={styles.title}>
-              Seu caminho,{'\n'}
-              <Text style={styles.titleAccent}>nossa missão.</Text>
-            </Text>
-            <Text style={styles.subtitle}>
-              Planeje suas rotas e acompanhe os horários de forma simples,
-              rápida e intuitiva.
-            </Text>
-          </View>
-
           <View style={styles.routeCard}>
             <View style={styles.routeIconContainer}>
               <BusIcon dark />
             </View>
 
-            <Text style={styles.routeTitle}>Rotas de Ônibus</Text>
+            <Text style={styles.routeTitle}>Consultar rotas</Text>
             <Text style={styles.routeDescription}>
-              Encontre a melhor linha para chegar ao seu destino.
+              Veja rotas, pontos, horários e motoristas.
             </Text>
 
-            <TouchableOpacity
-              style={styles.primaryButton}
-              activeOpacity={0.88}
-              onPress={() => navigation.navigate('Rotas')}
-            >
-              <Text style={styles.primaryButtonText}>Ver Rotas</Text>
-              <Text style={styles.primaryButtonArrow}>{'>'}</Text>
-            </TouchableOpacity>
+            <View style={styles.mainActions}>
+              <TouchableOpacity
+                style={[styles.actionButton, styles.primaryButton]}
+                activeOpacity={0.88}
+                onPress={() => navigation.navigate('Rotas')}
+              >
+                <Text style={styles.primaryButtonText}>Ver rotas</Text>
+              </TouchableOpacity>
 
-            <TouchableOpacity
-              style={styles.scheduleButton}
-              activeOpacity={0.82}
-              onPress={() => navigation.navigate('Horarios')}
-            >
-              <Text style={styles.scheduleButtonText}>Consultar horários</Text>
-            </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.actionButton, styles.secondaryButton]}
+                activeOpacity={0.88}
+                onPress={() => navigation.navigate('Horarios')}
+              >
+                <Text style={styles.secondaryButtonText}>Ver horários</Text>
+              </TouchableOpacity>
+            </View>
           </View>
 
           <View style={styles.restrictedAccess}>

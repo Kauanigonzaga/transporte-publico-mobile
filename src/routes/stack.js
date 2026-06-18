@@ -6,6 +6,7 @@ import HomeAdmin from '../telas/homeAdmin';
 import LinhasPontos from '../telas/linhasPontos';
 import Rotas from '../telas/rotas';
 import Horarios from '../telas/horarios';
+import EditarHorarios from '../telas/editarHorarios';
 import InfoMotorista from '../telas/infoMotorista';
 import AvaliacoesMotorista from '../telas/avaliacoesMotorista';
 
@@ -23,6 +24,7 @@ function RootStack() {
       <Stack.Screen name="LinhasPontos" component={LinhasPontos} options={{ headerShown: false }}/>
       <Stack.Screen name="Rotas" component={Rotas} options={{ headerShown: false }}/>
       <Stack.Screen name="Horarios" component={Horarios} options={{ headerShown: false }}/>
+      <Stack.Screen name="EditarHorarios" component={EditarHorarios} options={{ headerShown: false }}/>
       <Stack.Screen name="InfoMotorista" component={InfoMotorista} options={{ headerShown: false }}/>
       <Stack.Screen name="AvaliacoesMotorista" component={AvaliacoesMotorista} options={{ headerShown: false }}/>
     </Stack.Navigator>

@@ -1,69 +1,178 @@
-import { useMemo, useState } from 'react';
-import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { useEffect, useMemo, useState } from 'react';
+import {
+  ActivityIndicator,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 
 import styles from './styles';
+import { buscarDetalhesRota, listarRotas } from '../../services/rotas';
 
-// Troque este array pelo retorno da API quando o back estiver pronto.
-const SCHEDULES = [
-  {
-    id: 'azul',
-    name: 'Azul',
-    color: '#1D4ED8',
-    softColor: '#DBEAFE',
-    origin: 'Centro',
-    destination: 'Bairro A',
-    points: [
-      { name: 'Terminal Central', times: ['06:40', '07:20', '08:00', '08:40'] },
-      { name: 'Escola Estadual', times: ['06:55', '07:35', '08:15', '08:55'] },
-      { name: 'Bairro A', times: ['07:10', '07:50', '08:30', '09:10'] },
-    ],
-  },
-  {
-    id: 'roxa',
-    name: 'Roxa',
-    color: '#7C3AED',
-    softColor: '#EDE9FE',
-    origin: 'Rodoviaria',
-    destination: 'Bairro B',
-    points: [
-      { name: 'Rodoviaria', times: ['08:00', '09:00', '10:00', '11:00'] },
-      { name: 'Mercado Central', times: ['08:10', '09:10', '10:10', '11:10'] },
-      { name: 'Praca Central', times: ['08:25', '09:25', '10:25', '11:25'] },
-    ],
-  },
-  {
-    id: 'amarela',
-    name: 'Amarela',
-    color: '#EAB308',
-    softColor: '#FEF3C7',
-    origin: 'Bairro D',
-    destination: 'Centro',
-    points: [
-      { name: 'Bairro D', times: ['06:30', '07:30', '08:30', '09:30'] },
-      { name: 'Escola', times: ['06:45', '07:45', '08:45', '09:45'] },
-      { name: 'Centro', times: ['07:05', '08:05', '09:05', '10:05'] },
-    ],
-  },
-  {
-    id: 'laranja',
-    name: 'Laranja',
-    color: '#F97316',
-    softColor: '#FFEDD5',
-    origin: 'Bairro C',
-    destination: 'Centro',
-    points: [
-      { name: 'Terminal Norte', times: ['07:00', '08:00', '09:00', '10:00'] },
-      { name: 'Rua das Flores', times: ['07:15', '08:15', '09:15', '10:15'] },
-      { name: 'Centro', times: ['07:35', '08:35', '09:35', '10:35'] },
-    ],
-  },
-];
+const DEFAULT_ROUTE_COLOR = '#1769E0';
+const DEFAULT_ROUTE_SOFT_COLOR = '#EAF2FF';
+
+function getRouteId(route) {
+  return route?.id_rota || route?.id || route?.idRota;
+}
+
+function getRouteName(route) {
+  return (
+    route?.nome_linhas ||
+    route?.nome_rota ||
+    route?.nome ||
+    `Rota ${getRouteId(route) || ''}`.trim()
+  );
+}
+
+function routeTheme(route) {
+  return {
+    color: route?.cor_rota || route?.corRota || route?.cor || DEFAULT_ROUTE_COLOR,
+    softColor:
+      route?.cor_rota_suave ||
+      route?.corRotaSuave ||
+      route?.cor_suave ||
+      DEFAULT_ROUTE_SOFT_COLOR,
+  };
+}
+
+function normalizeRoutes(items) {
+  const seen = new Set();
+
+  return items.reduce((routes, route) => {
+    const id = Number(getRouteId(route));
+
+    if (!Number.isFinite(id) || seen.has(id)) {
+      return routes;
+    }
+
+    seen.add(id);
+    routes.push({
+      ...route,
+      id_rota: id,
+    });
+
+    return routes;
+  }, []);
+}
+
+function getScheduleTime(schedule) {
+  return schedule?.hora || schedule?.passagem_horarios || '';
+}
+
+function getNextSchedule(routeDetails, scheduleGroups) {
+  if (routeDetails?.proxima_saida || routeDetails?.proximaSaida) {
+    return routeDetails.proxima_saida || routeDetails.proximaSaida;
+  }
+
+  const times = scheduleGroups
+    .flatMap((point) => point.horarios.map(getScheduleTime))
+    .filter(Boolean)
+    .map((time) => String(time).slice(0, 5))
+    .sort();
+
+  if (times.length === 0) {
+    return '--:--';
+  }
+
+  const now = new Date();
+  const currentTime = `${String(now.getHours()).padStart(2, '0')}:${String(
+    now.getMinutes(),
+  ).padStart(2, '0')}`;
+
+  return times.find((time) => time >= currentTime) || times[0];
+}
+
+function groupSchedulesByPoint(points = [], schedules = []) {
+  const pointMap = new Map(
+    points.map((point) => [
+      String(point.id_ponto || point.id_pontos || point.id),
+      {
+        id_ponto: point.id_ponto || point.id_pontos || point.id,
+        nome_ponto: point.nome_ponto || point.nome_pontos || '',
+        horarios: [],
+      },
+    ]),
+  );
+
+  schedules.forEach((schedule) => {
+    const pointId = schedule.id_ponto || schedule.id_pontos || schedule.id;
+    const key = String(pointId);
+    const current =
+      pointMap.get(key) || {
+        id_ponto: pointId,
+        nome_ponto: schedule.nome_ponto || schedule.nome_pontos || '',
+        horarios: [],
+      };
+
+    current.horarios.push(schedule);
+    pointMap.set(key, current);
+  });
+
+  return Array.from(pointMap.values());
+}
 
 export default function Horarios() {
   const navigation = useNavigation();
-  const [selectedLineId, setSelectedLineId] = useState(SCHEDULES[0].id);
+  const [routes, setRoutes] = useState([]);
+  const [selectedRouteId, setSelectedRouteId] = useState(null);
+  const [routeDetails, setRouteDetails] = useState(null);
+  const [loadingRoutes, setLoadingRoutes] = useState(true);
+  const [loadingDetails, setLoadingDetails] = useState(false);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    loadRoutes();
+  }, []);
+
+  useEffect(() => {
+    if (selectedRouteId) {
+      loadRouteDetails(selectedRouteId);
+    }
+  }, [selectedRouteId]);
+
+  async function loadRoutes() {
+    try {
+      setLoadingRoutes(true);
+      setError('');
+
+      const loadedRoutes = normalizeRoutes(await listarRotas());
+
+      setRoutes(loadedRoutes);
+      setSelectedRouteId((currentId) => currentId || loadedRoutes[0]?.id_rota || null);
+    } catch (loadError) {
+      setError(loadError.message);
+    } finally {
+      setLoadingRoutes(false);
+    }
+  }
+
+  async function loadRouteDetails(routeId) {
+    try {
+      setLoadingDetails(true);
+      setError('');
+      setRouteDetails(null);
+
+      const selectedRoute = routes.find(
+        (route) => Number(getRouteId(route)) === Number(routeId),
+      );
+      const details = await buscarDetalhesRota(routeId);
+
+      setRouteDetails({
+        ...selectedRoute,
+        ...details,
+        pontos: details.pontos || [],
+        horarios: details.horarios || [],
+      });
+    } catch (loadError) {
+      setError(loadError.message);
+    } finally {
+      setLoadingDetails(false);
+    }
+  }
 
   function goHome() {
     navigation.reset({
@@ -72,12 +181,24 @@ export default function Horarios() {
     });
   }
 
-  const selectedLine = useMemo(
-    () => SCHEDULES.find((line) => line.id === selectedLineId) || SCHEDULES[0],
-    [selectedLineId],
-  );
+  function selectRoute(routeId) {
+    setSelectedRouteId(routeId);
+  }
 
-  const nextTime = selectedLine.points[0]?.times[0] || '--:--';
+  const selectedRoute = useMemo(
+    () =>
+      routes.find((route) => Number(getRouteId(route)) === Number(selectedRouteId)) ||
+      null,
+    [routes, selectedRouteId],
+  );
+  const selectedLine = routeDetails || selectedRoute;
+  const selectedTheme = routeTheme(selectedLine);
+  const routeName = selectedLine ? getRouteName(selectedLine) : 'Selecione uma rota';
+  const scheduleGroups = useMemo(
+    () => groupSchedulesByPoint(routeDetails?.pontos || [], routeDetails?.horarios || []),
+    [routeDetails],
+  );
+  const nextTime = getNextSchedule(routeDetails, scheduleGroups);
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -92,7 +213,7 @@ export default function Horarios() {
 
         <View style={styles.headerTextGroup}>
           <Text style={styles.brand}>OminiBus</Text>
-          <Text style={styles.headerTitle}>Horarios</Text>
+          <Text style={styles.headerTitle}>Horários</Text>
         </View>
       </View>
 
@@ -101,88 +222,144 @@ export default function Horarios() {
         contentContainerStyle={styles.contentContainer}
         showsVerticalScrollIndicator={false}
       >
-        <View style={styles.nextCard}>
-          <View>
-            <Text style={styles.nextLabel}>Proxima saida</Text>
-            <Text style={styles.nextTime}>{nextTime}</Text>
+        <View style={[styles.nextCard, { borderColor: selectedTheme.color }]}>
+          <View style={styles.nextInfo}>
+            <Text style={styles.nextLabel}>Rota</Text>
+            <Text style={styles.routeName} numberOfLines={1}>
+              {routeName}
+            </Text>
+            {routeDetails?.sentido ? (
+              <Text style={styles.routeDirection}>{routeDetails.sentido}</Text>
+            ) : null}
           </View>
 
-          <View style={[styles.lineBadge, { backgroundColor: selectedLine.color }]}>
-            <Text style={styles.lineBadgeText}>{selectedLine.name}</Text>
+          <View style={styles.nextRight}>
+            <Text style={styles.nextLabel}>Próximo horário</Text>
+            <Text style={styles.nextTime}>{loadingDetails ? '--:--' : nextTime}</Text>
+            <Text style={styles.pointCount}>
+              {scheduleGroups.length} {scheduleGroups.length === 1 ? 'ponto' : 'pontos'}
+            </Text>
           </View>
         </View>
 
-        <Text style={styles.sectionTitle}>Escolha a linha</Text>
+        <View style={styles.routesCard}>
+          {loadingRoutes ? (
+            <ActivityIndicator color="#8FD8FF" size="large" />
+          ) : routes.length === 0 ? (
+            <Text style={styles.emptyText}>Nenhuma rota cadastrada no momento.</Text>
+          ) : (
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={styles.lineSelector}
+            >
+              {routes.map((route) => {
+                const routeId = getRouteId(route);
+                const isSelected = Number(routeId) === Number(selectedRouteId);
+                const theme = routeTheme(route);
 
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.lineSelector}
-        >
-          {SCHEDULES.map((line) => {
-            const isSelected = line.id === selectedLine.id;
+                return (
+                  <TouchableOpacity
+                    key={routeId}
+                    style={[
+                      styles.lineButton,
+                      { backgroundColor: theme.softColor },
+                      isSelected && {
+                        backgroundColor: theme.color,
+                        borderColor: '#FFFFFF',
+                      },
+                    ]}
+                    activeOpacity={0.86}
+                    onPress={() => selectRoute(routeId)}
+                  >
+                    <View
+                      style={[
+                        styles.lineDot,
+                        { backgroundColor: isSelected ? '#FFFFFF' : theme.color },
+                      ]}
+                    />
+                    <Text
+                      style={[
+                        styles.lineButtonText,
+                        isSelected && styles.lineButtonTextActive,
+                      ]}
+                      numberOfLines={1}
+                    >
+                      {getRouteName(route)}
+                    </Text>
+                  </TouchableOpacity>
+                );
+              })}
+            </ScrollView>
+          )}
+        </View>
 
-            return (
-              <TouchableOpacity
-                key={line.id}
-                style={[
-                  styles.lineButton,
-                  { backgroundColor: line.softColor },
-                  isSelected && { backgroundColor: line.color },
-                ]}
-                activeOpacity={0.86}
-                onPress={() => setSelectedLineId(line.id)}
-              >
+        {error ? (
+          <TouchableOpacity
+            style={styles.errorCard}
+            activeOpacity={0.85}
+            onPress={() =>
+              selectedRouteId ? loadRouteDetails(selectedRouteId) : loadRoutes()
+            }
+          >
+            <Text style={styles.errorTitle}>Não foi possível carregar</Text>
+            <Text style={styles.errorText}>{error}</Text>
+            <Text style={styles.errorAction}>Toque para tentar novamente</Text>
+          </TouchableOpacity>
+        ) : null}
+
+        <Text style={styles.sectionTitle}>Pontos</Text>
+
+        {loadingDetails ? (
+          <View style={styles.feedbackCard}>
+            <ActivityIndicator color="#8FD8FF" size="large" />
+            <Text style={styles.feedbackText}>Carregando horários...</Text>
+          </View>
+        ) : scheduleGroups.length ? (
+          scheduleGroups.map((point, index) => (
+            <View key={point.id_ponto || index} style={styles.stopCard}>
+              <View style={styles.stopHeader}>
                 <View
                   style={[
-                    styles.lineDot,
-                    { backgroundColor: isSelected ? '#FFFFFF' : line.color },
-                  ]}
-                />
-                <Text
-                  style={[
-                    styles.lineButtonText,
-                    isSelected && styles.lineButtonTextActive,
+                    styles.stopMarker,
+                    { backgroundColor: selectedTheme.color },
                   ]}
                 >
-                  {line.name}
-                </Text>
-              </TouchableOpacity>
-            );
-          })}
-        </ScrollView>
+                  <Text style={styles.stopMarkerText}>{index + 1}</Text>
+                </View>
 
-        <View style={styles.routeCard}>
-          <Text style={styles.routeLabel}>Trajeto</Text>
-          <Text style={styles.routeTitle}>
-            {selectedLine.origin} {'>'} {selectedLine.destination}
-          </Text>
-        </View>
-
-        <Text style={styles.sectionTitle}>Pontos e horarios</Text>
-
-        {selectedLine.points.map((point, index) => (
-          <View key={point.name} style={styles.stopCard}>
-            <View style={styles.stopHeader}>
-              <View style={[styles.stopMarker, { backgroundColor: selectedLine.color }]}>
-                <Text style={styles.stopMarkerText}>{index + 1}</Text>
+                <Text style={styles.stopName}>{point.nome_ponto}</Text>
               </View>
 
-              <View style={styles.stopInfo}>
-                <Text style={styles.stopName}>{point.name}</Text>
-                <Text style={styles.stopHint}>{point.times.length} horarios hoje</Text>
-              </View>
-            </View>
+              {point.horarios.length ? (
+                <View style={styles.timesList}>
+                  {point.horarios.map((schedule, scheduleIndex) => {
+                    const time = getScheduleTime(schedule);
 
-            <View style={styles.timesList}>
-              {point.times.map((time) => (
-                <Text key={time} style={styles.timePill}>
-                  {time}
+                    return (
+                      <Text
+                        key={schedule.id_horario || `${point.id_ponto}-${scheduleIndex}`}
+                        style={styles.timePill}
+                      >
+                        {String(time).slice(0, 5)}
+                      </Text>
+                    );
+                  })}
+                </View>
+              ) : (
+                <Text style={styles.emptyPointText}>
+                  Nenhum horário cadastrado para este ponto.
                 </Text>
-              ))}
+              )}
             </View>
+          ))
+        ) : (
+          <View style={styles.feedbackCard}>
+            <Text style={styles.emptyText}>
+              Nenhum ponto ou horário cadastrado para esta rota.
+            </Text>
           </View>
-        ))}
+        )}
       </ScrollView>
     </SafeAreaView>
   );

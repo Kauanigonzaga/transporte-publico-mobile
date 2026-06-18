@@ -1,9 +1,0 @@
-Starting project at D:\temp\Maria\transporte-publico-mobile
-Starting Metro Bundler
-
-warning: Bundler cache is empty, rebuilding (this may take a minute)
- ERROR  An unknown error occurred while installing React Native DevTools. Details:
-
-spawn EPERM
-Waiting on http://localhost:8090
-Logs for your project will appear below.

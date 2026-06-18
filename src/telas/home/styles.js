@@ -3,12 +3,12 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   background: {
     flex: 1,
-    backgroundColor: '#10243D',
+    backgroundColor: '#06142E',
   },
 
   mapOverlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(11, 25, 43, 0.76)',
+    backgroundColor: 'rgba(6, 20, 46, 0.82)',
   },
 
   safeArea: {
@@ -16,13 +16,13 @@ const styles = StyleSheet.create({
   },
 
   header: {
-    minHeight: 68,
+    minHeight: 72,
     paddingHorizontal: 22,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'rgba(5, 55, 128, 0.97)',
+    backgroundColor: 'rgba(7, 61, 143, 0.72)',
     borderBottomWidth: 1,
-    borderBottomColor: 'rgba(255, 255, 255, 0.1)',
+    borderBottomColor: 'rgba(255, 255, 255, 0.12)',
   },
 
   brandGroup: {
@@ -31,9 +31,9 @@ const styles = StyleSheet.create({
   },
 
   logoIcon: {
-    width: 38,
-    height: 38,
-    borderRadius: 11,
+    width: 40,
+    height: 40,
+    borderRadius: 12,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#1688E8',
@@ -42,9 +42,9 @@ const styles = StyleSheet.create({
 
   brand: {
     color: '#FFFFFF',
-    fontSize: 23,
+    fontSize: 22,
     fontWeight: '900',
-    letterSpacing: -0.5,
+    letterSpacing: 0,
   },
 
   scroll: {
@@ -54,44 +54,9 @@ const styles = StyleSheet.create({
   content: {
     flexGrow: 1,
     paddingHorizontal: 22,
-    paddingTop: 42,
-    paddingBottom: 26,
+    paddingTop: 56,
+    paddingBottom: 30,
     justifyContent: 'center',
-  },
-
-  hero: {
-    marginBottom: 28,
-  },
-
-  eyebrow: {
-    color: '#72C6FF',
-    fontSize: 11,
-    fontWeight: '800',
-    letterSpacing: 1.4,
-    textTransform: 'uppercase',
-    marginBottom: 12,
-  },
-
-  title: {
-    maxWidth: 330,
-    color: '#FFFFFF',
-    fontSize: 39,
-    lineHeight: 44,
-    fontWeight: '900',
-    letterSpacing: -1.4,
-  },
-
-  titleAccent: {
-    color: '#31A7F5',
-  },
-
-  subtitle: {
-    maxWidth: 350,
-    color: 'rgba(255, 255, 255, 0.78)',
-    fontSize: 15,
-    lineHeight: 23,
-    fontWeight: '500',
-    marginTop: 15,
   },
 
   routeCard: {
@@ -99,11 +64,11 @@ const styles = StyleSheet.create({
     maxWidth: 430,
     alignSelf: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.97)',
-    borderRadius: 24,
-    paddingHorizontal: 20,
-    paddingTop: 24,
-    paddingBottom: 18,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 26,
+    paddingHorizontal: 22,
+    paddingTop: 30,
+    paddingBottom: 24,
     shadowColor: '#000000',
     shadowOffset: { width: 0, height: 14 },
     shadowOpacity: 0.25,
@@ -112,41 +77,49 @@ const styles = StyleSheet.create({
   },
 
   routeIconContainer: {
-    width: 56,
-    height: 56,
-    borderRadius: 17,
+    width: 64,
+    height: 64,
+    borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#E4F2FF',
-    marginBottom: 14,
+    marginBottom: 18,
   },
 
   routeTitle: {
     color: '#092D5D',
-    fontSize: 22,
+    fontSize: 24,
     fontWeight: '900',
-    letterSpacing: -0.4,
+    letterSpacing: 0,
   },
 
   routeDescription: {
     maxWidth: 280,
     color: '#68798D',
-    fontSize: 13,
-    lineHeight: 19,
-    fontWeight: '500',
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: '700',
     textAlign: 'center',
-    marginTop: 6,
-    marginBottom: 18,
+    marginTop: 8,
+    marginBottom: 22,
+  },
+
+  mainActions: {
+    width: '100%',
+    flexDirection: 'row',
+    gap: 10,
+  },
+
+  actionButton: {
+    flex: 1,
+    minHeight: 58,
+    borderRadius: 16,
+    paddingHorizontal: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
   primaryButton: {
-    width: '100%',
-    minHeight: 56,
-    borderRadius: 15,
-    paddingHorizontal: 19,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
     backgroundColor: '#0768C9',
     shadowColor: '#0768C9',
     shadowOffset: { width: 0, height: 8 },
@@ -155,43 +128,35 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
 
+  secondaryButton: {
+    backgroundColor: '#EAF4FF',
+    borderWidth: 1,
+    borderColor: '#BFDBFE',
+  },
+
   primaryButtonText: {
     color: '#FFFFFF',
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: '900',
+    textAlign: 'center',
   },
 
-  primaryButtonArrow: {
-    position: 'absolute',
-    right: 19,
-    color: '#FFFFFF',
-    fontSize: 21,
-    fontWeight: '700',
-  },
-
-  scheduleButton: {
-    minHeight: 38,
-    paddingHorizontal: 14,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 7,
-  },
-
-  scheduleButtonText: {
+  secondaryButtonText: {
     color: '#0768C9',
-    fontSize: 13,
-    fontWeight: '800',
+    fontSize: 15,
+    fontWeight: '900',
+    textAlign: 'center',
   },
 
   restrictedAccess: {
     width: '100%',
     maxWidth: 430,
     alignSelf: 'center',
-    marginTop: 24,
+    marginTop: 30,
   },
 
   accessLabel: {
-    color: 'rgba(255, 255, 255, 0.68)',
+    color: 'rgba(255, 255, 255, 0.76)',
     fontSize: 10,
     fontWeight: '800',
     letterSpacing: 1.3,
@@ -207,29 +172,21 @@ const styles = StyleSheet.create({
 
   accessButton: {
     flex: 1,
-    minHeight: 50,
-    borderRadius: 14,
+    minHeight: 48,
+    borderRadius: 15,
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.28)',
-    paddingHorizontal: 13,
+    paddingHorizontal: 10,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'rgba(8, 32, 58, 0.68)',
+    backgroundColor: 'rgba(255, 255, 255, 0.12)',
   },
 
   accessButtonText: {
     color: '#FFFFFF',
     fontSize: 13,
-    fontWeight: '800',
-  },
-
-  accessButtonArrow: {
-    position: 'absolute',
-    right: 11,
-    color: '#72C6FF',
-    fontSize: 17,
-    fontWeight: '800',
+    fontWeight: '900',
   },
 
   busIcon: {
