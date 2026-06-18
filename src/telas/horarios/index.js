@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 import styles from './styles';
 import { buscarDetalhesRota, listarRotas } from '../../services/rotas';
@@ -115,6 +115,84 @@ function groupSchedulesByPoint(points = [], schedules = []) {
   return Array.from(pointMap.values());
 }
 
+function getRouteName(route) {
+  return route?.nome_linhas || route?.nome_rota || `Rota ${route?.id_rota}`;
+}
+
+function getScheduleTime(schedule) {
+  return schedule?.hora || schedule?.passagem_horarios || schedule?.horario || '';
+}
+
+function routeTheme(route, index) {
+  if (route?.cor || route?.color) {
+    return {
+      color: route.cor || route.color,
+      softColor: route.cor_suave || route.softColor || route.cor_clara || '#DBEAFE',
+    };
+  }
+
+  return ROUTE_THEMES[index % ROUTE_THEMES.length];
+}
+
+function groupSchedulesByPoint(schedules = []) {
+  return schedules.reduce((groups, schedule) => {
+    const pointId = schedule.id_ponto || schedule.ponto_id || schedule.id;
+    const key = String(pointId || schedule.nome_ponto || groups.size);
+    const current = groups.get(key) || {
+      id: pointId || key,
+      name: schedule.nome_ponto || schedule.nome_pontos || 'Ponto sem nome',
+      times: [],
+    };
+    const time = getScheduleTime(schedule);
+
+    if (time) {
+      current.times.push(time);
+    }
+
+    groups.set(key, current);
+    return groups;
+  }, new Map());
+}
+
+function normalizeLine(route, details, index) {
+  const theme = routeTheme(route, index);
+  const scheduleGroups = groupSchedulesByPoint(details?.horarios || []);
+  const routePoints = details?.pontos || [];
+  const points = routePoints.length
+    ? routePoints.map((point) => {
+        const id = point.id_ponto || point.id;
+        const schedulePoint = scheduleGroups.get(String(id));
+
+        return {
+          id: id || point.nome_ponto || point.nome_pontos,
+          name: point.nome_ponto || point.nome_pontos || 'Ponto sem nome',
+          times: [...(schedulePoint?.times || [])].sort(),
+        };
+      })
+    : Array.from(scheduleGroups.values()).map((point) => ({
+        ...point,
+        times: [...point.times].sort(),
+      }));
+
+  return {
+    id: route.id_rota,
+    name: getRouteName(route),
+    color: theme.color,
+    softColor: theme.softColor,
+    origin:
+      details?.origem ||
+      route?.origem ||
+      points[0]?.name ||
+      'Origem não informada',
+    destination:
+      details?.destino ||
+      route?.destino ||
+      points[points.length - 1]?.name ||
+      'Destino não informado',
+    points,
+  };
+}
+
 export default function Horarios() {
   const navigation = useNavigation();
   const [routes, setRoutes] = useState([]);
@@ -171,6 +249,7 @@ export default function Horarios() {
       setError(loadError.message);
     } finally {
       setLoadingDetails(false);
+
     }
   }
 
@@ -180,6 +259,7 @@ export default function Horarios() {
       routes: [{ name: 'Home' }],
     });
   }
+
 
   function selectRoute(routeId) {
     setSelectedRouteId(routeId);
@@ -200,6 +280,7 @@ export default function Horarios() {
   );
   const nextTime = getNextSchedule(routeDetails, scheduleGroups);
 
+
   return (
     <SafeAreaView style={styles.screen}>
       <View style={styles.header}>
@@ -216,6 +297,7 @@ export default function Horarios() {
           <Text style={styles.headerTitle}>Horários</Text>
         </View>
       </View>
+
 
       <ScrollView
         style={styles.content}
@@ -351,6 +433,7 @@ export default function Horarios() {
                   Nenhum horário cadastrado para este ponto.
                 </Text>
               )}
+
             </View>
           ))
         ) : (
@@ -359,8 +442,10 @@ export default function Horarios() {
               Nenhum ponto ou horário cadastrado para esta rota.
             </Text>
           </View>
+
         )}
       </ScrollView>
+
     </SafeAreaView>
   );
 }

@@ -1,30 +1,37 @@
 import { StyleSheet } from 'react-native';
 
+
 const glassFill = 'rgba(255, 255, 255, 0.14)';
 const glassBorder = 'rgba(255, 255, 255, 0.22)';
+
 
 const styles = StyleSheet.create({
   background: {
     flex: 1,
+
   },
 
   overlay: {
     flex: 1,
+
   },
 
   screen: {
     flex: 1,
+
   },
 
   header: {
     paddingHorizontal: 20,
     paddingTop: 14,
     paddingBottom: 18,
+
     flexDirection: 'row',
     alignItems: 'flex-start',
   },
 
   backButton: {
+
     width: 42,
     height: 42,
     borderRadius: 12,
@@ -42,16 +49,20 @@ const styles = StyleSheet.create({
   backButtonText: {
     color: '#073D8F',
     fontSize: 22,
+
     fontWeight: '900',
+    lineHeight: 26,
   },
 
   headerTextGroup: {
     flex: 1,
     paddingTop: 1,
+    minWidth: 0,
+
   },
 
   brand: {
-    color: '#8FD8FF',
+    color: '#E0F2FE',
     fontSize: 13,
     fontWeight: '900',
     letterSpacing: 0,
@@ -65,6 +76,7 @@ const styles = StyleSheet.create({
     marginTop: 3,
   },
 
+
   subtitle: {
     color: '#D6E8FF',
     fontSize: 14,
@@ -75,11 +87,13 @@ const styles = StyleSheet.create({
 
   listContent: {
     paddingBottom: 30,
+
   },
 
   emptyListContent: {
     flexGrow: 1,
   },
+
 
   summaryCard: {
     marginHorizontal: 18,
@@ -156,6 +170,7 @@ const styles = StyleSheet.create({
 
   reviewHeader: {
     flexDirection: 'row',
+    flexWrap: 'wrap',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
     marginBottom: 12,
@@ -206,6 +221,7 @@ const styles = StyleSheet.create({
   },
 
   starActive: {
+
     color: '#FFD166',
   },
 
@@ -292,6 +308,47 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     fontWeight: '900',
     textAlign: 'center',
+  },
+
+  container: {
+    flex: 1,
+    backgroundColor: 'transparent',
+  },
+  botaoVoltar: {
+    width: 46,
+    height: 46,
+  },
+  titulo: {
+    color: '#FFFFFF',
+  },
+  subtitulo: {
+    color: '#E0F2FE',
+  },
+  listaAvaliacoes: {
+    paddingHorizontal: 16,
+  },
+  listaAvaliacoesComScroll: {
+    paddingBottom: 28,
+  },
+  card: {
+    ...glassCard,
+  },
+  topoCard: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 10,
+  },
+  data: {
+    color: '#E0F2FE',
+  },
+  estrelas: {
+    flexDirection: 'row',
+  },
+  comentario: {
+    color: 'rgba(255, 255, 255, 0.86)',
+  },
+  semAvaliacao: {
+    color: '#E0F2FE',
   },
 });
 

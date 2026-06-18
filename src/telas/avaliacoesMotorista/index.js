@@ -7,7 +7,10 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+
 import { LinearGradient } from 'expo-linear-gradient';
+
+
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   useFocusEffect,
@@ -135,7 +138,12 @@ export default function AvaliacoesMotorista() {
   const averageLabel = Number(average || 0).toFixed(1);
 
   const renderReview = ({ item, index }) => (
-    <View style={styles.reviewCard}>
+    <BlurView
+      intensity={24}
+      tint="dark"
+      experimentalBlurMethod="dimezisBlurView"
+      style={styles.reviewCard}
+    >
       <View style={styles.reviewHeader}>
         <View style={styles.reviewTitleGroup}>
           <Text style={styles.reviewTitle}>Avaliação {index + 1}</Text>
@@ -156,7 +164,7 @@ export default function AvaliacoesMotorista() {
       <Text style={styles.reviewText}>
         {item.comentario_avaliacao?.trim() || 'Sem comentário cadastrado.'}
       </Text>
-    </View>
+    </BlurView>
   );
 
   const listHeader = (
@@ -250,6 +258,7 @@ export default function AvaliacoesMotorista() {
           )}
         </SafeAreaView>
       </LinearGradient>
+
     </ImageBackground>
   );
 }

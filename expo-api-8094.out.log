@@ -1,0 +1,8 @@
+Starting project at D:\temp\Maria\transporte-publico-mobile
+Starting Metro Bundler
+
+ ERROR  An unknown error occurred while installing React Native DevTools. Details:
+
+spawn EPERM
+Waiting on http://localhost:8094
+Logs for your project will appear below.

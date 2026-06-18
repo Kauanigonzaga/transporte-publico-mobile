@@ -17,6 +17,7 @@ import motoristaImage from '../../../assets/imgMotorista.png';
 import { getAssetUrl } from '../../services/api';
 import { buscarDetalhesRota, listarRotas } from '../../services/rotas';
 
+
 const DEFAULT_ROUTE_COLOR = '#1769E0';
 const DEFAULT_ROUTE_SOFT_COLOR = '#EAF2FF';
 
@@ -42,6 +43,7 @@ function routeTheme(route) {
       route?.cor_suave ||
       DEFAULT_ROUTE_SOFT_COLOR,
   };
+
 }
 
 function normalizeRoutes(items) {
@@ -147,6 +149,7 @@ export default function RotasScreen() {
     [routes, selectedRouteId],
   );
   const selectedTheme = routeTheme(routeDetails || selectedRoute);
+
 
   const mapUrl =
     routeDetails?.mapa_url ||

@@ -22,6 +22,7 @@ import motoristaImage from '../../../assets/imgMotorista.png';
 import { get, getAssetUrl } from '../../services/api';
 import { buscarDetalhesRota } from '../../services/rotas';
 
+
 if (
   Platform.OS === 'android' &&
   UIManager.setLayoutAnimationEnabledExperimental
@@ -61,6 +62,7 @@ function normalizeRouteName(route) {
 
 function routeMap(route) {
   return route?.mapa_url || route?.mapaUrl || route?.mapa || '';
+
 }
 
 function nextSchedule(schedules = []) {

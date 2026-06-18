@@ -58,6 +58,46 @@ const styles = StyleSheet.create({
     paddingBottom: 30,
   },
 
+  feedback: {
+    flex: 1,
+    padding: 24,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  feedbackText: {
+    color: '#65758A',
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: '700',
+    textAlign: 'center',
+    marginTop: 10,
+  },
+
+  errorText: {
+    color: '#BE123C',
+    fontSize: 15,
+    lineHeight: 21,
+    fontWeight: '700',
+    textAlign: 'center',
+    marginBottom: 16,
+  },
+
+  retryButton: {
+    minHeight: 44,
+    paddingHorizontal: 18,
+    borderRadius: 12,
+    backgroundColor: '#073D8F',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  retryButtonText: {
+    color: '#FFFFFF',
+    fontSize: 14,
+    fontWeight: '900',
+  },
+
   summaryCard: {
     backgroundColor: '#FFFFFF',
     borderRadius: 22,
@@ -292,6 +332,14 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 15,
     fontWeight: '900',
+  },
+
+  emptyText: {
+    color: '#65758A',
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: '700',
+    textAlign: 'center',
   },
 });
 
