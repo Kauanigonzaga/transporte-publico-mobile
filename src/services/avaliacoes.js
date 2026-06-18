@@ -35,11 +35,15 @@ export async function buscarMediaAvaliacoes(idMotorista) {
       0,
     quantidade:
       payload.quantidade_avaliacoes ??
+      payload.total_avaliacoes ??
       payload.quantidade ??
       payload.total ??
+      payload.nItens ??
       response?.quantidade_avaliacoes ??
+      response?.total_avaliacoes ??
       response?.quantidade ??
       response?.total ??
+      response?.nItens ??
       0,
   };
 }

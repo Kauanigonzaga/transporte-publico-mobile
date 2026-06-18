@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
@@ -305,24 +304,16 @@ export default function EditarHorarios() {
 
   if (!isAdmin) {
     return (
-      <LinearGradient colors={['#1E40AF', '#06142E']} style={styles.screen} />
+      <View style={styles.screen} />
     );
   }
 
   return (
-    <LinearGradient
-      colors={['#0F172A', '#1E40AF', '#06142E']}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 1, y: 1 }}
+    <View
       style={styles.screen}
     >
       <SafeAreaView style={styles.safeArea}>
-        <LinearGradient
-          colors={['#1D4ED8', '#1E3A8A']}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
-          style={styles.header}
-        >
+        <View style={styles.header}>
           <Text style={styles.headerTitle}>Editar horários</Text>
 
           <TouchableOpacity
@@ -332,7 +323,7 @@ export default function EditarHorarios() {
           >
             <Text style={styles.backButtonText}>Voltar</Text>
           </TouchableOpacity>
-        </LinearGradient>
+        </View>
 
         <ScrollView
           showsVerticalScrollIndicator={false}
@@ -487,6 +478,6 @@ export default function EditarHorarios() {
           </View>
         </ScrollView>
       </SafeAreaView>
-    </LinearGradient>
+    </View>
   );
 }

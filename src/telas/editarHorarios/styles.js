@@ -3,6 +3,7 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
+    backgroundColor: '#06142E',
   },
 
   safeArea: {
@@ -13,6 +14,7 @@ const styles = StyleSheet.create({
     minHeight: 86,
     paddingHorizontal: 18,
     paddingVertical: 16,
+    backgroundColor: '#061C46',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -55,14 +57,10 @@ const styles = StyleSheet.create({
   card: {
     borderRadius: 24,
     padding: 18,
-    backgroundColor: 'rgba(255, 255, 255, 0.12)',
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.16)',
-    shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 16 },
-    shadowOpacity: 0.28,
-    shadowRadius: 28,
-    elevation: 9,
+    backgroundColor: 'transparent',
+    borderWidth: 0,
+    shadowOpacity: 0,
+    elevation: 0,
   },
 
   cardTitle: {
