@@ -4,6 +4,18 @@ import { StyleSheet } from 'react-native';
 const glassFill = 'rgba(255, 255, 255, 0.14)';
 const glassBorder = 'rgba(255, 255, 255, 0.22)';
 
+const glassCard = {
+  backgroundColor: glassFill,
+  borderRadius: 20,
+  padding: 16,
+  borderWidth: 1,
+  borderColor: glassBorder,
+  shadowColor: '#001B44',
+  shadowOffset: { width: 0, height: 10 },
+  shadowOpacity: 0.16,
+  shadowRadius: 18,
+  elevation: 5,
+};
 
 const styles = StyleSheet.create({
   background: {
